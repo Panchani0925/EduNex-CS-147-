@@ -46,7 +46,6 @@ function App() {
                 FAQ
               </a>
             </div>
-            {/* Removed Login and Sign Up buttons */}
           </div>
         </nav>
 
@@ -164,19 +163,19 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <TestimonialCard
               text="EduNex has transformed how I manage my classroom. The integrated tools make teaching and tracking progress so much easier."
-              author="Sarah Johnson"
+              author="MR. Idunil Silva"
               role="High School Teacher"
               image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
             />
             <TestimonialCard
               text="As a parent, I love being able to stay connected with my child's education. The real-time updates are invaluable."
-              author="Michael Chen"
+              author="Malanie jayathilaka"
               role="Parent"
               image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80"
             />
             <TestimonialCard
               text="The personalized learning recommendations have helped me improve my grades significantly. Highly recommended!"
-              author="Emily Rodriguez"
+              author="Amasha Perera"
               role="Student"
               image="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80"
             />
