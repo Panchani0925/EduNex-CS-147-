@@ -11,6 +11,7 @@ import {
   Users
 } from "lucide-react";
 import React, { useState } from "react";
+import "./public/logo.jpg";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <img src="/logo.jpg" alt="EduNex Logo" className="logo" />
               <span className="text-2xl font-bold text-gray-900">EduNex</span>
             </div>
             <div className="hidden md:flex space-x-8">
@@ -68,6 +69,11 @@ function App() {
             The all-in-one mobile learning platform that connects students,
             teachers, and parents for a seamless educational experience.
           </motion.p>
+          <br>
+          </br>
+          <br>
+          </br>
+          <br></br>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,9 +143,12 @@ function App() {
       {/* Video Section */}
       <section id="video" className="py-24 bg-blue-50">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-8">Watch Our Video</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">
+            Watch Our Video
+          </h2>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Learn more about how EduNex is transforming education through technology.
+            Learn more about how EduNex is transforming education through
+            technology.
           </p>
           <div className="relative pb-9/16">
             <iframe
@@ -188,10 +197,15 @@ function App() {
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-8">About Us</h2>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            EduNex is dedicated to transforming education through technology. Our mission is to provide an all-in-one mobile learning platform that connects students, teachers, and parents for a seamless educational experience.
+            EduNex is dedicated to transforming education through technology.
+            Our mission is to provide an all-in-one mobile learning platform
+            that connects students, teachers, and parents for a seamless
+            educational experience.
           </p>
           <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-            Founded in 2025, EduNex has quickly become a trusted name in the education sector, offering innovative solutions that enhance learning and foster collaboration.
+            Founded in 2025, EduNex has quickly become a trusted name in the
+            education sector, offering innovative solutions that enhance
+            learning and foster collaboration.
           </p>
         </div>
       </section>
@@ -205,19 +219,28 @@ function App() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <div className="flex flex-col items-center">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">Email</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                Email
+              </h3>
               <p className="text-gray-600">support@edunex.com</p>
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">Phone</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                Phone
+              </h3>
               <p className="text-gray-600">+1 (800) 123-4567</p>
             </div>
           </div>
           <div className="mt-12">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Send Us a Message</h3>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Send Us a Message
+            </h3>
             <form className="max-w-xl mx-auto">
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="name"
+                >
                   Name
                 </label>
                 <input
@@ -228,7 +251,10 @@ function App() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
+                >
                   Email
                 </label>
                 <input
@@ -239,7 +265,10 @@ function App() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="message"
+                >
                   Message
                 </label>
                 <textarea
@@ -260,7 +289,9 @@ function App() {
             </form>
           </div>
           <div className="mt-12">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Our Location</h3>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              Our Location
+            </h3>
             <div className="relative pb-9/16">
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
@@ -277,22 +308,40 @@ function App() {
       {/* Frequently Asked Questions Section */}
       <section id="faq" className="py-24 bg-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">Frequently Asked Questions</h2>
+          <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">
+            Frequently Asked Questions
+          </h2>
           <div className="max-w-2xl mx-auto">
-            <FAQItem question="What is EduNex?" answer="EduNex is an all-in-one mobile learning platform that connects students, teachers, and parents for a seamless educational experience." />
-            <FAQItem question="How can I download the EduNex app?" answer="You can download the EduNex app from the App Store or Google Play Store." />
-            <FAQItem question="Is EduNex free to use?" answer="EduNex offers both free and premium plans. The free plan includes basic features, while the premium plan provides access to advanced features and content." />
-            <FAQItem question="How can I contact EduNex support?" answer="You can contact EduNex support via email at support@edunex.com or by phone at +1 (800) 123-4567." />
+            <FAQItem
+              question="What is EduNex?"
+              answer="EduNex is an all-in-one mobile learning platform that connects students, teachers, and parents for a seamless educational experience."
+            />
+            <FAQItem
+              question="How can I download the EduNex app?"
+              answer="You can download the EduNex app from the App Store or Google Play Store."
+            />
+            <FAQItem
+              question="Is EduNex free to use?"
+              answer="EduNex offers both free and premium plans. The free plan includes basic features, while the premium plan provides access to advanced features and content."
+            />
+            <FAQItem
+              question="How can I contact EduNex support?"
+              answer="You can contact EduNex support via email at support@edunex.com or by phone at +1 (800) 123-4567."
+            />
           </div>
         </div>
       </section>
 
       {/* Call-to-Action Banner */}
-      <section id="cta" className="py-24 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      <section
+        id="cta"
+        className="py-24 bg-gradient-to-r from-blue-600 to-blue-800 text-white"
+      >
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-8">Join EduNex Today!</h2>
           <p className="text-xl mb-12 max-w-2xl mx-auto">
-            Experience the future of education with EduNex. Sign up now and start your journey towards a better learning experience.
+            Experience the future of education with EduNex. Sign up now and
+            start your journey towards a better learning experience.
           </p>
           <button className="px-8 py-4 bg-white text-blue-600 rounded-lg hover:bg-gray-100">
             Get Started
