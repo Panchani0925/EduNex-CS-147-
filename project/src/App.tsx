@@ -11,6 +11,7 @@ import {
   Globe,
   Linkedin,
   Mail,
+  Menu,
   MessageCircle,
   Send,
   Shield,
@@ -24,86 +25,9 @@ import {
 import React, { useState } from "react";
 
 function App() {
-  const teamMembers = [
-    {
-      name: "John Doe",
-      role: "CEO",
-      image: "/api/placeholder/150/150",
-      work: "Leading company strategy and vision",
-      links: {
-        linkedin: "https://linkedin.com/in/johndoe",
-        github: "https://github.com/johndoe",
-        website: "https://johndoe.com",
-        email: "john@example.com"
-      },
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
-      name: "Jane Smith",
-      role: "CTO",
-      image: "/api/placeholder/150/150",
-      work: "Driving technical innovation",
-      links: {
-        linkedin: "https://linkedin.com/in/janesmith",
-        github: "https://github.com/janesmith",
-        website: "https://janesmith.dev",
-        email: "jane@example.com"
-      },
-      gradient: "from-blue-500 to-teal-500"
-    },
-    {
-      name: "Alice Johnson",
-      role: "CFO",
-      image: "/api/placeholder/150/150",
-      work: "Financial strategy and planning",
-      links: {
-        linkedin: "https://linkedin.com/in/alicejohnson",
-        github: "https://github.com/alicejohnson",
-        website: "https://alicejohnson.com",
-        email: "alice@example.com"
-      },
-      gradient: "from-orange-500 to-yellow-500"
-    },
-    {
-      name: "Bob Brown",
-      role: "COO",
-      image: "/api/placeholder/150/150",
-      work: "Operations and process optimization",
-      links: {
-        linkedin: "https://linkedin.com/in/bobbrown",
-        github: "https://github.com/bobbrown",
-        website: "https://bobbrown.com",
-        email: "bob@example.com"
-      },
-      gradient: "from-green-500 to-emerald-500"
-    },
-    {
-      name: "Charlie Davis",
-      role: "CMO",
-      image: "/api/placeholder/150/150",
-      work: "Marketing strategy and brand development",
-      links: {
-        linkedin: "https://linkedin.com/in/charliedavis",
-        github: "https://github.com/charliedavis",
-        website: "https://charliedavis.com",
-        email: "charlie@example.com"
-      },
-      gradient: "from-red-500 to-rose-500"
-    },
-    {
-      name: "Eve Wilson",
-      role: "CIO",
-      image: "/api/placeholder/150/150",
-      work: "Information systems and digital transformation",
-      links: {
-        linkedin: "https://linkedin.com/in/evewilson",
-        github: "https://github.com/evewilson",
-        website: "https://evewilson.tech",
-        email: "eve@example.com"
-      },
-      gradient: "from-indigo-500 to-violet-500"
-    }
-  ];
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -129,18 +53,48 @@ function App() {
                 "Download",
                 "About",
                 "Contact",
-                "FAQ"
+                "FAQ",
+                "Our Team"
               ].map((item) => (
                 <a
                   key={item}
-                  href={`#${item.toLowerCase()}`}
+                  href={`#${item.toLowerCase().replace(" ", "-")}`}
                   className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium"
                 >
                   {item}
                 </a>
               ))}
             </div>
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
           </div>
+          {isMenuOpen && (
+            <div className="md:hidden mt-4 space-y-2">
+              {[
+                "Features",
+                "Testimonials",
+                "Download",
+                "About",
+                "Contact",
+                "FAQ",
+                "Our Team"
+              ].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(" ", "-")}`}
+                  className="block text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          )}
         </nav>
 
         <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-blue-50 via-white to-blue-50">
@@ -161,10 +115,26 @@ function App() {
             {/* Main heading */}
             <div className="relative mb-8 animate-fade-in-up">
               <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
-                Transform Education
+                {Array.from("Transform Education").map((char, index) => (
+                  <span
+                    key={index}
+                    className="inline-block opacity-0 animate-fade-in-letter"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
               </h1>
               <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
-                with EduNex
+                {Array.from("with EduNex").map((char, index) => (
+                  <span
+                    key={index}
+                    className="inline-block opacity-0 animate-fade-in-letter"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
               </h1>
             </div>
 
@@ -186,12 +156,12 @@ function App() {
             </div>
 
             {/* Feature image */}
-            <div className="relative max-w-4xl mx-auto animate-float">
+            <div className="relative max-w-6xl mx-auto animate-float flex justify-center">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg transform rotate-1 scale-105 opacity-20 blur-xl" />
               <img
-                src="/api/placeholder/800/600"
+                src="/OIP.jpg"
                 alt="Student using EduNex"
-                className="relative rounded-lg shadow-2xl transform hover:scale-[1.01] transition-transform duration-300"
+                className="relative rounded-lg shadow-2xl transform hover:scale-[1.05] transition-transform duration-300"
               />
             </div>
           </div>
@@ -199,6 +169,17 @@ function App() {
           {/* Add custom animation keyframes */}
           <style jsx>{`
             @keyframes fade-in-up {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            @keyframes fade-in-letter {
               from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -237,6 +218,10 @@ function App() {
 
             .animate-float {
               animation: float 3s ease-in-out infinite;
+            }
+
+            .animate-fade-in-letter {
+              animation: fade-in-letter 0.5s ease-out forwards;
             }
           `}</style>
         </div>
@@ -328,7 +313,7 @@ function App() {
             <div className="relative">
               <iframe
                 className="w-full aspect-video rounded-lg shadow-2xl transform transition-transform hover:scale-[1.01] duration-300"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="1.2.mp4"
                 title="EduNex Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -382,19 +367,19 @@ function App() {
               text="EduNex has transformed how I manage my classroom. The integrated tools make teaching and tracking progress so much easier."
               author="MR. Idunil Silva"
               role="High School Teacher"
-              image="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+              image="a1.jpg"
             />
             <TestimonialCard
               text="As a parent, I love being able to stay connected with my child's education. The real-time updates are invaluable."
               author="Malanie jayathilaka"
               role="Parent"
-              image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80"
+              image="a2.jpg"
             />
             <TestimonialCard
               text="The personalized learning recommendations have helped me improve my grades significantly. Highly recommended!"
               author="Amasha Perera"
               role="Student"
-              image="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80"
+              image="a3.jpg"
             />
           </div>
         </div>
@@ -960,26 +945,24 @@ const ContactSection = () => {
   );
 };
 
-
-
 const TeamSection = () => {
   const teamMembers = [
     {
-      name: "Panchani",
-      role: "Leader",
-      image: "/api/placeholder/150/150",
-      work: "Leading company strategy and vision",
+      name: "Panchani Charunya Gunarathne",
+      role: "Server-side Development & Database Management",
+      image: "/site.jpg",
+      work: "I lead my team and also train",
       links: {
         linkedin: "https://linkedin.com/in/johndoe",
         github: "https://github.com/johndoe",
-        email: "john@example.com"
+        email: "#"
       },
       gradient: "from-purple-500 to-pink-500"
     },
     {
-      name: "Oshadhi",
-      role: "CTO",
-      image: "/api/placeholder/150/150",
+      name: " Arundathi Oshadhi Mendis",
+      role: "Server-side Development & Database Management",
+      image: "/oshadhi.jpg",
       work: "Driving technical innovation",
       links: {
         linkedin: "https://linkedin.com/in/janesmith",
@@ -990,8 +973,8 @@ const TeamSection = () => {
     },
     {
       name: "Ridmi Poornima",
-      role: "Client Side Development",
-      image: "/api/placeholder/150/150",
+      role: "Client Side Development & Marketing",
+      image: "/ridmi.jpg",
       work: "Financial strategy and planning",
       links: {
         linkedin: "https://linkedin.com/in/alicejohnson",
@@ -1001,9 +984,9 @@ const TeamSection = () => {
       gradient: "from-orange-500 to-yellow-500"
     },
     {
-      name: "Bob Brown",
-      role: "COO",
-      image: "/api/placeholder/150/150",
+      name: "Dithara Nimvini Andaraweera",
+      role: "server Side development & Marketing",
+      image: "/dithara.jpg",
       work: "Operations and process optimization",
       links: {
         linkedin: "https://linkedin.com/in/bobbrown",
@@ -1013,9 +996,9 @@ const TeamSection = () => {
       gradient: "from-green-500 to-emerald-500"
     },
     {
-      name: "Charlie Davis",
-      role: "CMO",
-      image: "/api/placeholder/150/150",
+      name: "Thangavel Abishek",
+      role: "UI/UX Design & server-side development",
+      image: "/abishek.jpg",
       work: "Marketing strategy and brand development",
       links: {
         linkedin: "https://linkedin.com/in/charliedavis",
@@ -1026,8 +1009,8 @@ const TeamSection = () => {
     },
     {
       name: "Eve Wilson",
-      role: "CIO",
-      image: "/api/placeholder/150/150",
+      role: "UI/UX Design & Client Side development",
+      image: "/buthmira.jpg",
       work: "Information systems and digital transformation",
       links: {
         linkedin: "https://linkedin.com/in/evewilson",
@@ -1039,19 +1022,23 @@ const TeamSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800">
+    <section
+      id="our-team"
+      className="py-24 bg-gradient-to-b from-blue-900 to-blue-800"
+    >
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center text-white mb-16">
           Meet Our Team
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {teamMembers.map((member, index) => (
-            <div
+            <motion.div
               key={member.name}
               className="group relative bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center transition-all duration-500 hover:scale-105"
-              style={{
-                animation: `fadeSlideUp 0.6s ease-out ${index * 0.2}s both`
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
             >
               {/* Animated Background Gradient */}
               <div
@@ -1113,7 +1100,7 @@ const TeamSection = () => {
 
               {/* Shimmer Effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-2xl" />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
