@@ -965,40 +965,37 @@ const ContactSection = () => {
 const TeamSection = () => {
   const teamMembers = [
     {
-      name: "John Doe",
-      role: "CEO",
+      name: "Panchani",
+      role: "Leader",
       image: "/api/placeholder/150/150",
       work: "Leading company strategy and vision",
       links: {
         linkedin: "https://linkedin.com/in/johndoe",
         github: "https://github.com/johndoe",
-        website: "https://johndoe.com",
         email: "john@example.com"
       },
       gradient: "from-purple-500 to-pink-500"
     },
     {
-      name: "Jane Smith",
+      name: "Oshadhi",
       role: "CTO",
       image: "/api/placeholder/150/150",
       work: "Driving technical innovation",
       links: {
         linkedin: "https://linkedin.com/in/janesmith",
         github: "https://github.com/janesmith",
-        website: "https://janesmith.dev",
         email: "jane@example.com"
       },
       gradient: "from-blue-500 to-teal-500"
     },
     {
-      name: "Alice Johnson",
-      role: "CFO",
+      name: "Ridmi Poornima",
+      role: "Client Side Development",
       image: "/api/placeholder/150/150",
       work: "Financial strategy and planning",
       links: {
         linkedin: "https://linkedin.com/in/alicejohnson",
         github: "https://github.com/alicejohnson",
-        website: "https://alicejohnson.com",
         email: "alice@example.com"
       },
       gradient: "from-orange-500 to-yellow-500"
@@ -1011,7 +1008,6 @@ const TeamSection = () => {
       links: {
         linkedin: "https://linkedin.com/in/bobbrown",
         github: "https://github.com/bobbrown",
-        website: "https://bobbrown.com",
         email: "bob@example.com"
       },
       gradient: "from-green-500 to-emerald-500"
@@ -1024,7 +1020,6 @@ const TeamSection = () => {
       links: {
         linkedin: "https://linkedin.com/in/charliedavis",
         github: "https://github.com/charliedavis",
-        website: "https://charliedavis.com",
         email: "charlie@example.com"
       },
       gradient: "from-red-500 to-rose-500"
@@ -1037,7 +1032,6 @@ const TeamSection = () => {
       links: {
         linkedin: "https://linkedin.com/in/evewilson",
         github: "https://github.com/evewilson",
-        website: "https://evewilson.tech",
         email: "eve@example.com"
       },
       gradient: "from-indigo-500 to-violet-500"
