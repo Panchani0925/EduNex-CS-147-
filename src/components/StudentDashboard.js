@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { Bar } from "react-chartjs-2";
-import { Switch, Typography, Card, CardContent, Grid, Paper } from "@mui/material";
+import { Bar, Line } from "react-chartjs-2";
+import { Typography, Card, CardContent, Grid, Paper, Button, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Switch } from "@mui/material"; // Added Switch here
 import { WiDaySunny, WiNightClear } from "react-icons/wi";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend } from "chart.js";
+import { Link, useNavigate } from "react-router-dom";
 //import "./StudentDashboard.css";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
 const StudentDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
 
   // Dark mode toggle
   const toggleDarkMode = () => {
@@ -17,13 +20,26 @@ const StudentDashboard = () => {
   };
 
   // Mock data for progress chart
-  const chartData = {
+  const progressChartData = {
     labels: ["Math", "Science", "English", "Chemistry"],
     datasets: [
       {
         label: "Progress",
         data: [80, 70, 90, 60],
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+      },
+    ],
+  };
+
+  // Mock data for performance trend
+  const performanceTrendData = {
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+    datasets: [
+      {
+        label: "Performance",
+        data: [70, 75, 80, 85, 90],
+        borderColor: "#4BC0C0",
+        fill: false,
       },
     ],
   };
@@ -36,22 +52,35 @@ const StudentDashboard = () => {
 
   // Mock data for notifications
   const notifications = [
-    "New Math assignment posted.",
-    "Science exam scheduled for next week.",
+    { id: 1, message: "New Math assignment posted.", details: "Complete Chapter 5 exercises by next week." },
+    { id: 2, message: "Science exam scheduled for next week.", details: "Prepare for the exam on December 28th." },
   ];
 
   // Mock data for enrolled classes
   const enrolledClasses = [
-    { name: "Advanced Mathematics", instructor: "Mr. Peiris", progress: 80 },
-    { name: "Introduction to Science", instructor: "Ms. Jayasuriya", progress: 70 },
-    { name: "English Literature", instructor: "Mrs. Abeysiriwardana", progress: 90 },
+    { id: 1, name: "Advanced Mathematics", instructor: "Mr. Peiris", progress: 80 },
+    { id: 2, name: "Introduction to Science", instructor: "Ms. Jayasuriya", progress: 70 },
+    { id: 3, name: "English Literature", instructor: "Mrs. Abeysiriwardana", progress: 90 },
   ];
 
-  // Mock data for badges
-  const badges = [
-    { name: "Math Whiz", icon: "🥇" },
-    { name: "Science Star", icon: "🌟" },
-    { name: "Perfect Attendance", icon: "🎖️" },
+  // Mock data for study resources
+  const studyResources = [
+    { id: 1, title: "Math Notes", type: "PDF", link: "https://example.com/math-notes" },
+    { id: 2, title: "Science Past Papers", type: "PDF", link: "https://example.com/science-papers" },
+    { id: 3, title: "English Lecture Slides", type: "PPT", link: "https://example.com/english-slides" },
+  ];
+
+  // Mock data for discussion forums
+  const discussionForums = [
+    { id: 1, topic: "Math Homework Help", posts: 12 },
+    { id: 2, topic: "Science Project Discussion", posts: 8 },
+    { id: 3, topic: "English Essay Tips", posts: 15 },
+  ];
+
+  // Mock data for live classes
+  const liveClasses = [
+    { id: 1, title: "Math Live Session", date: "2024-12-25", time: "10:00 AM" },
+    { id: 2, title: "Science Live Session", date: "2024-12-28", time: "11:00 AM" },
   ];
 
   // Calculate days left for deadlines
@@ -60,6 +89,17 @@ const StudentDashboard = () => {
     const due = new Date(dueDate);
     const timeDiff = due - today;
     return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  };
+
+  // Handle notification click
+  const handleNotificationClick = (notification) => {
+    setSelectedNotification(notification);
+    setOpenNotificationDialog(true);
+  };
+
+  // Close notification dialog
+  const handleCloseNotificationDialog = () => {
+    setOpenNotificationDialog(false);
   };
 
   return (
@@ -79,9 +119,11 @@ const StudentDashboard = () => {
           <Card>
             <CardContent>
               <Typography variant="h6">Notifications</Typography>
-              <ul>
-                {notifications.map((notification, index) => (
-                  <li key={index}>{notification}</li>
+              <ul className="notification-list">
+                {notifications.map((notification) => (
+                  <li key={notification.id} onClick={() => handleNotificationClick(notification)}>
+                    <Typography>{notification.message}</Typography>
+                  </li>
                 ))}
               </ul>
             </CardContent>
@@ -94,7 +136,7 @@ const StudentDashboard = () => {
             <CardContent>
               <Typography variant="h6">Progress Overview</Typography>
               <Bar
-                data={chartData}
+                data={progressChartData}
                 options={{
                   responsive: true,
                   plugins: {
@@ -118,13 +160,15 @@ const StudentDashboard = () => {
             <CardContent>
               <Typography variant="h6">Classes Enrolled</Typography>
               <Grid container spacing={2}>
-                {enrolledClasses.map((cls, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper className="class-card">
-                      <Typography variant="h6">{cls.name}</Typography>
-                      <Typography>Instructor: {cls.instructor}</Typography>
-                      <Typography>Progress: {cls.progress}%</Typography>
-                    </Paper>
+                {enrolledClasses.map((cls) => (
+                  <Grid item xs={12} sm={6} md={4} key={cls.id}>
+                    <Link to={`/class/${cls.id}`} style={{ textDecoration: "none" }}>
+                      <Paper className="class-card">
+                        <Typography variant="h6">{cls.name}</Typography>
+                        <Typography>Instructor: {cls.instructor}</Typography>
+                        <Typography>Progress: {cls.progress}%</Typography>
+                      </Paper>
+                    </Link>
                   </Grid>
                 ))}
               </Grid>
@@ -132,54 +176,69 @@ const StudentDashboard = () => {
           </Card>
         </Grid>
 
-        {/* Badges Section */}
-        <Grid item xs={12}>
+        {/* Study Resources */}
+        <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Badges</Typography>
-              <Grid container spacing={2}>
-                {badges.map((badge, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper className="badge-card">
-                      <Typography variant="h6">{badge.icon} {badge.name}</Typography>
-                    </Paper>
-                  </Grid>
+              <Typography variant="h6">Study Resources</Typography>
+              <ul>
+                {studyResources.map((resource) => (
+                  <li key={resource.id}>
+                    <a href={resource.link} target="_blank" rel="noopener noreferrer">
+                      {resource.title} ({resource.type})
+                    </a>
+                  </li>
                 ))}
-              </Grid>
+              </ul>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Upcoming Deadlines */}
-        <Grid item xs={12}>
+        {/* Discussion Forums */}
+        <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Upcoming Deadlines</Typography>
-              {deadlines.map((deadline, index) => (
-                <Paper key={index} className="deadline-item">
-                  <Typography>{deadline.task}</Typography>
-                  <Typography>
-                    {calculateDaysLeft(deadline.due)} days left
-                  </Typography>
-                </Paper>
-              ))}
+              <Typography variant="h6">Discussion Forums</Typography>
+              <ul>
+                {discussionForums.map((forum) => (
+                  <li key={forum.id}>
+                    <Typography>{forum.topic}</Typography>
+                    <Typography>Posts: {forum.posts}</Typography>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Task Progress Tracker */}
+        {/* Live Classes */}
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Task Progress</Typography>
-              <div className="progress-bar">
-                <div className="progress" style={{ width: "60%" }}></div>
-              </div>
-              <Typography>60% completed</Typography>
+              <Typography variant="h6">Live Classes</Typography>
+              <ul>
+                {liveClasses.map((liveClass) => (
+                  <li key={liveClass.id}>
+                    <Typography>{liveClass.title}</Typography>
+                    <Typography>Date: {liveClass.date}, Time: {liveClass.time}</Typography>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+
+      {/* Notification Dialog */}
+      <Dialog open={openNotificationDialog} onClose={handleCloseNotificationDialog}>
+        <DialogTitle>Notification Details</DialogTitle>
+        <DialogContent>
+          <Typography>{selectedNotification?.details}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNotificationDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
