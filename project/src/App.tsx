@@ -4,14 +4,15 @@ import {
   BarChart3,
   BookOpen,
   Brain,
-  GraduationCap,
+  Facebook,
+  Linkedin,
   MessageCircle,
   Shield,
   Smartphone,
+  Twitter,
   Users
 } from "lucide-react";
 import React, { useState } from "react";
-import "./public/logo.jpg";
 
 function App() {
   return (
@@ -69,10 +70,8 @@ function App() {
             The all-in-one mobile learning platform that connects students,
             teachers, and parents for a seamless educational experience.
           </motion.p>
-          <br>
-          </br>
-          <br>
-          </br>
+          <br></br>
+          <br></br>
           <br></br>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -247,7 +246,8 @@ function App() {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
-                  placeholder="Your name"
+                  placeholder="Your name "
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -262,6 +262,7 @@ function App() {
                   id="email"
                   type="email"
                   placeholder="Your email"
+                  required
                 />
               </div>
               <div className="mb-4">
@@ -278,10 +279,22 @@ function App() {
                   rows={4}
                 ></textarea>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center">
                 <button
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
+                  onClick={() => {
+                    const name = (
+                      document.getElementById("name") as HTMLInputElement
+                    ).value;
+                    const email = (
+                      document.getElementById("email") as HTMLInputElement
+                    ).value;
+                    const message = (
+                      document.getElementById("message") as HTMLTextAreaElement
+                    ).value;
+                    window.location.href = `mailto:support@edunex.com?subject=Contact from ${name}&body=${message} (Email: ${email})`;
+                  }}
                 >
                   Send
                 </button>
@@ -289,9 +302,6 @@ function App() {
             </form>
           </div>
           <div className="mt-12">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-              Our Location
-            </h3>
             <div className="relative pb-9/16">
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
@@ -374,7 +384,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-6">
-                <GraduationCap className="h-8 w-8 text-blue-400" />
+                <img src="/logo.jpg" alt="EduNex Logo" className="logo" />
                 <span className="text-2xl font-bold">EduNex</span>
               </div>
               <p className="text-gray-400">
@@ -420,17 +430,29 @@ function App() {
               <h3 className="text-lg font-semibold mb-4">Connect</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white flex items-center"
+                  >
+                    <Twitter className="w-5 h-5 mr-2" />
                     Twitter
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white flex items-center"
+                  >
+                    <Linkedin className="w-5 h-5 mr-2" />
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white flex items-center"
+                  >
+                    <Facebook className="w-5 h-5 mr-2" />
                     Facebook
                   </a>
                 </li>
