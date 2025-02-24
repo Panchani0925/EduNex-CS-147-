@@ -9,6 +9,7 @@ import {
   Facebook,
   Github,
   Globe,
+  Instagram,
   Linkedin,
   Mail,
   Menu,
@@ -18,7 +19,6 @@ import {
   Smartphone,
   Sparkles,
   Star,
-  Twitter,
   Users,
   Zap
 } from "lucide-react";
@@ -114,7 +114,8 @@ function App() {
 
             {/* Main heading */}
             <div className="relative mb-8 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
+              <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2 text-center">
+                Transform Education
                 {Array.from("Transform Education").map((char, index) => (
                   <span
                     key={index}
@@ -126,6 +127,7 @@ function App() {
                 ))}
               </h1>
               <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+                With EduNex
                 {Array.from("with EduNex").map((char, index) => (
                   <span
                     key={index}
@@ -146,11 +148,11 @@ function App() {
 
             {/* Call to action buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16 animate-fade-in-up-delay-2">
-              <button className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg flex items-center justify-center">
+              <button className="group px-8 py-4 bg-[#00224B] hover:bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg flex items-center justify-center">
                 <Smartphone className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                 Download App
               </button>
-              <button className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:bg-blue-50">
+              <button className="px-8 py-4 border-2 border-[#00224B] text-[#00224B] rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg hover:bg-blue-50">
                 Learn More
               </button>
             </div>
@@ -467,7 +469,7 @@ function App() {
       {/* Frequently Asked Questions Section */}
       <FAQ />
       {/* Call-to-Action Banner */}
-      <section className="relative py-24 overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white">
+      <section className="relative py-24 overflow-hidden bg-[#00224B] via-blue-700 to-blue-800 text-white">
         {/* Animated background particles */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 animate-ping opacity-30">
@@ -501,7 +503,7 @@ function App() {
 
           <div className="space-y-6">
             {/* Primary CTA Button */}
-            <button className="group relative px-8 py-4 bg-white text-blue-600 rounded-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl">
+            <button className="group relative px-8 py-4 bg-white text-[#00224B] rounded-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl">
               <span className="relative z-10 flex items-center justify-center">
                 Get Started
                 <ArrowRight className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
@@ -917,7 +919,7 @@ const ContactSection = () => {
 
             <div className="flex items-center justify-center">
               <button
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-[#00224B] hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transform transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 type="button"
                 onClick={() => {
                   window.location.href = `mailto:support@edunex.com?subject=Contact from ${formData.name}&body=${formData.message} (Email: ${formData.email})`;
@@ -941,9 +943,10 @@ const TeamSection = () => {
       image: "/site.jpg",
       work: "I lead my team and also train",
       links: {
-        linkedin: "https://linkedin.com/in/johndoe",
-        github: "https://github.com/johndoe",
-        email: "#"
+        linkedin:
+          "http://www.linkedin.com/in/panchani-gunarathne-108058318/johndoe",
+        github: "https://github.com/Panchani0925",
+        email: "panchani.20233002@iit.ac.lk"
       },
       gradient: "from-purple-500 to-pink-500"
     },
@@ -953,9 +956,9 @@ const TeamSection = () => {
       image: "/oshadhi.jpg",
       work: "I work to build the database of the application",
       links: {
-        linkedin: "https://linkedin.com/in/janesmith",
-        github: "https://github.com/janesmith",
-        email: "jane@example.com"
+        linkedin: "http://www.linkedin.com/in/arundathi-oshadhi-061166336",
+        github: "https://github.com/Oshadhi571",
+        email: "liyana.20232974@iit.ac.lk"
       },
       gradient: "from-blue-500 to-teal-500"
     },
@@ -977,9 +980,9 @@ const TeamSection = () => {
       image: "/dithara.jpg",
       work: "I work to build the backend of the application",
       links: {
-        linkedin: "https://linkedin.com/in/bobbrown",
-        github: "https://github.com/bobbrown",
-        email: "bob@example.com"
+        linkedin: "http://www.linkedin.com/in/ditharaandaraweera",
+        github: "https://github.com/DitharaAndaraweera",
+        email: "dithara.20231164@iit.ac.lk"
       },
       gradient: "from-green-500 to-emerald-500"
     },
@@ -1012,7 +1015,7 @@ const TeamSection = () => {
   return (
     <section
       id="our-team"
-      className="py-24 bg-gradient-to-b from-blue-900 to-blue-800"
+      className="py-24 bg-[#00224B]" // changed background color to solid #00224B
     >
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center text-white mb-16">
@@ -1223,13 +1226,30 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Connect</h3>
             <ul className="space-y-2">
               {[
-                { icon: Twitter, name: "Twitter" },
-                { icon: Linkedin, name: "LinkedIn" },
-                { icon: Facebook, name: "Facebook" }
-              ].map(({ icon: Icon, name }) => (
+                {
+                  icon: Instagram,
+                  name: "Instagram",
+                  url: "https://www.instagram.com/edunex_2025?utm_source=qr&igsh=amJ2bWhrOTZzbjMy"
+                },
+                {
+                  icon: Linkedin,
+                  name: "LinkedIn",
+                  url: "https://www.linkedin.com/company/105658686/admin/dashboard/"
+                },
+                {
+                  icon: Facebook,
+                  name: "Facebook",
+                  url: "https://www.facebook.com/share/1LE4XmXUvs/"
+                }, // <-- added comma here
+                {
+                  icon: Github, // corrected from "github" to "Github"
+                  name: "Github", // updated name accordingly
+                  url: "https://github.com/Panchani0925/EduNex-CS-147-.git" // update URL if needed
+                }
+              ].map(({ icon: Icon, name, url }) => (
                 <li key={name}>
                   <a
-                    href="#"
+                    href={url}
                     className="text-gray-400 hover:text-white flex items-center group"
                   >
                     <Icon className="w-5 h-5 mr-2 transform group-hover:scale-110 transition-transform" />
