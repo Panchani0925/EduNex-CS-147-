@@ -25,8 +25,6 @@ import {
 import React, { useState } from "react";
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -169,7 +167,7 @@ function App() {
           </div>
 
           {/* Add custom animation keyframes */}
-          <style jsx>{`
+          <style >{`
             @keyframes fade-in-up {
               from {
                 opacity: 0;
@@ -307,7 +305,7 @@ function App() {
             className="relative aspect-video max-w-4xl mx-auto"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 4 }}
             viewport={{ once: true }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl transform -rotate-1" />
@@ -330,7 +328,7 @@ function App() {
           <div className="absolute bottom-1/4 right-0 w-8 h-8 bg-blue-300 rounded-full animate-float opacity-50" />
         </div>
 
-        <style jsx>{`
+        <style >{`
           @keyframes float {
             0%,
             100% {
@@ -632,7 +630,12 @@ function TestimonialCard({
   );
 }
 
-const FAQItem = ({ question, answer }) => {
+interface FAQItemProps {
+  question: string;
+  answer: string;
+}
+
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -708,7 +711,7 @@ const FAQ = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style >{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -758,7 +761,9 @@ const ContactSection = () => {
     message: false
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -766,14 +771,14 @@ const ContactSection = () => {
     }));
   };
 
-  const handleFocus = (field) => {
+  const handleFocus = (field: "name" | "email" | "message") => {
     setFocused((prev) => ({
       ...prev,
       [field]: true
     }));
   };
 
-  const handleBlur = (field) => {
+  const handleBlur = (field: "name" | "email" | "message") => {
     setFocused((prev) => ({
       ...prev,
       [field]: false
@@ -1074,7 +1079,7 @@ const TeamSection = () => {
                     website: Globe,
                     email: Mail
                   }[platform];
-
+                  if (!Icon) return null;
                   return (
                     <a
                       key={platform}
@@ -1096,7 +1101,7 @@ const TeamSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeSlideUp {
           from {
             opacity: 0;
@@ -1116,7 +1121,7 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubscribed(true);
     setEmail("");
