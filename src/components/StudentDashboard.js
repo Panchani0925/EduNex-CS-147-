@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
-import { Typography, Card, CardContent, Grid, Paper, Button, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Switch } from "@mui/material"; // Added Switch here
+import { Typography, Card, CardContent, Grid, Paper, Button, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Switch, TextField } from "@mui/material";
 import { WiDaySunny, WiNightClear } from "react-icons/wi";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend } from "chart.js";
 import { Link, useNavigate } from "react-router-dom";
-//import "./StudentDashboard.css";
+import "./StudentDashboard.css";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
@@ -56,8 +56,8 @@ const StudentDashboard = () => {
     { id: 2, message: "Science exam scheduled for next week.", details: "Prepare for the exam on December 28th." },
   ];
 
-  // Mock data for enrolled classes
-  const enrolledClasses = [
+  // Mock data for enrolled courses
+  const enrolledCourses = [
     { id: 1, name: "Advanced Mathematics", instructor: "Mr. Peiris", progress: 80 },
     { id: 2, name: "Introduction to Science", instructor: "Ms. Jayasuriya", progress: 70 },
     { id: 3, name: "English Literature", instructor: "Mrs. Abeysiriwardana", progress: 90 },
@@ -160,13 +160,13 @@ const StudentDashboard = () => {
             <CardContent>
               <Typography variant="h6">Classes Enrolled</Typography>
               <Grid container spacing={2}>
-                {enrolledClasses.map((cls) => (
-                  <Grid item xs={12} sm={6} md={4} key={cls.id}>
-                    <Link to={`/class/${cls.id}`} style={{ textDecoration: "none" }}>
+                {enrolledCourses.map((course) => (
+                  <Grid item xs={12} sm={6} md={4} key={course.id}>
+                    <Link to={`/class/${course.id}`} style={{ textDecoration: "none" }}>
                       <Paper className="class-card">
-                        <Typography variant="h6">{cls.name}</Typography>
-                        <Typography>Instructor: {cls.instructor}</Typography>
-                        <Typography>Progress: {cls.progress}%</Typography>
+                        <Typography variant="h6">{course.name}</Typography>
+                        <Typography>Instructor: {course.instructor}</Typography>
+                        <Typography>Progress: {course.progress}%</Typography>
                       </Paper>
                     </Link>
                   </Grid>
@@ -224,6 +224,60 @@ const StudentDashboard = () => {
                   </li>
                 ))}
               </ul>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Upcoming Deadlines */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Upcoming Deadlines</Typography>
+              {deadlines.map((deadline, index) => (
+                <Paper key={index} className="deadline-item">
+                  <Typography>{deadline.task}</Typography>
+                  <Typography>
+                    {calculateDaysLeft(deadline.due)} days left
+                  </Typography>
+                </Paper>
+              ))}
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Performance Analytics */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Performance Analytics</Typography>
+              <Line
+                data={performanceTrendData}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: "top",
+                    },
+                    title: {
+                      display: true,
+                      text: "Weekly Performance",
+                    },
+                  },
+                }}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Support Section */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Support Section</Typography>
+              <Typography>Contact your counselor or support team for assistance.</Typography>
+              <Button variant="contained" color="primary">
+                Contact Support
+              </Button>
             </CardContent>
           </Card>
         </Grid>

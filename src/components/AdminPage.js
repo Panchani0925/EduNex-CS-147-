@@ -1,47 +1,41 @@
 import React, { useState } from "react";
 import { Bar, Pie } from "react-chartjs-2";
-import { Typography, Card, CardContent, Grid, Paper, Button, Switch, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Typography, Card, CardContent, Grid, Paper, Button, Switch, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
 import { WiDaySunny, WiNightClear } from "react-icons/wi";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from "chart.js";
-//import "./AdminPage.css";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 const AdminPage = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [openAddCourseDialog, setOpenAddCourseDialog] = useState(false);
   const [openAddUserDialog, setOpenAddUserDialog] = useState(false);
-  const [newCourseName, setNewCourseName] = useState("");
+  const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
+  const [openDeleteUserDialog, setOpenDeleteUserDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [newUserName, setNewUserName] = useState("");
   const [newUserRole, setNewUserRole] = useState("Teacher");
-  const [courses, setCourses] = useState(["Advanced Mathematics", "Introduction to Physics", "English Literature", "Advanced Chemistry"]);
   const [users, setUsers] = useState([
-    { id: 1, name: "Hasitha Madusanka", role: "Teacher" },
-    { id: 2, name: "Nilantha Jayasuriya", role: "Teacher" },
-    { id: 3, name: "Nimal Siripala", role: "Student" },
+    { id: 1, name: "Hasitha Madusanka", role: "Teacher", status: "Active" },
+    { id: 2, name: "Nilantha Jayasuriya", role: "Teacher", status: "Active" },
+    { id: 3, name: "Nimal Siripala", role: "Student", status: "Active" },
+    { id: 4, name: "Kamal Perera", role: "Parent", status: "Inactive" },
   ]);
+
+  const [platformUsage, setPlatformUsage] = useState([
+    { id: 1, user: "Hasitha Madusanka", logins: 12, resourcesAccessed: 5, engagement: "High" },
+    { id: 2, user: "Nilantha Jayasuriya", logins: 8, resourcesAccessed: 3, engagement: "Medium" },
+    { id: 3, user: "Nimal Siripala", logins: 15, resourcesAccessed: 7, engagement: "High" },
+  ]);
+
+  const [securitySettings, setSecuritySettings] = useState({
+    dataPermissions: "Restricted",
+    compliance: "GDPR Compliant",
+  });
 
   // Dark mode toggle
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-  };
-
-  // Open add course dialog
-  const handleOpenAddCourseDialog = () => {
-    setOpenAddCourseDialog(true);
-  };
-
-  // Close add course dialog
-  const handleCloseAddCourseDialog = () => {
-    setOpenAddCourseDialog(false);
-  };
-
-  // Add a new course
-  const handleAddCourse = () => {
-    setCourses([...courses, newCourseName]);
-    setNewCourseName("");
-    handleCloseAddCourseDialog();
   };
 
   // Open add user dialog
@@ -52,6 +46,8 @@ const AdminPage = () => {
   // Close add user dialog
   const handleCloseAddUserDialog = () => {
     setOpenAddUserDialog(false);
+    setNewUserName("");
+    setNewUserRole("Teacher");
   };
 
   // Add a new user
@@ -60,11 +56,58 @@ const AdminPage = () => {
       id: users.length + 1,
       name: newUserName,
       role: newUserRole,
+      status: "Active",
     };
     setUsers([...users, newUser]);
-    setNewUserName("");
-    setNewUserRole("Teacher");
     handleCloseAddUserDialog();
+  };
+
+  // Open edit user dialog
+  const handleOpenEditUserDialog = (user) => {
+    setSelectedUser(user);
+    setOpenEditUserDialog(true);
+  };
+
+  // Close edit user dialog
+  const handleCloseEditUserDialog = () => {
+    setOpenEditUserDialog(false);
+    setSelectedUser(null);
+  };
+
+  // Update user details
+  const handleUpdateUser = () => {
+    const updatedUsers = users.map((user) =>
+      user.id === selectedUser.id ? { ...user, name: selectedUser.name, role: selectedUser.role } : user
+    );
+    setUsers(updatedUsers);
+    handleCloseEditUserDialog();
+  };
+
+  // Open delete user dialog
+  const handleOpenDeleteUserDialog = (user) => {
+    setSelectedUser(user);
+    setOpenDeleteUserDialog(true);
+  };
+
+  // Close delete user dialog
+  const handleCloseDeleteUserDialog = () => {
+    setOpenDeleteUserDialog(false);
+    setSelectedUser(null);
+  };
+
+  // Delete a user
+  const handleDeleteUser = () => {
+    const updatedUsers = users.filter((user) => user.id !== selectedUser.id);
+    setUsers(updatedUsers);
+    handleCloseDeleteUserDialog();
+  };
+
+  // Toggle user status (Active/Inactive)
+  const toggleUserStatus = (userId) => {
+    const updatedUsers = users.map((user) =>
+      user.id === userId ? { ...user, status: user.status === "Active" ? "Inactive" : "Active" } : user
+    );
+    setUsers(updatedUsers);
   };
 
   // Mock data for course enrollment
@@ -81,12 +124,29 @@ const AdminPage = () => {
 
   // Mock data for user roles
   const userRolesData = {
-    labels: ["Teachers", "Students"],
+    labels: ["Teachers", "Students", "Parents"],
     datasets: [
       {
         label: "User Roles",
-        data: [2, 1],
-        backgroundColor: ["#FF6384", "#36A2EB"],
+        data: [2, 1, 1],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+
+  // Mock data for platform usage
+  const platformUsageData = {
+    labels: platformUsage.map((user) => user.user),
+    datasets: [
+      {
+        label: "Logins",
+        data: platformUsage.map((user) => user.logins),
+        backgroundColor: "#36A2EB",
+      },
+      {
+        label: "Resources Accessed",
+        data: platformUsage.map((user) => user.resourcesAccessed),
+        backgroundColor: "#FF6384",
       },
     ],
   };
@@ -103,36 +163,8 @@ const AdminPage = () => {
       </header>
 
       <Grid container spacing={3}>
-        {/* Course Management */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Course Management</Typography>
-              <Button variant="contained" color="primary" onClick={handleOpenAddCourseDialog}>
-                Add New Course
-              </Button>
-              <TableContainer component={Paper} style={{ marginTop: "10px" }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Course Name</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {courses.map((course, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{course}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </CardContent>
-          </Card>
-        </Grid>
-
         {/* User Management */}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Card>
             <CardContent>
               <Typography variant="h6">User Management</Typography>
@@ -145,6 +177,8 @@ const AdminPage = () => {
                     <TableRow>
                       <TableCell>Name</TableCell>
                       <TableCell>Role</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -152,6 +186,17 @@ const AdminPage = () => {
                       <TableRow key={user.id}>
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.role}</TableCell>
+                        <TableCell>
+                          <Switch
+                            checked={user.status === "Active"}
+                            onChange={() => toggleUserStatus(user.id)}
+                          />
+                          {user.status}
+                        </TableCell>
+                        <TableCell>
+                          <Button onClick={() => handleOpenEditUserDialog(user)}>Edit</Button>
+                          <Button onClick={() => handleOpenDeleteUserDialog(user)}>Delete</Button>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -161,13 +206,13 @@ const AdminPage = () => {
           </Card>
         </Grid>
 
-        {/* Course Enrollment Chart */}
+        {/* Platform Usage */}
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Course Enrollment</Typography>
+              <Typography variant="h6">Platform Usage</Typography>
               <Bar
-                data={courseEnrollmentData}
+                data={platformUsageData}
                 options={{
                   responsive: true,
                   plugins: {
@@ -176,7 +221,7 @@ const AdminPage = () => {
                     },
                     title: {
                       display: true,
-                      text: "Enrollment by Course",
+                      text: "User Engagement",
                     },
                   },
                 }}
@@ -209,44 +254,41 @@ const AdminPage = () => {
           </Card>
         </Grid>
 
-        {/* System Settings */}
+        {/* Security & Privacy Controls */}
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Typography variant="h6">System Settings</Typography>
-              <form>
-                <label>
-                  Notification Settings:
-                  <Switch /> Enable Email Notifications
-                </label>
-                <Button type="submit" variant="contained" color="primary">
-                  Save Settings
-                </Button>
-              </form>
+              <Typography variant="h6">Security & Privacy Controls</Typography>
+              <FormControl fullWidth style={{ marginBottom: "10px" }}>
+                <InputLabel>Data Permissions</InputLabel>
+                <Select
+                  value={securitySettings.dataPermissions}
+                  onChange={(e) =>
+                    setSecuritySettings({ ...securitySettings, dataPermissions: e.target.value })
+                  }
+                >
+                  <MenuItem value="Restricted">Restricted</MenuItem>
+                  <MenuItem value="Limited">Limited</MenuItem>
+                  <MenuItem value="Full Access">Full Access</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel>Compliance</InputLabel>
+                <Select
+                  value={securitySettings.compliance}
+                  onChange={(e) =>
+                    setSecuritySettings({ ...securitySettings, compliance: e.target.value })
+                  }
+                >
+                  <MenuItem value="GDPR Compliant">GDPR Compliant</MenuItem>
+                  <MenuItem value="FERPA Compliant">FERPA Compliant</MenuItem>
+                  <MenuItem value="HIPAA Compliant">HIPAA Compliant</MenuItem>
+                </Select>
+              </FormControl>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-
-      {/* Add Course Dialog */}
-      <Dialog open={openAddCourseDialog} onClose={handleCloseAddCourseDialog}>
-        <DialogTitle>Add New Course</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Course Name"
-            fullWidth
-            value={newCourseName}
-            onChange={(e) => setNewCourseName(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseAddCourseDialog}>Cancel</Button>
-          <Button onClick={handleAddCourse} color="primary">
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
 
       {/* Add User Dialog */}
       <Dialog open={openAddUserDialog} onClose={handleCloseAddUserDialog}>
@@ -259,21 +301,67 @@ const AdminPage = () => {
             onChange={(e) => setNewUserName(e.target.value)}
             style={{ marginBottom: "10px" }}
           />
-          <TextField
-            label="Role"
-            fullWidth
-            select
-            value={newUserRole}
-            onChange={(e) => setNewUserRole(e.target.value)}
-          >
-            <option value="Teacher">Teacher</option>
-            <option value="Student">Student</option>
-          </TextField>
+          <FormControl fullWidth>
+            <InputLabel>Role</InputLabel>
+            <Select
+              value={newUserRole}
+              onChange={(e) => setNewUserRole(e.target.value)}
+            >
+              <MenuItem value="Teacher">Teacher</MenuItem>
+              <MenuItem value="Student">Student</MenuItem>
+              <MenuItem value="Parent">Parent</MenuItem>
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddUserDialog}>Cancel</Button>
           <Button onClick={handleAddUser} color="primary">
             Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit User Dialog */}
+      <Dialog open={openEditUserDialog} onClose={handleCloseEditUserDialog}>
+        <DialogTitle>Edit User</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="User Name"
+            fullWidth
+            value={selectedUser?.name || ""}
+            onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
+            style={{ marginBottom: "10px" }}
+          />
+          <FormControl fullWidth>
+            <InputLabel>Role</InputLabel>
+            <Select
+              value={selectedUser?.role || ""}
+              onChange={(e) => setSelectedUser({ ...selectedUser, role: e.target.value })}
+            >
+              <MenuItem value="Teacher">Teacher</MenuItem>
+              <MenuItem value="Student">Student</MenuItem>
+              <MenuItem value="Parent">Parent</MenuItem>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditUserDialog}>Cancel</Button>
+          <Button onClick={handleUpdateUser} color="primary">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete User Dialog */}
+      <Dialog open={openDeleteUserDialog} onClose={handleCloseDeleteUserDialog}>
+        <DialogTitle>Delete User</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete {selectedUser?.name}?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteUserDialog}>Cancel</Button>
+          <Button onClick={handleDeleteUser} color="primary">
+            Delete
           </Button>
         </DialogActions>
       </Dialog>
