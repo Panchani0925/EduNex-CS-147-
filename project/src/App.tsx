@@ -567,7 +567,7 @@ function App() {
 
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
             {/* Primary download button */}
-            <button className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center">
+            <button className="group px-8 py-4 bg-[#00224B] text-white rounded-lg hover:bg-blue-800 transform hover:-translate-y-1 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center">
               <Award className="w-5 h-5 mr-2 animate-pulse" />
               <span>Download Now</span>
               <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
@@ -928,18 +928,6 @@ const ContactSection = () => {
             </div>
           </form>
         </div>
-
-        <div className="mt-16">
-          <div className="relative pb-[56.25%] rounded-xl overflow-hidden shadow-xl transform transition-all duration-500 hover:shadow-2xl">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019112287726!2d-122.41941548468196!3d37.77492977975956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5b5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sSan%20Francisco%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1616161616161!5m2!1sen!2s"
-              title="EduNex Location"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -963,7 +951,7 @@ const TeamSection = () => {
       name: " Arundathi Oshadhi Mendis",
       role: "Server-side Development & Database Management",
       image: "/oshadhi.jpg",
-      work: "Driving technical innovation",
+      work: "I work to build the database of the application",
       links: {
         linkedin: "https://linkedin.com/in/janesmith",
         github: "https://github.com/janesmith",
@@ -975,11 +963,11 @@ const TeamSection = () => {
       name: "Ridmi Poornima",
       role: "Client Side Development & Marketing",
       image: "/ridmi.jpg",
-      work: "Financial strategy and planning",
+      work: "I work to build the frontend of the application",
       links: {
-        linkedin: "https://linkedin.com/in/alicejohnson",
-        github: "https://github.com/alicejohnson",
-        email: "alice@example.com"
+        linkedin: "https://www.linkedin.com/in/ridmi-epa-b569aa2ba/",
+        github: "https://github.com/ridmipoornima",
+        email: "ridmipoornima.com"
       },
       gradient: "from-orange-500 to-yellow-500"
     },
@@ -987,7 +975,7 @@ const TeamSection = () => {
       name: "Dithara Nimvini Andaraweera",
       role: "server Side development & Marketing",
       image: "/dithara.jpg",
-      work: "Operations and process optimization",
+      work: "I work to build the backend of the application",
       links: {
         linkedin: "https://linkedin.com/in/bobbrown",
         github: "https://github.com/bobbrown",
@@ -999,7 +987,7 @@ const TeamSection = () => {
       name: "Thangavel Abishek",
       role: "UI/UX Design & server-side development",
       image: "/abishek.jpg",
-      work: "Marketing strategy and brand development",
+      work: "I work to build the backend of the application",
       links: {
         linkedin: "https://linkedin.com/in/charliedavis",
         github: "https://github.com/charliedavis",
@@ -1008,10 +996,10 @@ const TeamSection = () => {
       gradient: "from-red-500 to-rose-500"
     },
     {
-      name: "Eve Wilson",
+      name: "Buthmira Perera",
       role: "UI/UX Design & Client Side development",
       image: "/buthmira.jpg",
-      work: "Information systems and digital transformation",
+      work: "I work to build the frontend of the application",
       links: {
         linkedin: "https://linkedin.com/in/evewilson",
         github: "https://github.com/evewilson",
@@ -1132,7 +1120,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white py-12 relative overflow-hidden">
+    <footer className="bg-[#00224B] text-white py-12 relative overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 animate-gradient-x" />
 
