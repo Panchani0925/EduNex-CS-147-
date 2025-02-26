@@ -116,3 +116,69 @@ router.delete("/users/:id", authenticateToken, authorizeRole("admin"), (req, res
     });
 });
 
+// Update user profile (Admin & Student)
+router.put("/profile", authenticateToken, authorizeRole("student", "admin"), async (req, res) => {
+    const userId = req.user.id;
+    const { name, password } = req.body;
+    let updateFields = [];
+    let values = [];
+    if (name) {
+        updateFields.push("name = ?");
+        values.push(name);
+    }
+    if (password) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        updateFields.push("password = ?");
+        values.push(hashedPassword);
+    }
+    if (updateFields.length === 0) {
+        return res.status(400).json({ message: "No changes provided" });
+    }
+    values.push(userId);
+    const sql = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
+    db.query(sql, values, (err, result) => {
+        if (err) return res.status(500).json({ message: err.message });
+        res.json({ message: "Profile updated successfully" });
+    });
+});
+
+// Dashboard Endpoint (Enhanced User Profiles - Part 1)
+router.get("/dashboard", authenticateToken, (req, res) => {
+    const userId = req.user.id;
+    const userRole = req.user.role;
+    if (userRole === "student") {
+        // Query for students: fetch enrolled courses (requires enrollments and courses tables)
+        const query = `
+            SELECT c.id, c.name, c.description, e.enrolled_date 
+            FROM enrollments e 
+            JOIN courses c ON e.course_id = c.id 
+            WHERE e.student_id = ?`;
+        db.query(query, [userId], (err, courses) => {
+            if (err) return res.status(500).json({ message: err.message });
+            res.json({ role: "student", dashboard: { courses } });
+        });
+    } else if (userRole === "teacher") {
+        // Query for teachers: fetch courses managed by teacher
+        const query = `SELECT id, name, description FROM courses WHERE teacher_id = ?`;
+        db.query(query, [userId], (err, courses) => {
+            if (err) return res.status(500).json({ message: err.message });
+            res.json({ role: "teacher", dashboard: { courses } });
+        });
+    } else if (userRole === "parent") {
+        // Query for parents: fetch linked student's progress (requires parent_child and progress tables)
+        const query = `
+            SELECT s.id, s.name, p.progress 
+            FROM students s 
+            JOIN parent_child pc ON s.id = pc.student_id 
+            LEFT JOIN progress p ON s.id = p.student_id 
+            WHERE pc.parent_id = ?`;
+        db.query(query, [userId], (err, progressData) => {
+            if (err) return res.status(500).json({ message: err.message });
+            res.json({ role: "parent", dashboard: { progress: progressData } });
+        });
+    } else {
+        res.status(403).json({ message: "Unauthorized role" });
+    }
+});
+
+
