@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bar, Line } from "react-chartjs-2";
-import { Typography, Card, CardContent, Grid, Paper, Button, Badge, Dialog, DialogTitle, DialogContent, DialogActions, Switch, TextField } from "@mui/material";
+import { Typography, Card, CardContent, Grid, Paper, Button, Dialog, DialogTitle, DialogContent, DialogActions, Switch } from "@mui/material";
 import { WiDaySunny, WiNightClear } from "react-icons/wi";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend } from "chart.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./StudentDashboard.css";
 
 // Register Chart.js components
@@ -18,6 +18,58 @@ const StudentDashboard = () => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
+  // Particle animation logic
+  useEffect(() => {
+    const initParticles = () => {
+      const container = document.createElement('div');
+      container.className = 'floating-particles';
+
+      // Create particles
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+
+        // Random size between 3px and 15px
+        const size = Math.random() * 12 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+
+        // Random opacity
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+        // Random animation duration between 10s and 30s
+        const duration = Math.random() * 20 + 10;
+        particle.style.animationDuration = `${duration}s`;
+
+        // Random animation delay
+        particle.style.animationDelay = `${Math.random() * 10}s`;
+
+        // Adjust particle color based on dark mode
+        particle.style.backgroundColor = darkMode ? 'rgba(175, 180, 255, 0.7)' : 'rgba(138, 148, 255, 0.7)';
+
+        // Add particle to container
+        container.appendChild(particle);
+      }
+
+      // Add container to dashboard
+      document.querySelector('.dashboard').appendChild(container);
+    };
+
+    initParticles();
+
+    // Cleanup function to remove particles when component unmounts
+    return () => {
+      const particlesContainer = document.querySelector('.floating-particles');
+      if (particlesContainer) {
+        particlesContainer.remove();
+      }
+    };
+  }, [darkMode]); // Re-run effect when darkMode changes
 
   // Mock data for progress chart
   const progressChartData = {
@@ -103,7 +155,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className={`dashboard ${darkMode ? "dark-mode" : "light-mode"}`}>
+    <div className={`dashboard ${darkMode ? "dark-mode" : ""}`}>
       <header>
         <Typography variant="h4">Welcome Student!</Typography>
         <div className="dark-mode-toggle">
@@ -113,10 +165,10 @@ const StudentDashboard = () => {
         </div>
       </header>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2} className="grid-container">
         {/* Notifications Panel */}
         <Grid item xs={12} md={4}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Notifications</Typography>
               <ul className="notification-list">
@@ -132,7 +184,7 @@ const StudentDashboard = () => {
 
         {/* Progress Chart */}
         <Grid item xs={12} md={8}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Progress Overview</Typography>
               <Bar
@@ -156,7 +208,7 @@ const StudentDashboard = () => {
 
         {/* Classes Enrolled */}
         <Grid item xs={12}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Classes Enrolled</Typography>
               <Grid container spacing={2}>
@@ -178,7 +230,7 @@ const StudentDashboard = () => {
 
         {/* Study Resources */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Study Resources</Typography>
               <ul>
@@ -196,7 +248,7 @@ const StudentDashboard = () => {
 
         {/* Discussion Forums */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Discussion Forums</Typography>
               <ul>
@@ -213,7 +265,7 @@ const StudentDashboard = () => {
 
         {/* Live Classes */}
         <Grid item xs={12}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Live Classes</Typography>
               <ul>
@@ -230,7 +282,7 @@ const StudentDashboard = () => {
 
         {/* Upcoming Deadlines */}
         <Grid item xs={12}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Upcoming Deadlines</Typography>
               {deadlines.map((deadline, index) => (
@@ -247,7 +299,7 @@ const StudentDashboard = () => {
 
         {/* Performance Analytics */}
         <Grid item xs={12}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Performance Analytics</Typography>
               <Line
@@ -271,7 +323,7 @@ const StudentDashboard = () => {
 
         {/* Support Section */}
         <Grid item xs={12}>
-          <Card>
+          <Card className="card">
             <CardContent>
               <Typography variant="h6">Support Section</Typography>
               <Typography>Contact your counselor or support team for assistance.</Typography>

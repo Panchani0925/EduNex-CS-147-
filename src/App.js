@@ -5,6 +5,7 @@ import AdminPage from './components/AdminPage';
 import StudentDashboard from './components/StudentDashboard';
 import Navbar from './components/Navbar';
 import ParentDashboard from "./components/ParentDashboard";
+import StudentDashboardcss from './components/StudentDashboard.css';
 
 const App = () => {
   return (

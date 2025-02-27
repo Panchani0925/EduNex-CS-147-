@@ -12,14 +12,26 @@ const AdminPage = () => {
   const [openAddUserDialog, setOpenAddUserDialog] = useState(false);
   const [openEditUserDialog, setOpenEditUserDialog] = useState(false);
   const [openDeleteUserDialog, setOpenDeleteUserDialog] = useState(false);
+  const [openAddClassDialog, setOpenAddClassDialog] = useState(false);
+  const [openEditClassDialog, setOpenEditClassDialog] = useState(false);
+  const [openDeleteClassDialog, setOpenDeleteClassDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedClass, setSelectedClass] = useState(null);
   const [newUserName, setNewUserName] = useState("");
   const [newUserRole, setNewUserRole] = useState("Teacher");
+  const [newClassName, setNewClassName] = useState("");
+  const [newClassTeacher, setNewClassTeacher] = useState("");
+  const [newClassSubject, setNewClassSubject] = useState("");
   const [users, setUsers] = useState([
     { id: 1, name: "Hasitha Madusanka", role: "Teacher", status: "Active" },
     { id: 2, name: "Nilantha Jayasuriya", role: "Teacher", status: "Active" },
     { id: 3, name: "Nimal Siripala", role: "Student", status: "Active" },
     { id: 4, name: "Kamal Perera", role: "Parent", status: "Inactive" },
+  ]);
+
+  const [classes, setClasses] = useState([
+    { id: 1, name: "Mathematics", teacher: "Hasitha Madusanka", subject: "Advanced Math" },
+    { id: 2, name: "Science", teacher: "Nilantha Jayasuriya", subject: "Physics" },
   ]);
 
   const [platformUsage, setPlatformUsage] = useState([
@@ -110,6 +122,73 @@ const AdminPage = () => {
     setUsers(updatedUsers);
   };
 
+  // Open add class dialog
+  const handleOpenAddClassDialog = () => {
+    setOpenAddClassDialog(true);
+  };
+
+  // Close add class dialog
+  const handleCloseAddClassDialog = () => {
+    setOpenAddClassDialog(false);
+    setNewClassName("");
+    setNewClassTeacher("");
+    setNewClassSubject("");
+  };
+
+  // Add a new class
+  const handleAddClass = () => {
+    const newClass = {
+      id: classes.length + 1,
+      name: newClassName,
+      teacher: newClassTeacher,
+      subject: newClassSubject,
+    };
+    setClasses([...classes, newClass]);
+    handleCloseAddClassDialog();
+  };
+
+  // Open edit class dialog
+  const handleOpenEditClassDialog = (classItem) => {
+    setSelectedClass(classItem);
+    setOpenEditClassDialog(true);
+  };
+
+  // Close edit class dialog
+  const handleCloseEditClassDialog = () => {
+    setOpenEditClassDialog(false);
+    setSelectedClass(null);
+  };
+
+  // Update class details
+  const handleUpdateClass = () => {
+    const updatedClasses = classes.map((classItem) =>
+      classItem.id === selectedClass.id
+        ? { ...classItem, name: selectedClass.name, teacher: selectedClass.teacher, subject: selectedClass.subject }
+        : classItem
+    );
+    setClasses(updatedClasses);
+    handleCloseEditClassDialog();
+  };
+
+  // Open delete class dialog
+  const handleOpenDeleteClassDialog = (classItem) => {
+    setSelectedClass(classItem);
+    setOpenDeleteClassDialog(true);
+  };
+
+  // Close delete class dialog
+  const handleCloseDeleteClassDialog = () => {
+    setOpenDeleteClassDialog(false);
+    setSelectedClass(null);
+  };
+
+  // Delete a class
+  const handleDeleteClass = () => {
+    const updatedClasses = classes.filter((classItem) => classItem.id !== selectedClass.id);
+    setClasses(updatedClasses);
+    handleCloseDeleteClassDialog();
+  };
+
   // Mock data for course enrollment
   const courseEnrollmentData = {
     labels: ["Advanced Mathematics", "Introduction to Physics", "English Literature", "Advanced Chemistry"],
@@ -196,6 +275,43 @@ const AdminPage = () => {
                         <TableCell>
                           <Button onClick={() => handleOpenEditUserDialog(user)}>Edit</Button>
                           <Button onClick={() => handleOpenDeleteUserDialog(user)}>Delete</Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Class Management */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Class Management</Typography>
+              <Button variant="contained" color="primary" onClick={handleOpenAddClassDialog}>
+                Add New Class
+              </Button>
+              <TableContainer component={Paper} style={{ marginTop: "10px" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Class Name</TableCell>
+                      <TableCell>Teacher</TableCell>
+                      <TableCell>Subject</TableCell>
+                      <TableCell>Actions</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {classes.map((classItem) => (
+                      <TableRow key={classItem.id}>
+                        <TableCell>{classItem.name}</TableCell>
+                        <TableCell>{classItem.teacher}</TableCell>
+                        <TableCell>{classItem.subject}</TableCell>
+                        <TableCell>
+                          <Button onClick={() => handleOpenEditClassDialog(classItem)}>Edit</Button>
+                          <Button onClick={() => handleOpenDeleteClassDialog(classItem)}>Delete</Button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -361,6 +477,86 @@ const AdminPage = () => {
         <DialogActions>
           <Button onClick={handleCloseDeleteUserDialog}>Cancel</Button>
           <Button onClick={handleDeleteUser} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Add Class Dialog */}
+      <Dialog open={openAddClassDialog} onClose={handleCloseAddClassDialog}>
+        <DialogTitle>Add New Class</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Class Name"
+            fullWidth
+            value={newClassName}
+            onChange={(e) => setNewClassName(e.target.value)}
+            style={{ marginBottom: "10px" }}
+          />
+          <TextField
+            label="Teacher"
+            fullWidth
+            value={newClassTeacher}
+            onChange={(e) => setNewClassTeacher(e.target.value)}
+            style={{ marginBottom: "10px" }}
+          />
+          <TextField
+            label="Subject"
+            fullWidth
+            value={newClassSubject}
+            onChange={(e) => setNewClassSubject(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAddClassDialog}>Cancel</Button>
+          <Button onClick={handleAddClass} color="primary">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Class Dialog */}
+      <Dialog open={openEditClassDialog} onClose={handleCloseEditClassDialog}>
+        <DialogTitle>Edit Class</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Class Name"
+            fullWidth
+            value={selectedClass?.name || ""}
+            onChange={(e) => setSelectedClass({ ...selectedClass, name: e.target.value })}
+            style={{ marginBottom: "10px" }}
+          />
+          <TextField
+            label="Teacher"
+            fullWidth
+            value={selectedClass?.teacher || ""}
+            onChange={(e) => setSelectedClass({ ...selectedClass, teacher: e.target.value })}
+            style={{ marginBottom: "10px" }}
+          />
+          <TextField
+            label="Subject"
+            fullWidth
+            value={selectedClass?.subject || ""}
+            onChange={(e) => setSelectedClass({ ...selectedClass, subject: e.target.value })}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditClassDialog}>Cancel</Button>
+          <Button onClick={handleUpdateClass} color="primary">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Class Dialog */}
+      <Dialog open={openDeleteClassDialog} onClose={handleCloseDeleteClassDialog}>
+        <DialogTitle>Delete Class</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete {selectedClass?.name}?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteClassDialog}>Cancel</Button>
+          <Button onClick={handleDeleteClass} color="primary">
             Delete
           </Button>
         </DialogActions>

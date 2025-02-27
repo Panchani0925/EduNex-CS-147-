@@ -1,240 +1,90 @@
+/* General Styles */
 .dashboard {
-  padding: 24px;
+  padding: 16px;
   font-family: 'Inter', system-ui, sans-serif;
-  background: linear-gradient(135deg, #E2E4F5 0%, #EBEEF7 100%);
+  background: linear-gradient(135deg, #EEF0FF 0%, #F0F2FF 100%);
   color: #060D4D;
   min-height: 100vh;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.dark-mode {
-  background: linear-gradient(135deg, #060D4D 0%, #0B1363 100%);
+/* Dark Mode Styles */
+.dashboard.dark-mode {
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
   color: #ffffff;
 }
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding: 20px 28px;
-  background: rgba(6, 13, 77, 0.06);
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(6, 13, 77, 0.08);
-  border-radius: 24px;
-  box-shadow: 
-    0 8px 32px rgba(6, 13, 77, 0.08),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(6, 13, 77, 0.06);
 }
 
-.dark-mode header {
-  background: rgba(6, 13, 77, 0.25);
+.dashboard.dark-mode header {
+  background: rgba(11, 19, 99, 0.2);
   border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.notification-list li, .course-card, .assignment-card, .card {
-  background: rgba(255, 255, 255, 0.95);
+/* Cards */
+.card {
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(6, 13, 77, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 16px 0;
+  border-radius: 16px;
+  padding: 16px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 4px 24px rgba(6, 13, 77, 0.06),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 24px rgba(6, 13, 77, 0.06);
 }
 
-.dark-mode .notification-list li,
-.dark-mode .course-card,
-.dark-mode .assignment-card,
-.dark-mode .card {
+.dashboard.dark-mode .card {
   background: rgba(11, 19, 99, 0.4);
   border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 4px 24px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  color: #ffffff;
 }
 
-.course-card:hover, .notification-list li:hover {
-  transform: translateY(-4px) scale(1.02);
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 
-    0 12px 40px rgba(6, 13, 77, 0.12),
-    inset 0 0 0 1px rgba(6, 13, 77, 0.1);
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 16px;
 }
 
-.dark-mode .course-card:hover,
-.dark-mode .notification-list li:hover {
-  background: rgba(11, 19, 99, 0.5);
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(6, 13, 77, 0.15);
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 16px;
-  backdrop-filter: blur(4px);
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #060D4D 0%, #0B1363 50%, #162293 100%);
-  border-radius: 20px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 20px rgba(6, 13, 77, 0.3);
-}
-
-.dark-mode .progress-fill {
-  background: linear-gradient(90deg, #6B76FF 0%, #8A94FF 100%);
-  box-shadow: 0 0 20px rgba(138, 148, 255, 0.3);
-}
-
-button {
-  background: linear-gradient(135deg, #060D4D 0%, #0B1363 50%, #162293 100%);
-  color: #ffffff;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 
-    0 4px 20px rgba(6, 13, 77, 0.15),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 30px rgba(6, 13, 77, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-}
-
-button:active {
-  transform: translateY(1px);
-}
-
-.dark-mode button {
-  background: linear-gradient(135deg, #6B76FF 0%, #8A94FF 100%);
-  color: #060D4D;
-}
-
-a {
-  color: #060D4D;
-  text-decoration: none;
-  position: relative;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background: linear-gradient(90deg, #060D4D 0%, #162293 100%);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-.dark-mode a {
-  color: #8A94FF;
-}
-
-.dark-mode a::after {
-  background: linear-gradient(90deg, #6B76FF 0%, #8A94FF 100%);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #060D4D;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #060D4D 0%, #162293 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4,
-.dark-mode h5,
-.dark-mode h6 {
-  background: linear-gradient(135deg, #060D4D  0%, #B5BCFF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(6, 13, 77, 0.05);
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #060D4D 0%, #162293 100%);
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.dark-mode ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6B76FF 0%, #8A94FF 100%);
-  border: 2px solid rgba(6, 13, 77, 0.1);
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.course-card::before,
-.notification-list li::before {
-  content: '';
+/* Particles Animation */
+.floating-particles {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite linear;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
-.course-card:hover::before,
-.notification-list li:hover::before {
-  opacity: 1;
+.particle {
+  position: absolute;
+  background-color: rgba(138, 148, 255, 0.7);
+  border-radius: 50%;
+  animation: float infinite ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-20px) translateX(20px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }
