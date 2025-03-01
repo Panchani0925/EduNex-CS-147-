@@ -1,20 +1,18 @@
 const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const routes = require("./routes");
-require("dotenv").config();
+const db = require("./db"); // Import the database connection
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = 3000;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+// Middleware to parse JSON
+app.use(express.json());
 
-// Routes
-app.use("/api", routes);
+// Test route
+app.get("/", (req, res) => {
+    res.send("Hello, EduNex!");
+});
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
