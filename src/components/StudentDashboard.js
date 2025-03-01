@@ -17,6 +17,7 @@ const StudentDashboard = () => {
   // Dark mode toggle
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+    document.body.classList.toggle("dark-mode", !darkMode); // Toggle dark mode on body
   };
 
   // Particle animation logic
