@@ -320,3 +320,26 @@ router.post("/assignments/submit", authenticateToken, authorizeRole("student"), 
         res.status(201).json({ message: "Assignment submitted successfully", submissionId: result.insertId });
     });
 });
+// -------------------------------
+// 8. Performance Analytics Page (For Students & Parents)
+// -------------------------------
+
+// Get Performance Analytics
+router.get("/performance", authenticateToken, (req, res) => {
+    const userId = req.user.id;
+
+    const query = `
+        SELECT c.name AS course_name, AVG(s.grade) AS average_grade 
+        FROM submissions s 
+        JOIN assignments a ON s.assignment_id = a.id 
+        JOIN courses c ON a.course_id = c.id 
+        WHERE s.student_id = ? 
+        GROUP BY c.id`;
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error("Error fetching performance analytics:", err);
+            return res.status(500).json({ message: "Failed to fetch performance analytics" });
+        }
+        res.json({ performance: result });
+    });
+});
