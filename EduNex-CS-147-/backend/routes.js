@@ -76,3 +76,36 @@ router.post("/register", async (req, res) => {
         }
     });
 });
+// Login Route
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
+        if (err) return res.status(500).json({ message: err.message });
+        if (result.length === 0) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const user = result[0];
+
+        try {
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: "Invalid password" });
+            }
+            // Generate a JWT token including the user's id and role
+            const token = jwt.sign(
+                { id: user.id, role: user.role },
+                process.env.JWT_SECRET,
+                { expiresIn: "1h" }
+            );
+            res.json({ message: "Login successful", token, role: user.role });
+        } catch (error) {
+            console.error("Error during login:", error);
+            res.status(500).json({ message: "An error occurred during login" });
+        }
+    });
+});
