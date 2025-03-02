@@ -109,3 +109,43 @@ router.post("/login", async (req, res) => {
         }
     });
 });
+// Forgot Password - Send Reset Link
+// router.post("/forgot-password", (req, res) => {
+//     const { email } = req.body;
+//     if (!email) return res.status(400).json({ message: "Email is required" });
+
+//     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+//         if (err) return res.status(500).json({ message: err.message });
+//         if (result.length === 0) return res.status(404).json({ message: "User not found" });
+
+//         const user = result[0];
+//         const resetToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+//         const resetLink = https://yourplatform.com/reset-password?token=${resetToken};
+
+//         // Send reset link via email (use nodemailer or similar)
+//         console.log("Reset Link:", resetLink); // Replace with actual email sending logic
+//         res.json({ message: "Reset link sent to your email" });
+//     });
+// });
+
+// Reset Password
+router.post("/reset-password", (req, res) => {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) return res.status(400).json({ message: "Token and new password are required" });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.id;
+
+        bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+            if (err) return res.status(500).json({ message: "Error hashing password" });
+            db.query("UPDATE users SET password = ? WHERE id = ?", [hashedPassword, userId], (err, result) => {
+                if (err) return res.status(500).json({ message: err.message });
+                res.json({ message: "Password reset successfully" });
+            });
+        });
+    } catch (error) {
+        res.status(400).json({ message: "Invalid or expired token" });
+    }
+});
+
