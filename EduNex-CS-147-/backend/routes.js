@@ -167,3 +167,46 @@ GROUP BY a.course_id;`;
         });
     });
 });
+// 4. Teacher Dashboard
+// -------------------------------
+
+// Get Teacher Dashboard
+router.get("/teacher/dashboard", authenticateToken, authorizeRole("teacher"), (req, res) => {
+    const userId = req.user.id;
+
+    // Fetch courses managed by the teacher
+    const coursesQuery = `
+        SELECT id, name, description 
+        FROM courses 
+        WHERE teacher_id = ?`;
+    db.query(coursesQuery, [userId], (err, courses) => {
+        if (err) {
+            console.error("Error fetching courses:", err);
+            return res.status(500).json({ message: "Failed to fetch courses" });
+        }
+
+        // Fetch student performance data
+        const performanceQuery = `
+            SELECT s.student_id, u.name AS student_name, AVG(s.grade) AS average_grade 
+            FROM submissions s 
+            JOIN users u ON s.student_id = u.id 
+            JOIN assignments a ON s.assignment_id = a.id 
+            JOIN courses c ON a.course_id = c.id 
+            WHERE c.teacher_id = ? 
+            GROUP BY s.student_id`;
+        db.query(performanceQuery, [userId], (err, performance) => {
+            if (err) {
+                console.error("Error fetching performance data:", err);
+                return res.status(500).json({ message: "Failed to fetch performance data" });
+            }
+
+            // Send the response
+            res.json({
+                message: "Welcome to your dashboard!",
+                courses,
+                performance,
+            });
+        });
+    });
+});
+
