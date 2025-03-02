@@ -109,43 +109,61 @@ router.post("/login", async (req, res) => {
         }
     });
 });
-// Forgot Password - Send Reset Link
-// router.post("/forgot-password", (req, res) => {
-//     const { email } = req.body;
-//     if (!email) return res.status(400).json({ message: "Email is required" });
+// -------------------------------
+// 3. Student Dashboard
+// -------------------------------
 
-//     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
-//         if (err) return res.status(500).json({ message: err.message });
-//         if (result.length === 0) return res.status(404).json({ message: "User not found" });
+// Get Student Dashboard
+router.get("/student/dashboard", authenticateToken, authorizeRole("student"), (req, res) => {
+    const userId = req.user.id;
 
-//         const user = result[0];
-//         const resetToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-//         const resetLink = https://yourplatform.com/reset-password?token=${resetToken};
+    // Fetch enrolled courses
+    const coursesQuery = `
+        SELECT c.id, c.name, c.description, e.enrolled_date 
+        FROM enrollments e 
+        JOIN courses c ON e.course_id = c.id 
+        WHERE e.student_id = ?`;
+    db.query(coursesQuery, [userId], (err, courses) => {
+        if (err) {
+            console.error("Error fetching enrolled courses:", err);
+            return res.status(500).json({ message: "Failed to fetch enrolled courses" });
+        }
 
-//         // Send reset link via email (use nodemailer or similar)
-//         console.log("Reset Link:", resetLink); // Replace with actual email sending logic
-//         res.json({ message: "Reset link sent to your email" });
-//     });
-// });
+        // Fetch upcoming assignments
+        const assignmentsQuery = `
+            SELECT a.id, a.title, a.deadline, c.name AS course_name 
+            FROM assignments a 
+            JOIN courses c ON a.course_id = c.id 
+            JOIN enrollments e ON c.id = e.course_id 
+            WHERE e.student_id = ? AND a.deadline > NOW()`;
+        db.query(assignmentsQuery, [userId], (err, assignments) => {
+            if (err) {
+                console.error("Error fetching upcoming assignments:", err);
+                return res.status(500).json({ message: "Failed to fetch upcoming assignments" });
+            }
 
-// Reset Password
-router.post("/reset-password", (req, res) => {
-    const { token, newPassword } = req.body;
-    if (!token || !newPassword) return res.status(400).json({ message: "Token and new password are required" });
+            // Fetch performance analytics
+            const performanceQuery = `
+                SELECT a.course_id, c.name AS course_name, AVG(s.grade) AS average_grade 
+FROM submissions s 
+JOIN assignments a ON s.assignment_id = a.id 
+JOIN courses c ON a.course_id = c.id 
+WHERE s.student_id = ? 
+GROUP BY a.course_id;`;
+            db.query(performanceQuery, [userId], (err, performance) => {
+                if (err) {
+                    console.error("Error fetching performance analytics:", err);
+                    return res.status(500).json({ message: "Failed to fetch performance analytics" });
+                }
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decoded.id;
-
-        bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
-            if (err) return res.status(500).json({ message: "Error hashing password" });
-            db.query("UPDATE users SET password = ? WHERE id = ?", [hashedPassword, userId], (err, result) => {
-                if (err) return res.status(500).json({ message: err.message });
-                res.json({ message: "Password reset successfully" });
+                // Send the response
+                res.json({
+                    message: "Welcome to your dashboard!",
+                    courses,
+                    assignments,
+                    performance,
+                });
             });
         });
-    } catch (error) {
-        res.status(400).json({ message: "Invalid or expired token" });
-    }
+    });
 });
-
