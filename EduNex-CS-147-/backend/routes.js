@@ -261,3 +261,62 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
         });
     });
 });
+// -------------------------------
+// 6. Course Page (For Students & Teachers)
+// -------------------------------
+
+// Get Course Details
+router.get("/courses/:id", authenticateToken, (req, res) => {
+    const courseId = req.params.id;
+
+    // Fetch course details
+    const courseQuery = "SELECT id, name, description, teacher_id FROM courses WHERE id = ?";
+    db.query(courseQuery, [courseId], (err, course) => {
+        if (err) {
+            console.error("Error fetching course details:", err);
+            return res.status(500).json({ message: "Failed to fetch course details" });
+        }
+
+        // Fetch course modules
+        const modulesQuery = "SELECT id, title, description FROM course_modules WHERE course_id = ?";
+        db.query(modulesQuery, [courseId], (err, modules) => {
+            if (err) {
+                console.error("Error fetching course modules:", err);
+                return res.status(500).json({ message: "Failed to fetch course modules" });
+            }
+
+            // Fetch course resources
+            const resourcesQuery = "SELECT id, title, file_path, type FROM resources WHERE course_id = ?";
+            db.query(resourcesQuery, [courseId], (err, resources) => {
+                if (err) {
+                    console.error("Error fetching course resources:", err);
+                    return res.status(500).json({ message: "Failed to fetch course resources" });
+                }
+
+                res.json({
+                    course: course[0], // Return the first (and only) course object
+                    modules,
+                    resources,
+                });
+            });
+        });
+    });
+});
+// -------------------------------
+// 7. Assignment Submission Page (For Students)
+// -------------------------------
+
+// Submit Assignment
+router.post("/assignments/submit", authenticateToken, authorizeRole("student"), (req, res) => {
+    const { assignmentId, file_path } = req.body;
+    const studentId = req.user.id;
+
+    const sql = "INSERT INTO submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
+    db.query(sql, [assignmentId, studentId, file_path], (err, result) => {
+        if (err) {
+            console.error("Error submitting assignment:", err);
+            return res.status(500).json({ message: "Failed to submit assignment" });
+        }
+        res.status(201).json({ message: "Assignment submitted successfully", submissionId: result.insertId });
+    });
+});
