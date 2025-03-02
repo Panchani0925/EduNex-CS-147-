@@ -10,33 +10,19 @@
   --background: #f9fafb;
   --card-bg: #ffffff;
   --border: #e5e7eb;
-  
+
   /* Dark mode colors - refined with dark navy blue background */
-  --dark-background: #0a1929;  /* Dark navy blue background */
-  --dark-card-bg: #132f4c;     /* Slightly lighter navy for containers */
+  --dark-background: #0a1929; /* Dark navy blue background */
+  --dark-card-bg: #132f4c; /* Slightly lighter navy for containers */
   --dark-text-primary: #ffffff; /* Pure white text for maximum contrast */
   --dark-text-secondary: #ffffff; /* Now also pure white for consistency */
-  --dark-border: #1e3a5f;      /* Navy border color */
-  
-  /* Animation speeds - dramatically slowed down for hovering effects */
-  --transition-speed: 0.3s;
-  --hover-transition-speed: 1.5s; /* Much much slower hover transitions */
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  transition: background-color var(--transition-speed) ease-in-out, 
-              color var(--transition-speed) ease-in-out, 
-              transform var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1), 
-              box-shadow var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1),
-              border-color var(--transition-speed) ease-in-out;
+  --dark-border: #1e3a5f; /* Navy border color */
 }
 
 /* Ensure the background is clean */
-html, body {
-  background-color: #ffffff !important; /* Solid white background */
+html,
+body {
+  background-color: var(--background) !important; /* Solid white background */
   background-image: none !important; /* Remove any background images */
   overflow-x: hidden; /* Fix overflow issues */
   min-height: 100vh;
@@ -44,7 +30,7 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   color: var(--text-primary);
   line-height: 1.5;
   display: flex;
@@ -55,87 +41,37 @@ body {
 /* Dark mode styles - enhanced contrast with pure white text and dark navy background */
 body.dark-mode {
   background-color: var(--dark-background) !important;
-  color: var(--dark-text-primary);
+  color: var(--dark-text-primary) !important; /* Force all text to be white in dark mode */
 }
 
-/* Improved sidebar styling with smoother animations */
-.sidebar {
-  width: 60px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background-color: var(--primary-dark);
-  transition: width var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  overflow: hidden;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 1rem;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25); /* Enhanced shadow for boldness */
-  border-right: 3px solid var(--primary); /* Added bold border */
+/* Force all text to be white in dark mode */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode div,
+body.dark-mode li,
+body.dark-mode td,
+body.dark-mode th,
+body.dark-mode label,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea,
+body.dark-mode a,
+body.dark-mode button {
+  color: white !important;
 }
 
-.sidebar.expanded {
-  width: 240px;
-}
-
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.sidebar-menu li {
-  padding: 0.75rem 1rem;
-  margin: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  color: rgba(255, 255, 255, 0.9); /* Increased from 0.8 for better visibility */
-}
-
-.sidebar-menu li:hover {
-  background-color: rgba(255, 255, 255, 0.15); /* Increased from 0.1 for better feedback */
-  color: white;
-  transform: translateX(3px);
-}
-
-.sidebar-menu li.active {
-  background-color: var(--primary-light);
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
-  font-weight: 700; /* Added bold font weight */
-}
-
-.sidebar-menu li svg {
-  margin-right: 0.75rem;
-  font-size: 1.25rem;
-}
-
-.dark-mode .sidebar {
-  background-color: #071320; /* Darker navy for better contrast */
-  border-right: 3px solid var(--primary-light); /* Bolder border */
-}
-
-/* Modified dashboard to account for sidebar */
+/* Dashboard styles */
 .dashboard {
   max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
-  margin-left: 60px;
-  width: calc(100% - 60px);
-  transition: margin-left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1), 
-              width var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.dashboard.sidebar-expanded {
-  margin-left: 240px;
-  width: calc(100% - 240px);
+  width: 100%;
 }
 
 header {
@@ -157,35 +93,37 @@ header {
   gap: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: all var(--hover-transition-speed) ease;
+  transition: transform 0.7s ease !important; /* Reduced hover transition to 0.7s */
 }
 
 .dark-mode-toggle:hover {
-  transform: scale(1.1); /* Increased from 1.05 for better feedback */
+  transform: scale(1.1) !important; /* Increased from 1.05 for better feedback */
 }
 
 .dark-mode-toggle svg {
   color: var(--accent);
 }
 
-/* Improved card styling with MUCH slower animations and bolder appearance */
+.dark-mode .dark-mode-toggle svg {
+  color: white; /* Ensuring icon is white in dark mode */
+}
+
+/* Card styling */
 .card {
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 6px 25px rgba(15, 52, 96, 0.1); /* Enhanced initial shadow */
   background-color: var(--card-bg);
   border: 3px solid var(--border); /* Increased from 1px for boldness */
-  transition: transform var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1), 
-              box-shadow var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1),
-              border-color var(--hover-transition-speed) ease;
   height: 100%;
-  will-change: transform, box-shadow; /* Performance optimization for animations */
+  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding to card elements */
 }
 
 .card:hover {
-  transform: translateY(-10px); /* Increased from -7px for more noticeable effect */
-  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18); /* Bolder shadow */
-  border-color: var(--primary); /* Highlight border on hover */
+  transform: translateY(-10px) !important; /* Increased from -7px for more noticeable effect */
+  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important; /* Bolder shadow */
+  border-color: var(--primary) !important; /* Highlight border on hover */
 }
 
 .dark-mode .card {
@@ -196,419 +134,275 @@ header {
 }
 
 .dark-mode .card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45); /* Enhanced shadow effect */
-  border-color: var(--primary-light); /* Lighter navy border on hover for better visibility */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important; /* Enhanced shadow effect */
+  border-color: var(--primary-light) !important; /* Lighter navy border on hover for better visibility */
 }
 
-.grid-container {
-  margin-top: 1.5rem;
-}
-
-/* Typography - improved for dark mode */
-h4, h6 {
-  font-weight: 800; /* Increased from 700 for bolder appearance */
-  letter-spacing: -0.025em;
-}
-
-h4 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
-}
-
-.dark-mode h4 {
-  color: white; /* Pure white for headings in dark mode */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced text shadow for depth */
-}
-
-h6 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  color: var(--primary);
-  position: relative;
-  padding-bottom: 0.5rem;
-}
-
-h6::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 4px; /* Increased from 3px for bolder appearance */
-  background: var(--primary);
-  border-radius: 4px;
-  transition: width var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-h6:hover::after {
-  width: 100px;
-}
-
-.dark-mode h6 {
-  color: white; /* Pure white */
-}
-
-.dark-mode h6::after {
-  background: var(--primary-light);
-  height: 4px; /* Ensure it's bold in dark mode too */
-}
-
-/* Notification list - enhanced with bolder border */
+/* Notification list */
 .notification-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.notification-list li {
+.MuiPaper-root.notification-card {
   padding: 1rem;
   border-radius: 0.5rem;
   margin-bottom: 0.75rem;
   background-color: rgba(15, 52, 96, 0.05);
   border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
   cursor: pointer;
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  will-change: transform, background-color; /* Performance optimization */
+  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
 }
 
-.notification-list li:hover {
-  background-color: rgba(15, 52, 96, 0.1);
-  transform: translateX(10px); /* Increased from 8px */
+.MuiPaper-root.notification-card:hover {
+  background-color: rgba(15, 52, 96, 0.1) !important;
+  transform: translateX(10px) !important; /* Increased from 8px */
 }
 
-.dark-mode .notification-list li {
+.dark-mode .MuiPaper-root.notification-card {
   background-color: rgba(26, 93, 173, 0.15);
   border-left: 6px solid var(--primary-light); /* Bold in dark mode */
   color: white; /* Pure white text */
 }
 
-.dark-mode .notification-list li:hover {
-  background-color: rgba(26, 93, 173, 0.25);
+.dark-mode .MuiPaper-root.notification-card:hover {
+  background-color: rgba(26, 93, 173, 0.25) !important;
 }
 
-/* Class cards - enhanced with bolder border */
+/* Study Resources */
+.study-resources-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MuiPaper-root.study-resource-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  background-color: rgba(15, 52, 96, 0.05);
+  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
+  cursor: pointer;
+  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
+}
+
+.MuiPaper-root.study-resource-card:hover {
+  background-color: rgba(15, 52, 96, 0.1) !important;
+  transform: translateX(10px) !important; /* Increased from 8px */
+}
+
+.dark-mode .MuiPaper-root.study-resource-card {
+  background-color: rgba(26, 93, 173, 0.15);
+  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
+  color: white; /* Pure white text */
+}
+
+.dark-mode .MuiPaper-root.study-resource-card:hover {
+  background-color: rgba(26, 93, 173, 0.25) !important;
+}
+
+/* Discussion Forums */
+.discussion-forums-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MuiPaper-root.discussion-forum-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  background-color: rgba(15, 52, 96, 0.05);
+  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
+  cursor: pointer;
+  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
+}
+
+.MuiPaper-root.discussion-forum-card:hover {
+  background-color: rgba(15, 52, 96, 0.1) !important;
+  transform: translateX(10px) !important; /* Increased from 8px */
+}
+
+.dark-mode .MuiPaper-root.discussion-forum-card {
+  background-color: rgba(26, 93, 173, 0.15);
+  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
+  color: white; /* Pure white text */
+}
+
+.dark-mode .MuiPaper-root.discussion-forum-card:hover {
+  background-color: rgba(26, 93, 173, 0.25) !important;
+}
+
+/* Live Classes */
+.live-classes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MuiPaper-root.live-class-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  background-color: rgba(15, 52, 96, 0.05);
+  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
+  cursor: pointer;
+  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
+}
+
+.MuiPaper-root.live-class-card:hover {
+  background-color: rgba(15, 52, 96, 0.1) !important;
+  transform: translateX(10px) !important; /* Increased from 8px */
+}
+
+.dark-mode .MuiPaper-root.live-class-card {
+  background-color: rgba(26, 93, 173, 0.15);
+  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
+  color: white; /* Pure white text */
+}
+
+.dark-mode .MuiPaper-root.live-class-card:hover {
+  background-color: rgba(26, 93, 173, 0.25) !important;
+}
+
+/* Deadlines */
+.deadlines-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MuiPaper-root.deadline-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  background-color: rgba(15, 52, 96, 0.05);
+  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
+  cursor: pointer;
+  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
+}
+
+.MuiPaper-root.deadline-card:hover {
+  background-color: rgba(15, 52, 96, 0.1) !important;
+  transform: translateX(10px) !important; /* Increased from 8px */
+}
+
+.dark-mode .MuiPaper-root.deadline-card {
+  background-color: rgba(26, 93, 173, 0.15);
+  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
+  color: white; /* Pure white text */
+}
+
+.dark-mode .MuiPaper-root.deadline-card:hover {
+  background-color: rgba(26, 93, 173, 0.25) !important;
+}
+
+/* Enrolled Section */
+.enrolled-section {
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  border: 3px solid var(--border);
+  margin-top: 2rem;
+  box-shadow: 0 6px 25px rgba(15, 52, 96, 0.1);
+  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
+}
+
+.enrolled-section:hover {
+  transform: translateY(-10px) !important;
+  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important;
+  border-color: var(--primary) !important;
+}
+
+.dark-mode .enrolled-section {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  color: white; /* Pure white text */
+}
+
+.dark-mode .enrolled-section:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important;
+  border-color: var(--primary-light) !important;
+}
+
+/* Classes Enrolled - Child Elements */
 .class-card {
   padding: 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   border-radius: 0.75rem;
-  border: 3px solid var(--border); /* Increased from 1px for boldness */
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+  border: 3px solid var(--border);
   background-color: var(--card-bg);
-  will-change: transform, box-shadow, border-color; /* Performance optimization */
+  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  padding-top: 15px; /* Added top padding */
 }
 
 .class-card:hover {
-  transform: translateY(-10px) scale(1.02); /* Enhanced movement */
-  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18);
-  border-color: var(--primary-light);
+  transform: translateY(-10px) !important;
+  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important;
+  border-color: var(--primary) !important;
 }
 
 .dark-mode .class-card {
   background-color: var(--dark-card-bg);
   border-color: var(--dark-border);
-  border-width: 3px; /* Ensure border is bold */
   color: white; /* Pure white text */
 }
 
 .dark-mode .class-card:hover {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  border-color: var(--primary-light);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important;
+  border-color: var(--primary-light) !important;
 }
 
-/* Study resources - enhanced for dark mode */
-ul {
-  list-style: none;
-  padding: 0;
+/* Titles and Buttons */
+h1, h2, h3, h4, h5, h6 {
+  padding: 5px; /* Padding around titles */
+  padding-bottom: 15px; /* Added extra bottom padding */
+  margin-bottom: 10px; /* Add margin to compensate for animation placement */
 }
 
-ul li {
-  padding: 0.75rem 0;
-  border-bottom: 2px solid var(--border); /* Increased from 1px for boldness */
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+
+.support-button{
+  padding-top: 10px !important;
+  margin-top: 10px !important;
 }
 
-.dark-mode ul li {
-  border-bottom-color: var(--dark-border);
-  color: white; /* Pure white text */
-}
 
-ul li:last-child {
-  border-bottom: none;
-}
-
-ul li a {
-  color: var(--primary);
-  text-decoration: none;
-  display: inline-block;
+/* Animation under titles */
+h4, h6 {
   position: relative;
-  transition: color var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1), 
-              transform var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  padding: 0.25rem 0;
-  font-weight: 600; /* Made links slightly bolder */
+  padding-bottom: 20px; /* Increased to accommodate the animation below */
 }
 
-ul li a::after {
+h4::after, h6::after {
   content: '';
   position: absolute;
-  width: 0;
-  height: 3px; /* Increased from 2px for boldness */
-  bottom: 0;
+  bottom: 10px; /* Position adjusted to keep animation at the same place */
   left: 0;
-  background-color: var(--primary);
-  transition: width var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 4px;
+  transition: width 0.7s ease; /* Reduced hover transition to 0.7s */
 }
 
-ul li a:hover {
-  transform: translateX(10px); /* Increased from 8px */
+h4:hover::after, h6:hover::after {
+  width: 100px;
 }
 
-ul li a:hover::after {
-  width: 100%;
+.dark-mode h4::after, .dark-mode h6::after {
+  background: var(--primary-light);
 }
 
-.dark-mode ul li a {
-  color: white; /* Pure white links */
-}
-
-.dark-mode ul li a::after {
-  background-color: white; /* White underline for better visibility */
-  height: 3px; /* Ensure it's bold */
-}
-
-/* Deadline items - enhanced with bolder border */
-.deadline-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-  border-radius: 0.5rem;
-  background-color: rgba(26, 93, 173, 0.1);
-  border-left: 6px solid var(--accent); /* Increased from 4px for boldness */
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  will-change: transform, background-color; /* Performance optimization */
-}
-
-.deadline-item:hover {
-  transform: translateX(10px); /* Increased from 8px */
-  background-color: rgba(26, 93, 173, 0.15);
-}
-
-.dark-mode .deadline-item {
-  background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--accent); /* Ensure it's bold */
-  color: white; /* Pure white text */
-}
-
-.dark-mode .deadline-item:hover {
-  background-color: rgba(26, 93, 173, 0.25);
-}
-
-/* Support section - enhanced with bolder border */
-.support-section {
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border-radius: 1rem;
-  border: 3px solid var(--border); /* Increased from 1px for boldness */
-  margin-top: 2rem;
-  box-shadow: 0 6px 25px rgba(15, 52, 96, 0.1); /* Enhanced shadow */
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.support-section:hover {
-  box-shadow: 0 15px 40px rgba(15, 52, 96, 0.18); /* Enhanced shadow */
-  transform: translateY(-7px); /* Increased from -5px */
-  border-color: var(--primary-light); /* Highlight border on hover */
-}
-
-.dark-mode .support-section {
-  background-color: var(--dark-card-bg);
-  border-color: var(--dark-border);
-  border-width: 3px; /* Ensure it's bold */
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
-  color: white; /* Pure white text */
-}
-
-.dark-mode .support-section:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
-  border-color: var(--primary-light);
-}
-
-.support-section h6 {
-  color: var(--primary);
-  border-bottom: none;
-}
-
-.dark-mode .support-section h6 {
-  color: white; /* Pure white heading */
-}
-
-/* Improved buttons with enhanced effects and bolder appearance */
-button {
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 700; /* Increased from 600 for boldness */
-  cursor: pointer;
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  letter-spacing: 0.025em;
-  box-shadow: 0 5px 15px rgba(15, 52, 96, 0.25); /* Enhanced shadow */
-  position: relative;
-  overflow: hidden;
-  will-change: transform, background-color, box-shadow; /* Performance optimization */
-  border: 2px solid transparent; /* Added for bold appearance */
-}
-
-button:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-5px); /* Increased from -3px */
-  box-shadow: 0 10px 25px rgba(15, 52, 96, 0.4); /* Enhanced shadow */
-  border-color: rgba(255, 255, 255, 0.2); /* Subtle border on hover */
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(15, 52, 96, 0.2);
-}
-
-.dark-mode button {
-  background-color: var(--primary-light);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  color: white; /* Pure white text */
-  border: 2px solid transparent; /* Added for bold appearance */
-}
-
-.dark-mode button:hover {
-  background-color: var(--primary);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
-  border-color: rgba(255, 255, 255, 0.2); /* Subtle border on hover */
-}
-
-/* Enhanced button hover effect with slower ripple */
-button::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.7); /* Increased from 0.5 for better visibility */
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%);
-  transform-origin: 50% 50%;
-}
-
-button:hover::after {
-  animation: ripple 2s ease-out; /* Slower animation - increased from 1.2s */
-}
-
-@keyframes ripple {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.7; /* Increased from 0.5 */
-  }
-  20% {
-    transform: scale(25, 25);
-    opacity: 0.5; /* Increased from 0.3 */
-  }
-  100% {
-    opacity: 0;
-    transform: scale(60, 60); /* Increased from 50, 50 */
-  }
-}
-
-/* Links - enhanced for dark mode */
-a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  font-weight: 600; /* Made links slightly bolder */
-}
-
-a:hover {
-  color: var(--primary-dark);
-}
-
-.dark-mode a {
-  color: white; /* Pure white links */
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.2); /* Subtle text shadow for better readability */
-}
-
-.dark-mode a:hover {
-  color: var(--primary-light); /* Light blue on hover for contrast */
-  text-shadow: 0 0 2px rgba(26, 93, 173, 0.3); /* Enhanced text shadow on hover */
-}
-
-/* Dialog - enhanced with bolder border */
-.MuiDialog-paper {
-  border-radius: 1rem !important;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2) !important; /* Enhanced shadow */
-  overflow: hidden !important;
-  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1) !important; /* Slowed from 0.5s */
-  border: 3px solid var(--border) !important; /* Added for bold appearance */
-}
-
-.dark-mode .MuiDialog-paper {
-  background-color: var(--dark-card-bg) !important;
-  color: white !important; /* Pure white text */
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important; /* Enhanced shadow */
-  border-color: var(--dark-border) !important;
-}
-
-/* Charts custom styling */
-canvas {
-  max-width: 100%;
-  height: auto !important;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15)); /* Enhanced shadow for depth */
-  border: 3px solid transparent; /* Added for bold appearance */
-  transition: filter var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1),
-              border-color var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-canvas:hover {
-  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.2));
-  border-color: var(--border); /* Show border on hover */
-}
-
-.dark-mode canvas {
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.3)); /* Stronger shadow in dark mode */
-}
-
-.dark-mode canvas:hover {
-  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
-  border-color: var(--dark-border);
-}
-
-/* Media Queries - improved for better responsiveness */
+/* Media Queries */
 @media screen and (max-width: 768px) {
   .dashboard {
     padding: 1rem;
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .sidebar {
-    width: 0;
-    transform: translateX(-100%);
-  }
-  
-  .sidebar.mobile-visible {
-    width: 240px;
-    transform: translateX(0);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.35); /* Enhanced shadow */
-  }
-  
-  .dashboard.sidebar-expanded {
-    margin-left: 0;
-    width: 100%;
   }
 
   header {
@@ -616,163 +410,22 @@ canvas:hover {
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .dark-mode-toggle {
     align-self: flex-end;
   }
-  
+
   h4 {
     font-size: 1.75rem;
   }
-  
-  .deadline-item {
+
+  .deadline-card {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .card {
     margin-bottom: 1rem;
   }
-}
-
-/* Enhanced custom scrollbar */
-::-webkit-scrollbar {
-  width: 12px; /* Increased from 10px */
-  height: 12px; /* Increased from 10px */
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background);
-  border-radius: 12px; /* Increased from 10px */
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
-  border-radius: 12px; /* Increased from 10px */
-  border: 2px solid transparent; /* For smoother appearance */
-  background-clip: content-box; /* Works with the border to create padding */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-  background-clip: content-box; /* Maintain the padding effect on hover */
-}
-
-.dark-mode ::-webkit-scrollbar-track {
-  background: var(--dark-background);
-}
-
-.dark-mode ::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  background-clip: content-box;
-}
-
-.dark-mode ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-light);
-  background-clip: content-box;
-}
-
-/* Improved animation effects with slower fadeIn */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); } /* Increased from 20px */
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.grid-container > .MuiGrid-item {
-  animation: fadeIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards; /* Increased from 0.5s */
-  animation-delay: calc(var(--index, 0) * 0.1s); /* Slightly slower sequence */
-  opacity: 0;
-  will-change: opacity, transform; /* Performance optimization */
-}
-
-/* Improved focus states for accessibility */
-button:focus, a:focus, input:focus, select:focus, textarea:focus {
-  outline: 4px solid var(--primary-light); /* Increased from 3px */
-  outline-offset: 3px; /* Increased from 2px */
-}
-
-.dark-mode button:focus, .dark-mode a:focus, .dark-mode input:focus, 
-.dark-mode select:focus, .dark-mode textarea:focus {
-  outline-color: white; /* White outline for better visibility in dark mode */
-}
-
-/* Form elements styling - enhanced with bolder borders */
-input, select, textarea {
-  padding: 0.75rem;
-  border: 3px solid var(--border); /* Increased from 1px for boldness */
-  border-radius: 0.5rem;
-  background-color: var(--card-bg);
-  color: var(--text-primary);
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 5px rgba(26, 93, 173, 0.25); /* Increased from 4px */
-  transform: translateY(-2px); /* Enhanced lift effect on focus */
-}
-
-.dark-mode input, .dark-mode select, .dark-mode textarea {
-  background-color: #183450;  /* Navy blue input background */
-  border-color: var(--dark-border);
-  border-width: 3px; /* Ensure it's bold */
-  color: white; /* Pure white text */
-}
-
-.dark-mode input:focus, .dark-mode select:focus, .dark-mode textarea:focus {
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 5px rgba(26, 93, 173, 0.35);
-}
-
-/* Fix the floating particles container */
-.floating-particles {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  background: transparent;
-  z-index: -1; /* Ensure particles are behind other content */
-}
-
-/* Add smooth page transitions - slowed down */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(25px); /* Increased from 20px */
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s ease, transform 0.7s ease; /* Increased from 0.4s */
-}
-
-.page-transition-exit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(-25px); /* Increased from -20px */
-  transition: opacity 0.7s ease, transform 0.7s ease; /* Increased from 0.4s */
-}
-
-/* Enhanced hover effects for all interactive elements - much slower */
-.interactive-element {
-  transition: all var(--hover-transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-  border: 3px solid transparent; /* Added for bold appearance */
-}
-
-.interactive-element:hover {
-  transform: translateY(-5px); /* Increased from -3px */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
-  border-color: var(--border); /* Show border on hover */
-}
-
-.dark-mode .interactive-element:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35); /* Enhanced shadow */
-  border-color: var(--dark-border);
 }
