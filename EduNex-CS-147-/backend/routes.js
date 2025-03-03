@@ -431,3 +431,21 @@ router.get("/parent/alerts", authenticateToken, authorizeRole("parent"), (req, r
         res.json({ alerts: result });
     });
 });
+
+// -------------------------------
+// 14. Student Wellbeing & Assistance Tools
+// -------------------------------
+
+// Submit Anonymous Feedback
+router.post("/anonymous-feedback", authenticateToken, (req, res) => {
+    const { courseId, feedback } = req.body;
+
+    const sql = "INSERT INTO anonymous_feedback (course_id, feedback) VALUES (?, ?)";
+    db.query(sql, [courseId, feedback], (err, result) => {
+        if (err) {
+            console.error("Error submitting anonymous feedback:", err);
+            return res.status(500).json({ message: "Failed to submit feedback" });
+        }
+        res.status(201).json({ message: "Feedback submitted successfully", feedbackId: result.insertId });
+    });
+});
