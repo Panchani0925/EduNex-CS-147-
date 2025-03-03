@@ -343,3 +343,18 @@ router.get("/performance", authenticateToken, (req, res) => {
         res.json({ performance: result });
     });
 });
+// -------------------------------
+// 9. Resource Hub (Educational Library)
+// -------------------------------
+
+// Get Resources
+router.get("/resources", authenticateToken, (req, res) => {
+    const query = "SELECT id, title, file_path, type FROM resources";
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Error fetching resources:", err);
+            return res.status(500).json({ message: "Failed to fetch resources" });
+        }
+        res.json({ resources: result });
+    });
+});
