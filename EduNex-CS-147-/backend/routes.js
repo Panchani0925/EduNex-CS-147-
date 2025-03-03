@@ -390,3 +390,23 @@ router.get("/live-classes", authenticateToken, (req, res) => {
         res.json({ liveClasses: result });
     });
 });
+// -------------------------------
+// 12. Notifications & Alerts Page
+// -------------------------------
+
+// Get Alerts
+router.get("/alerts", authenticateToken, (req, res) => {
+    const userId = req.user.id;
+
+    const query = `
+        SELECT id, message, created_at 
+        FROM notifications 
+        WHERE user_id = ? AND is_read = FALSE`;
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error("Error fetching alerts:", err);
+            return res.status(500).json({ message: "Failed to fetch alerts" });
+        }
+        res.json({ alerts: result });
+    });
+});
