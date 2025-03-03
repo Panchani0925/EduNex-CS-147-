@@ -375,3 +375,18 @@ router.get("/notifications", authenticateToken, (req, res) => {
         res.json({ notifications: result });
     });
 });
+// -------------------------------
+// 11. Live Classes Page
+// -------------------------------
+
+// Get Live Classes
+router.get("/live-classes", authenticateToken, (req, res) => {
+    const query = "SELECT id, title, description, scheduled_at FROM live_classes";
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Error fetching live classes:", err);
+            return res.status(500).json({ message: "Failed to fetch live classes" });
+        }
+        res.json({ liveClasses: result });
+    });
+});
