@@ -12,7 +12,7 @@ const ProfileScreen = () => {
       <Text style={styles.bio}>Software Developer | Tech Enthusiast | Traveler</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.infoLabel}>Email:</Text>
-        <Text style={styles.infoText}>johndoe@example.com</Text>
+        <Text style={styles.infoText}>abishek@gmail.com</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoLabel}>Phone:</Text>
