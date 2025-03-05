@@ -28,8 +28,8 @@ const LoginScreen = () => {
       </View>
 
       {/* Welcome Message */}
-      <Text style={styles.welcomeText}>Welcome Back,</Text>
-      <Text style={styles.nameText}>Angela Christina</Text>
+      <Text style={styles.welcomeText}>Welcome ,</Text>
+      
 
       {/* Login Form */}
       <View style={styles.formContainer}>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     color: '#4A6CF7', // Blue color similar to the login button
   },
   welcomeText: {
-    fontSize: 18,
+    fontSize: 40,
     textAlign: 'center',
     marginTop: 30,
     color: 'black',
