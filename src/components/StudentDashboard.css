@@ -12,39 +12,44 @@
   --border: #e5e7eb;
 
   /* Dark mode colors - refined with dark navy blue background */
-  --dark-background: #0a1929; /* Dark navy blue background */
-  --dark-card-bg: #132f4c; /* Slightly lighter navy for containers */
-  --dark-text-primary: #ffffff; /* Pure white text for maximum contrast */
-  --dark-text-secondary: #ffffff; /* Now also pure white for consistency */
-  --dark-border: #1e3a5f; /* Navy border color */
+  --dark-background: #0a1929;
+  --dark-card-bg: #132f4c;
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #e2e8f0;
+  --dark-border: #1e3a5f;
 }
 
-/* Ensure the background is clean */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
-  background-color: var(--background) !important; /* Solid white background */
-  background-image: none !important; /* Remove any background images */
-  overflow-x: hidden; /* Fix overflow issues */
+  width: 100%;
+  background-color: var(--background);
+  background-image: none;
+  overflow-x: hidden;
   min-height: 100vh;
-  scroll-behavior: smooth; /* Added for smooth scrolling */
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   color: var(--text-primary);
   line-height: 1.5;
-  display: flex;
-  -webkit-font-smoothing: antialiased; /* Smoother font rendering */
-  -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode styles - enhanced contrast with pure white text and dark navy background */
+/* Dark mode styles */
 body.dark-mode {
-  background-color: var(--dark-background) !important;
-  color: var(--dark-text-primary) !important; /* Force all text to be white in dark mode */
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
 }
 
-/* Force all text to be white in dark mode */
 body.dark-mode h1,
 body.dark-mode h2,
 body.dark-mode h3,
@@ -53,379 +58,839 @@ body.dark-mode h5,
 body.dark-mode h6,
 body.dark-mode p,
 body.dark-mode span,
-body.dark-mode div,
+body.dark-mode div:not(.progress-fill),
 body.dark-mode li,
 body.dark-mode td,
 body.dark-mode th,
-body.dark-mode label,
-body.dark-mode input,
-body.dark-mode select,
-body.dark-mode textarea,
-body.dark-mode a,
-body.dark-mode button {
-  color: white !important;
+body.dark-mode label {
+  color: var(--dark-text-primary);
 }
 
-/* Dashboard styles */
+body.dark-mode a,
+body.dark-mode button {
+  color: var(--dark-text-primary);
+}
+
+/* Dashboard layout */
 .dashboard {
+  width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
-  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-header {
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 3px solid var(--border); /* Increased from 2px */
+  border-bottom: 3px solid var(--border);
+  position: relative;
+  width: 100%;
 }
 
-.dark-mode header {
+.dark-mode .dashboard-header {
   border-bottom-color: var(--dark-border);
 }
 
+/* Welcome container - full-width */
+.welcome-container {
+  grid-column: 1 / -1;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(15, 52, 96, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  display: block;
+}
+
+.welcome-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(15, 52, 96, 0.3);
+}
+
+.welcome-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+  z-index: 1;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.welcome-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
+  width: 100%;
+}
+
+.welcome-container p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  max-width: 60%;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.welcome-button {
+  background-color: white;
+  color: var(--primary);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.welcome-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.welcome-button.secondary {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.welcome-button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .welcome-container {
+  background-color: var(--primary-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .welcome-container:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .welcome-button {
+  background-color: var(--dark-card-bg);
+  color: white;
+}
+
+.dark-mode .welcome-button:hover {
+  background-color: var(--dark-background);
+}
+
+.dark-mode .welcome-button.secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .welcome-button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode toggle */
 .dark-mode-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.7s ease !important; /* Reduced hover transition to 0.7s */
+  position: absolute;
+  right: 0;
 }
 
-.dark-mode-toggle:hover {
-  transform: scale(1.1) !important; /* Increased from 1.05 for better feedback */
+.sun-icon, .moon-icon {
+  font-size: 1.5rem;
 }
 
-.dark-mode-toggle svg {
-  color: var(--accent);
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
 }
 
-.dark-mode .dark-mode-toggle svg {
-  color: white; /* Ensuring icon is white in dark mode */
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
-/* Card styling */
-.card {
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 6px 25px rgba(15, 52, 96, 0.1); /* Enhanced initial shadow */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Dashboard grid layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.dashboard-card {
   background-color: var(--card-bg);
-  border: 3px solid var(--border); /* Increased from 1px for boldness */
-  height: 100%;
-  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding to card elements */
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(15, 52, 96, 0.1);
+  border: 3px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  grid-column: span 6;
+  overflow: hidden;
 }
 
-.card:hover {
-  transform: translateY(-10px) !important; /* Increased from -7px for more noticeable effect */
-  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important; /* Bolder shadow */
-  border-color: var(--primary) !important; /* Highlight border on hover */
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(15, 52, 96, 0.15);
+  border-color: var(--primary);
 }
 
-.dark-mode .card {
+.dashboard-card.full-width {
+  grid-column: span 12;
+}
+
+.dark-mode .dashboard-card {
   background-color: var(--dark-card-bg);
   border-color: var(--dark-border);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3); /* Increased from 0.25 */
-  border-width: 3px; /* Ensure border is bolder in dark mode */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.dark-mode .card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important; /* Enhanced shadow effect */
-  border-color: var(--primary-light) !important; /* Lighter navy border on hover for better visibility */
+.dark-mode .dashboard-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-color: var(--primary-light);
 }
 
-/* Notification list */
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h2 {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.card-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.card-content h2:hover::after {
+  width: 100px;
+}
+
+.dark-mode .card-content h2::after {
+  background: var(--primary-light);
+}
+
+/* Card styles */
+.MuiCard-root {
+  border-radius: 1rem !important;
+  box-shadow: 0 4px 15px rgba(15, 52, 96, 0.1) !important;
+  border: 2px solid var(--border) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  overflow: hidden !important;
+  margin-bottom: 20px !important;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(15, 52, 96, 0.15) !important;
+}
+
+.dark-mode .MuiCard-root {
+  border-color: var(--dark-border) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .MuiCard-root:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Notifications */
 .notification-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.MuiPaper-root.notification-card {
+.notification-item {
   padding: 1rem;
   border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
   background-color: rgba(15, 52, 96, 0.05);
-  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
+  border-left: 4px solid var(--primary);
   cursor: pointer;
-  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+  transition: all 0.3s ease;
 }
 
-.MuiPaper-root.notification-card:hover {
-  background-color: rgba(15, 52, 96, 0.1) !important;
-  transform: translateX(10px) !important; /* Increased from 8px */
+.notification-item:hover {
+  background-color: rgba(15, 52, 96, 0.1);
+  transform: translateX(5px);
 }
 
-.dark-mode .MuiPaper-root.notification-card {
+.dark-mode .notification-item {
   background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
-  color: white; /* Pure white text */
+  border-left-color: var(--primary-light);
 }
 
-.dark-mode .MuiPaper-root.notification-card:hover {
-  background-color: rgba(26, 93, 173, 0.25) !important;
+.dark-mode .notification-item:hover {
+  background-color: rgba(26, 93, 173, 0.25);
 }
 
-/* Study Resources */
-.study-resources-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Course cards */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-.MuiPaper-root.study-resource-card {
+.course-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.course-card {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--border);
+  background-color: var(--card-bg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(15, 52, 96, 0.15);
+}
+
+.dark-mode .course-card {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .course-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.course-card h3 {
+  margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
+}
+
+.dark-mode .progress-bar {
+  background-color: #1e3a5f;
+}
+
+/* Assignment cards */
+.assignment-card {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.assignment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(15, 52, 96, 0.15);
+}
+
+.dark-mode .assignment-card {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .assignment-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Resources, Forums and Live Classes */
+.resources-list, .forums-list, .live-classes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.resource-item, .forum-item, .live-class-item {
   padding: 1rem;
   border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
   background-color: rgba(15, 52, 96, 0.05);
-  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
-  cursor: pointer;
-  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+  border-left: 4px solid var(--primary);
+  transition: all 0.3s ease;
 }
 
-.MuiPaper-root.study-resource-card:hover {
-  background-color: rgba(15, 52, 96, 0.1) !important;
-  transform: translateX(10px) !important; /* Increased from 8px */
+.resource-item:hover, .forum-item:hover, .live-class-item:hover {
+  background-color: rgba(15, 52, 96, 0.1);
+  transform: translateX(5px);
 }
 
-.dark-mode .MuiPaper-root.study-resource-card {
+.dark-mode .resource-item, 
+.dark-mode .forum-item, 
+.dark-mode .live-class-item {
   background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
-  color: white; /* Pure white text */
+  border-left-color: var(--primary-light);
 }
 
-.dark-mode .MuiPaper-root.study-resource-card:hover {
-  background-color: rgba(26, 93, 173, 0.25) !important;
+.dark-mode .resource-item:hover, 
+.dark-mode .forum-item:hover, 
+.dark-mode .live-class-item:hover {
+  background-color: rgba(26, 93, 173, 0.25);
 }
 
-/* Discussion Forums */
-.discussion-forums-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.resource-item a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.MuiPaper-root.discussion-forum-card {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
-  background-color: rgba(15, 52, 96, 0.05);
-  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
-  cursor: pointer;
-  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+.dark-mode .resource-item a {
+  color: var(--primary-light);
 }
 
-.MuiPaper-root.discussion-forum-card:hover {
-  background-color: rgba(15, 52, 96, 0.1) !important;
-  transform: translateX(10px) !important; /* Increased from 8px */
+/* Chart container */
+.chart-container {
+  width: 100%;
+  height: 250px;
 }
 
-.dark-mode .MuiPaper-root.discussion-forum-card {
-  background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
-  color: white; /* Pure white text */
+/* Charts */
+canvas {
+  margin: 10px 0 !important;
 }
 
-.dark-mode .MuiPaper-root.discussion-forum-card:hover {
-  background-color: rgba(26, 93, 173, 0.25) !important;
-}
-
-/* Live Classes */
-.live-classes-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.MuiPaper-root.live-class-card {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
-  background-color: rgba(15, 52, 96, 0.05);
-  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
-  cursor: pointer;
-  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
-}
-
-.MuiPaper-root.live-class-card:hover {
-  background-color: rgba(15, 52, 96, 0.1) !important;
-  transform: translateX(10px) !important; /* Increased from 8px */
-}
-
-.dark-mode .MuiPaper-root.live-class-card {
-  background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
-  color: white; /* Pure white text */
-}
-
-.dark-mode .MuiPaper-root.live-class-card:hover {
-  background-color: rgba(26, 93, 173, 0.25) !important;
+.dark-mode canvas {
+  filter: brightness(0.85);
 }
 
 /* Deadlines */
 .deadlines-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.MuiPaper-root.deadline-card {
+.deadline-item {
   padding: 1rem;
   border-radius: 0.5rem;
-  margin-bottom: 0.75rem;
   background-color: rgba(15, 52, 96, 0.05);
-  border-left: 6px solid var(--primary); /* Increased from 4px for boldness */
-  cursor: pointer;
-  transition: all 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+  border-left: 4px solid var(--primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
-.MuiPaper-root.deadline-card:hover {
-  background-color: rgba(15, 52, 96, 0.1) !important;
-  transform: translateX(10px) !important; /* Increased from 8px */
+.deadline-item:hover {
+  background-color: rgba(15, 52, 96, 0.1);
+  transform: translateX(5px);
 }
 
-.dark-mode .MuiPaper-root.deadline-card {
+.dark-mode .deadline-item {
   background-color: rgba(26, 93, 173, 0.15);
-  border-left: 6px solid var(--primary-light); /* Bold in dark mode */
-  color: white; /* Pure white text */
+  border-left-color: var(--primary-light);
 }
 
-.dark-mode .MuiPaper-root.deadline-card:hover {
-  background-color: rgba(26, 93, 173, 0.25) !important;
+.dark-mode .deadline-item:hover {
+  background-color: rgba(26, 93, 173, 0.25);
 }
 
-/* Enrolled Section */
-.enrolled-section {
-  padding: 2rem;
+.urgent {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.dark-mode .urgent {
+  color: #f87171;
+}
+
+/* Dialog styles for all popup dialogs */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog {
   background-color: var(--card-bg);
   border-radius: 1rem;
-  border: 3px solid var(--border);
-  margin-top: 2rem;
-  box-shadow: 0 6px 25px rgba(15, 52, 96, 0.1);
-  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.enrolled-section:hover {
-  transform: translateY(-10px) !important;
-  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important;
-  border-color: var(--primary) !important;
-}
-
-.dark-mode .enrolled-section {
+.dark-mode .dialog {
   background-color: var(--dark-card-bg);
-  border-color: var(--dark-border);
-  color: white; /* Pure white text */
 }
 
-.dark-mode .enrolled-section:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important;
-  border-color: var(--primary-light) !important;
-}
-
-/* Classes Enrolled - Child Elements */
-.class-card {
+.dialog-header {
   padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 3px solid var(--border);
-  background-color: var(--card-bg);
-  transition: transform 0.7s ease, box-shadow 0.7s ease, border-color 0.7s ease !important; /* Reduced hover transition to 0.7s */
-  padding-top: 15px; /* Added top padding */
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.class-card:hover {
-  transform: translateY(-10px) !important;
-  box-shadow: 0 15px 35px rgba(15, 52, 96, 0.18) !important;
-  border-color: var(--primary) !important;
+.dark-mode .dialog-header {
+  border-bottom-color: var(--dark-border);
 }
 
-.dark-mode .class-card {
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.dark-mode .close-button {
+  color: var(--dark-text-secondary);
+}
+
+.dialog-content {
+  padding: 1.5rem;
+}
+
+.dialog-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.dark-mode .dialog-actions {
+  border-top-color: var(--dark-border);
+}
+
+.MuiDialog-paper {
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+}
+
+.dark-mode .MuiDialog-paper {
   background-color: var(--dark-card-bg);
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .MuiDialogTitle-root,
+.dark-mode .MuiDialogContent-root,
+.dark-mode .MuiDialogActions-root,
+.dark-mode .MuiInputBase-input,
+.dark-mode .MuiInputLabel-root,
+.dark-mode .MuiTypography-root {
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .MuiOutlinedInput-notchedOutline {
   border-color: var(--dark-border);
-  color: white; /* Pure white text */
 }
 
-.dark-mode .class-card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45) !important;
-  border-color: var(--primary-light) !important;
+/* Buttons */
+.MuiButton-containedPrimary {
+  background-color: var(--primary) !important;
+  border-radius: 0.5rem !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.5rem !important;
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
 }
 
-/* Titles and Buttons */
-h1, h2, h3, h4, h5, h6 {
-  padding: 5px; /* Padding around titles */
-  padding-bottom: 15px; /* Added extra bottom padding */
-  margin-bottom: 10px; /* Add margin to compensate for animation placement */
+.MuiButton-containedPrimary:hover {
+  background-color: var(--primary-dark) !important;
+  transform: translateY(-2px);
 }
 
-
-.support-button{
-  padding-top: 10px !important;
-  margin-top: 10px !important;
+.dark-mode .MuiButton-containedPrimary {
+  background-color: var(--primary-light) !important;
 }
 
-
-/* Animation under titles */
-h4, h6 {
-  position: relative;
-  padding-bottom: 20px; /* Increased to accommodate the animation below */
+.dark-mode .MuiButton-containedPrimary:hover {
+  background-color: var(--primary) !important;
 }
 
-h4::after, h6::after {
-  content: '';
-  position: absolute;
-  bottom: 10px; /* Position adjusted to keep animation at the same place */
-  left: 0;
-  width: 50px;
-  height: 4px;
-  background: var(--primary);
-  border-radius: 4px;
-  transition: width 0.7s ease; /* Reduced hover transition to 0.7s */
+.join-button, .support-button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin-top: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
-h4:hover::after, h6:hover::after {
-  width: 100px;
+.join-button:hover, .support-button:hover {
+  background-color: var(--primary-dark);
 }
 
-.dark-mode h4::after, .dark-mode h6::after {
-  background: var(--primary-light);
+.dark-mode .join-button, .dark-mode .support-button {
+  background-color: var(--primary-light);
 }
 
-/* Media Queries */
+.dark-mode .join-button:hover, .dark-mode .support-button:hover {
+  background-color: var(--primary);
+}
+
+/* List styles */
+.MuiListItem-root {
+  border-radius: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
+.MuiListItem-button:hover {
+  background-color: rgba(15, 52, 96, 0.08) !important;
+  transform: translateX(5px);
+}
+
+.dark-mode .MuiListItem-button:hover {
+  background-color: rgba(26, 93, 173, 0.15) !important;
+}
+
+/* IconButtons */
+.MuiIconButton-root {
+  color: var(--primary) !important;
+  transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
+.MuiIconButton-root:hover {
+  background-color: rgba(15, 52, 96, 0.08) !important;
+  transform: scale(1.1);
+}
+
+.dark-mode .MuiIconButton-root {
+  color: var(--primary-light) !important;
+}
+
+.dark-mode .MuiIconButton-root:hover {
+  background-color: rgba(26, 93, 173, 0.15) !important;
+}
+
+/* Form fields */
+.MuiTextField-root {
+  margin-bottom: 16px !important;
+}
+
+.MuiInputBase-root {
+  border-radius: 0.5rem !important;
+}
+
+.dark-mode .MuiInputBase-root {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+.dark-mode a {
+  color: var(--primary-light);
+}
+
+.dark-mode a:hover {
+  color: var(--accent);
+}
+
+/* Grid layout */
+.MuiGrid-container {
+  margin-top: 16px !important;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 1200px) {
+  .dashboard {
+    padding: 1.5rem;
+  }
+  
+  .dashboard-grid {
+    gap: 1.25rem;
+  }
+  
+  .dashboard-card {
+    grid-column: span 6;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .dashboard {
+    padding: 1.25rem;
+  }
+  
+  .dashboard-card {
+    grid-column: span 12;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  
+  .welcome-container p {
+    max-width: 100%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .dashboard {
     padding: 1rem;
   }
-
-  header {
+  
+  .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-
+  
   .dark-mode-toggle {
     align-self: flex-end;
+    position: relative;
+    right: 0;
   }
-
-  h4 {
-    font-size: 1.75rem;
+  
+  .courses-grid {
+    grid-template-columns: 1fr;
   }
-
-  .deadline-card {
+  
+  .deadline-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
+  
+  .welcome-container {
+    padding: 1.5rem;
+  }
+  
+  .welcome-container h1 {
+    font-size: 2rem;
+  }
+  
+  .welcome-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
 
-  .card {
-    margin-bottom: 1rem;
+@media screen and (max-width: 480px) {
+  .dashboard {
+    padding: 0.75rem;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .MuiCardContent-root {
+    padding: 1rem !important;
+  }
+  
+  .switch {
+    width: 50px;
+    height: 26px;
+  }
+  
+  .slider:before {
+    height: 18px;
+    width: 18px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  .welcome-container h1 {
+    font-size: 1.75rem;
+  }
+  
+  .welcome-container {
+    padding: 1.25rem;
   }
 }

@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { Bar } from "react-chartjs-2";
-import { Typography, Card, CardContent, Grid, Paper, Button, Dialog, DialogTitle, DialogContent, DialogActions, Switch, TextField, MenuItem, List, ListItem, ListItemText, IconButton } from "@mui/material";
-import { WiDaySunny, WiNightClear } from "react-icons/wi";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import { Delete, Lock, Edit } from "@mui/icons-material";
-
-// Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import { Bar, Pie } from "react-chartjs-2";
+import "./TeacherDashboard.css";
 
 const TeacherDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -18,21 +12,40 @@ const TeacherDashboard = () => {
   const [openLiveClassDialog, setOpenLiveClassDialog] = useState(false);
   const [openResourceUploadDialog, setOpenResourceUploadDialog] = useState(false);
   const [openDiscussionModerationDialog, setOpenDiscussionModerationDialog] = useState(false);
+  const [messages, setMessages] = useState([]); // For real-time communication
+  const [newMessage, setNewMessage] = useState(""); // For chat input
 
   // Mock data for notifications
-  const notifications = [
+  const [notifications, setNotifications] = useState([
     { id: 1, message: "New Math assignment posted.", details: "Complete Chapter 5 exercises by next week." },
     { id: 2, message: "Science exam scheduled for next week.", details: "Prepare for the exam on December 28th." },
-  ];
+  ]);
 
   // Mock data for student performance
-  const studentPerformanceData = {
-    labels: ["Nimal Siripala", "Kamal Perera", "Saman Silva"],
+  const studentPerformanceData = [
+    { name: "Nimal Siripala", score: 80 },
+    { name: "Kamal Perera", score: 70 },
+    { name: "Saman Silva", score: 90 },
+  ];
+
+  // Chart data for student performance
+  const barChartData = {
+    labels: studentPerformanceData.map((student) => student.name),
     datasets: [
       {
-        label: "Performance",
-        data: [80, 70, 90],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        label: "Student Scores",
+        data: studentPerformanceData.map((student) => student.score),
+        backgroundColor: ["#0f3460", "#1a5dad", "#10b981"],
+      },
+    ],
+  };
+
+  const pieChartData = {
+    labels: studentPerformanceData.map((student) => student.name),
+    datasets: [
+      {
+        data: studentPerformanceData.map((student) => student.score),
+        backgroundColor: ["#0f3460", "#1a5dad", "#10b981"],
       },
     ],
   };
@@ -85,6 +98,7 @@ const TeacherDashboard = () => {
   const [resourceTitle, setResourceTitle] = useState("");
   const [resourceType, setResourceType] = useState("PDF");
   const [resourceLink, setResourceLink] = useState("");
+  const [newDiscussionTopic, setNewDiscussionTopic] = useState("");
 
   // Dark mode toggle
   const toggleDarkMode = () => {
@@ -189,376 +203,470 @@ const TeacherDashboard = () => {
     setDiscussionForums(updatedForums);
   };
 
+  // Handle new discussion topic
+  const handleCreateDiscussionTopic = () => {
+    const newTopic = {
+      id: discussionForums.length + 1,
+      topic: newDiscussionTopic,
+      posts: 0,
+      locked: false,
+    };
+    setDiscussionForums([...discussionForums, newTopic]);
+    setNewDiscussionTopic("");
+  };
+
+  // Handle real-time communication
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      setMessages([...messages, { id: messages.length + 1, text: newMessage, sender: "Teacher" }]);
+      setNewMessage("");
+    }
+  };
+
   return (
     <div className={`dashboard ${darkMode ? "dark-mode" : "light-mode"}`}>
       <header>
-        <Typography variant="h4">Welcome Teacher!</Typography>
+        <h1>Welcome Teacher!</h1>
         <div className="dark-mode-toggle">
-          <WiDaySunny />
-          <Switch checked={darkMode} onChange={toggleDarkMode} />
-          <WiNightClear />
+          <span>☀️</span>
+          <label className="switch">
+            <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
+            <span className="slider round"></span>
+          </label>
+          <span>🌙</span>
         </div>
       </header>
 
-      <Grid container spacing={3}>
+      <div className="grid-container">
         {/* Notifications Panel */}
-        <Grid item xs={12} md={4}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Notifications</Typography>
-              <List>
-                {notifications.map((notification) => (
-                  <ListItem key={notification.id} button onClick={() => handleNotificationClick(notification)}>
-                    <ListItemText primary={notification.message} />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card">
+          <div className="card-content">
+            <h2>Notifications</h2>
+            <ul className="list">
+              {notifications.map((notification) => (
+                <li key={notification.id} className="list-item" onClick={() => handleNotificationClick(notification)}>
+                  {notification.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
         {/* Student Performance Chart */}
-        <Grid item xs={12} md={8}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Student Performance</Typography>
-              <Bar
-                data={studentPerformanceData}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: "top",
-                    },
-                    title: {
-                      display: true,
-                      text: "Student Performance",
-                    },
-                  },
-                }}
-              />
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card">
+          <div className="card-content">
+            <h2>Student Performance</h2>
+            <div className="chart-container">
+              <Bar data={barChartData} options={{ responsive: true }} />
+              <Pie data={pieChartData} options={{ responsive: true }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Real-Time Communication */}
+        <div className="card">
+          <div className="card-content">
+            <h2>Real-Time Communication</h2>
+            <div className="chat-container">
+              <div className="chat-messages">
+                {messages.map((message) => (
+                  <div key={message.id} className={`message ${message.sender === "Teacher" ? "sent" : "received"}`}>
+                    {message.text}
+                  </div>
+                ))}
+              </div>
+              <div className="chat-input">
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="Type a message..."
+                />
+                <button onClick={handleSendMessage}>Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Courses Section */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Courses</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenCreateCourseDialog(true)}>
-                Create New Course
-              </Button>
-              <Grid container spacing={2} style={{ marginTop: "10px" }}>
-                {courses.map((course) => (
-                  <Grid item xs={12} sm={6} md={4} key={course.id}>
-                    <Paper className="course-card">
-                      <Typography variant="h6">{course.name}</Typography>
-                      <Typography>{course.description}</Typography>
-                      <Typography>Students: {course.students}</Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card full-width">
+          <div className="card-content">
+            <h2>Courses</h2>
+            <button className="btn primary" onClick={() => setOpenCreateCourseDialog(true)}>
+              Create New Course
+            </button>
+            <div className="grid-3">
+              {courses.map((course) => (
+                <div key={course.id} className="item-card">
+                  <h3>{course.name}</h3>
+                  <p>{course.description}</p>
+                  <p>Students: {course.students}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Assignments Section */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Assignments</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenCreateAssignmentDialog(true)}>
-                Create New Assignment
-              </Button>
-              <Grid container spacing={2} style={{ marginTop: "10px" }}>
-                {assignments.map((assignment) => (
-                  <Grid item xs={12} sm={6} md={4} key={assignment.id}>
-                    <Paper className="assignment-card">
-                      <Typography variant="h6">{assignment.title}</Typography>
-                      <Typography>{assignment.description}</Typography>
-                      <Typography>Due: {assignment.due}</Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card full-width">
+          <div className="card-content">
+            <h2>Assignments</h2>
+            <button className="btn primary" onClick={() => setOpenCreateAssignmentDialog(true)}>
+              Create New Assignment
+            </button>
+            <div className="grid-3">
+              {assignments.map((assignment) => (
+                <div key={assignment.id} className="item-card">
+                  <h3>{assignment.title}</h3>
+                  <p>{assignment.description}</p>
+                  <p>Due: {assignment.due}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Resources Section */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Resources</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenResourceUploadDialog(true)}>
-                Upload Resource
-              </Button>
-              <List>
-                {resources.map((resource) => (
-                  <ListItem key={resource.id}>
-                    <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                      {resource.title} ({resource.type})
-                    </a>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card">
+          <div className="card-content">
+            <h2>Resources</h2>
+            <button className="btn primary" onClick={() => setOpenResourceUploadDialog(true)}>
+              Upload Resource
+            </button>
+            <ul className="list">
+              {resources.map((resource) => (
+                <li key={resource.id} className="list-item">
+                  <a href={resource.link} target="_blank" rel="noopener noreferrer">
+                    {resource.title} ({resource.type})
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
         {/* Discussion Forums */}
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Discussion Forums</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenDiscussionModerationDialog(true)}>
-                Moderate Forums
-              </Button>
-              <List>
-                {discussionForums.map((forum) => (
-                  <ListItem key={forum.id}>
-                    <ListItemText primary={forum.topic} secondary={`Posts: ${forum.posts}`} />
-                    <IconButton onClick={() => handleLockForum(forum.id)}>
-                      {forum.locked ? <Lock /> : <Edit />}
-                    </IconButton>
-                    <IconButton onClick={() => handleDeleteForum(forum.id)}>
-                      <Delete />
-                    </IconButton>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card">
+          <div className="card-content">
+            <h2>Discussion Forums</h2>
+            <button className="btn primary" onClick={() => setOpenDiscussionModerationDialog(true)}>
+              Moderate Forums
+            </button>
+            <div className="new-topic-form">
+              <input
+                type="text"
+                value={newDiscussionTopic}
+                onChange={(e) => setNewDiscussionTopic(e.target.value)}
+                placeholder="New discussion topic"
+              />
+              <button onClick={handleCreateDiscussionTopic}>Create Topic</button>
+            </div>
+            <ul className="list">
+              {discussionForums.map((forum) => (
+                <li key={forum.id} className="list-item">
+                  <div className="forum-item">
+                    <div>
+                      <strong>{forum.topic}</strong>
+                      <p>Posts: {forum.posts}</p>
+                    </div>
+                    <div className="forum-actions">
+                      <button className="icon-btn" onClick={() => handleLockForum(forum.id)}>
+                        {forum.locked ? "🔒" : "✏️"}
+                      </button>
+                      <button className="icon-btn" onClick={() => handleDeleteForum(forum.id)}>
+                        🗑️
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
         {/* Live Classes */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Live Classes</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenLiveClassDialog(true)}>
-                Schedule Live Class
-              </Button>
-              <List>
-                {liveClasses.map((liveClass) => (
-                  <ListItem key={liveClass.id}>
-                    <ListItemText primary={liveClass.title} secondary={`Date: ${liveClass.date}, Time: ${liveClass.time}`} />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
+        <div className="card full-width">
+          <div className="card-content">
+            <h2>Live Classes</h2>
+            <button className="btn primary" onClick={() => setOpenLiveClassDialog(true)}>
+              Schedule Live Class
+            </button>
+            <ul className="list">
+              {liveClasses.map((liveClass) => (
+                <li key={liveClass.id} className="list-item">
+                  <strong>{liveClass.title}</strong> - Date: {liveClass.date}, Time: {liveClass.time}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
         {/* Feedback Section */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Feedback</Typography>
-              <Button variant="contained" color="primary" onClick={() => setOpenFeedbackDialog(true)}>
-                Submit Feedback
-              </Button>
-              <List>
-                {feedbackList.map((feedbackItem) => (
-                  <ListItem key={feedbackItem.id}>
-                    <ListItemText primary={feedbackItem.student} secondary={feedbackItem.message} />
-                  </ListItem>
+        <div className="card full-width">
+          <div className="card-content">
+            <h2>Feedback</h2>
+            <button className="btn primary" onClick={() => setOpenFeedbackDialog(true)}>
+              Submit Feedback
+            </button>
+            <ul className="list">
+              {feedbackList.map((feedbackItem) => (
+                <li key={feedbackItem.id} className="list-item">
+                  <strong>{feedbackItem.student}</strong>: {feedbackItem.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Dialog Components */}
+      {openNotificationDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Notification Details</h2>
+            </div>
+            <div className="dialog-content">
+              <p>{selectedNotification?.details}</p>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={handleCloseNotificationDialog}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openCreateCourseDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Create New Course</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="form-group">
+                <label htmlFor="course-name">Course Name</label>
+                <input
+                  id="course-name"
+                  type="text"
+                  value={courseName}
+                  onChange={(e) => setCourseName(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="course-description">Course Description</label>
+                <textarea
+                  id="course-description"
+                  value={courseDescription}
+                  onChange={(e) => setCourseDescription(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenCreateCourseDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleCreateCourse}>Create</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openCreateAssignmentDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Create New Assignment</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="form-group">
+                <label htmlFor="assignment-title">Assignment Title</label>
+                <input
+                  id="assignment-title"
+                  type="text"
+                  value={assignmentTitle}
+                  onChange={(e) => setAssignmentTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="assignment-description">Assignment Description</label>
+                <textarea
+                  id="assignment-description"
+                  value={assignmentDescription}
+                  onChange={(e) => setAssignmentDescription(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="assignment-due-date">Due Date</label>
+                <input
+                  id="assignment-due-date"
+                  type="date"
+                  value={assignmentDueDate}
+                  onChange={(e) => setAssignmentDueDate(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenCreateAssignmentDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleCreateAssignment}>Create</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openFeedbackDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Submit Feedback</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="form-group">
+                <label htmlFor="feedback">Feedback</label>
+                <textarea
+                  id="feedback"
+                  rows="4"
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenFeedbackDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleSubmitFeedback}>Submit</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openLiveClassDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Schedule Live Class</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="form-group">
+                <label htmlFor="class-title">Class Title</label>
+                <input
+                  id="class-title"
+                  type="text"
+                  value={liveClassTitle}
+                  onChange={(e) => setLiveClassTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="class-description">Class Description</label>
+                <textarea
+                  id="class-description"
+                  value={liveClassDescription}
+                  onChange={(e) => setLiveClassDescription(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="class-date">Date</label>
+                <input
+                  id="class-date"
+                  type="date"
+                  value={liveClassDate}
+                  onChange={(e) => setLiveClassDate(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="class-time">Time</label>
+                <input
+                  id="class-time"
+                  type="time"
+                  value={liveClassTime}
+                  onChange={(e) => setLiveClassTime(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenLiveClassDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleScheduleLiveClass}>Schedule</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openResourceUploadDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Upload Resource</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="form-group">
+                <label htmlFor="resource-title">Resource Title</label>
+                <input
+                  id="resource-title"
+                  type="text"
+                  value={resourceTitle}
+                  onChange={(e) => setResourceTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="resource-type">Resource Type</label>
+                <select
+                  id="resource-type"
+                  value={resourceType}
+                  onChange={(e) => setResourceType(e.target.value)}
+                >
+                  <option value="PDF">PDF</option>
+                  <option value="PPT">PPT</option>
+                  <option value="Video">Video</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="resource-link">Resource Link</label>
+                <input
+                  id="resource-link"
+                  type="text"
+                  value={resourceLink}
+                  onChange={(e) => setResourceLink(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenResourceUploadDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleUploadResource}>Upload</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openDiscussionModerationDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Moderate Discussion Forums</h2>
+            </div>
+            <div className="dialog-content">
+              <ul className="list">
+                {discussionForums.map((forum) => (
+                  <li key={forum.id} className="list-item">
+                    <div className="forum-item">
+                      <div>
+                        <strong>{forum.topic}</strong>
+                        <p>Posts: {forum.posts}</p>
+                      </div>
+                      <div className="forum-actions">
+                        <button className="icon-btn" onClick={() => handleLockForum(forum.id)}>
+                          {forum.locked ? "🔒" : "✏️"}
+                        </button>
+                        <button className="icon-btn" onClick={() => handleDeleteForum(forum.id)}>
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  </li>
                 ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Notification Dialog */}
-      <Dialog open={openNotificationDialog} onClose={handleCloseNotificationDialog}>
-        <DialogTitle>Notification Details</DialogTitle>
-        <DialogContent>
-          <Typography>{selectedNotification?.details}</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseNotificationDialog}>Close</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Create Course Dialog */}
-      <Dialog open={openCreateCourseDialog} onClose={() => setOpenCreateCourseDialog(false)}>
-        <DialogTitle>Create New Course</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Course Name"
-            fullWidth
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Course Description"
-            fullWidth
-            value={courseDescription}
-            onChange={(e) => setCourseDescription(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenCreateCourseDialog(false)}>Cancel</Button>
-          <Button onClick={handleCreateCourse} color="primary">Create</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Create Assignment Dialog */}
-      <Dialog open={openCreateAssignmentDialog} onClose={() => setOpenCreateAssignmentDialog(false)}>
-        <DialogTitle>Create New Assignment</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Assignment Title"
-            fullWidth
-            value={assignmentTitle}
-            onChange={(e) => setAssignmentTitle(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Assignment Description"
-            fullWidth
-            value={assignmentDescription}
-            onChange={(e) => setAssignmentDescription(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Due Date"
-            type="date"
-            fullWidth
-            value={assignmentDueDate}
-            onChange={(e) => setAssignmentDueDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenCreateAssignmentDialog(false)}>Cancel</Button>
-          <Button onClick={handleCreateAssignment} color="primary">Create</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Feedback Dialog */}
-      <Dialog open={openFeedbackDialog} onClose={() => setOpenFeedbackDialog(false)}>
-        <DialogTitle>Submit Feedback</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Feedback"
-            fullWidth
-            multiline
-            rows={4}
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenFeedbackDialog(false)}>Cancel</Button>
-          <Button onClick={handleSubmitFeedback} color="primary">Submit</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Schedule Live Class Dialog */}
-      <Dialog open={openLiveClassDialog} onClose={() => setOpenLiveClassDialog(false)}>
-        <DialogTitle>Schedule Live Class</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Class Title"
-            fullWidth
-            value={liveClassTitle}
-            onChange={(e) => setLiveClassTitle(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Class Description"
-            fullWidth
-            value={liveClassDescription}
-            onChange={(e) => setLiveClassDescription(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Date"
-            type="date"
-            fullWidth
-            value={liveClassDate}
-            onChange={(e) => setLiveClassDate(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Time"
-            type="time"
-            fullWidth
-            value={liveClassTime}
-            onChange={(e) => setLiveClassTime(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenLiveClassDialog(false)}>Cancel</Button>
-          <Button onClick={handleScheduleLiveClass} color="primary">Schedule</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Upload Resource Dialog */}
-      <Dialog open={openResourceUploadDialog} onClose={() => setOpenResourceUploadDialog(false)}>
-        <DialogTitle>Upload Resource</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Resource Title"
-            fullWidth
-            value={resourceTitle}
-            onChange={(e) => setResourceTitle(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          />
-          <TextField
-            label="Resource Type"
-            select
-            fullWidth
-            value={resourceType}
-            onChange={(e) => setResourceType(e.target.value)}
-            style={{ marginBottom: "10px" }}
-          >
-            <MenuItem value="PDF">PDF</MenuItem>
-            <MenuItem value="PPT">PPT</MenuItem>
-            <MenuItem value="Video">Video</MenuItem>
-          </TextField>
-          <TextField
-            label="Resource Link"
-            fullWidth
-            value={resourceLink}
-            onChange={(e) => setResourceLink(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenResourceUploadDialog(false)}>Cancel</Button>
-          <Button onClick={handleUploadResource} color="primary">Upload</Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Discussion Moderation Dialog */}
-      <Dialog open={openDiscussionModerationDialog} onClose={() => setOpenDiscussionModerationDialog(false)}>
-        <DialogTitle>Moderate Discussion Forums</DialogTitle>
-        <DialogContent>
-          <List>
-            {discussionForums.map((forum) => (
-              <ListItem key={forum.id}>
-                <ListItemText primary={forum.topic} secondary={`Posts: ${forum.posts}`} />
-                <IconButton onClick={() => handleLockForum(forum.id)}>
-                  {forum.locked ? <Lock /> : <Edit />}
-                </IconButton>
-                <IconButton onClick={() => handleDeleteForum(forum.id)}>
-                  <Delete />
-                </IconButton>
-              </ListItem>
-            ))}
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDiscussionModerationDialog(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+              </ul>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenDiscussionModerationDialog(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
