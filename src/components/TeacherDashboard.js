@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Bar, Pie } from "react-chartjs-2";
+import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
 import "./TeacherDashboard.css";
 
 const TeacherDashboard = () => {
@@ -12,8 +12,31 @@ const TeacherDashboard = () => {
   const [openLiveClassDialog, setOpenLiveClassDialog] = useState(false);
   const [openResourceUploadDialog, setOpenResourceUploadDialog] = useState(false);
   const [openDiscussionModerationDialog, setOpenDiscussionModerationDialog] = useState(false);
+  const [openReplyDialog, setOpenReplyDialog] = useState(false);
+  const [selectedForum, setSelectedForum] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [replyContent, setReplyContent] = useState("");
   const [messages, setMessages] = useState([]); // For real-time communication
   const [newMessage, setNewMessage] = useState(""); // For chat input
+
+  // Load dark mode preference from localStorage on component mount
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem("darkMode") === "true";
+    if (savedDarkMode) {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+    }
+  }, []);
+
+  // Toggle dark mode and save preference to localStorage
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    document.documentElement.classList.toggle("dark-mode", newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode);
+  };
 
   // Mock data for notifications
   const [notifications, setNotifications] = useState([
@@ -34,16 +57,6 @@ const TeacherDashboard = () => {
     datasets: [
       {
         label: "Student Scores",
-        data: studentPerformanceData.map((student) => student.score),
-        backgroundColor: ["#0f3460", "#1a5dad", "#10b981"],
-      },
-    ],
-  };
-
-  const pieChartData = {
-    labels: studentPerformanceData.map((student) => student.name),
-    datasets: [
-      {
         data: studentPerformanceData.map((student) => student.score),
         backgroundColor: ["#0f3460", "#1a5dad", "#10b981"],
       },
@@ -79,9 +92,16 @@ const TeacherDashboard = () => {
   ]);
 
   const [discussionForums, setDiscussionForums] = useState([
-    { id: 1, topic: "Math Homework Help", posts: 12, locked: false },
-    { id: 2, topic: "Science Project Discussion", posts: 8, locked: false },
-    { id: 3, topic: "English Essay Tips", posts: 15, locked: false },
+    { id: 1, topic: "Math Homework Help", posts: 12, locked: false, expanded: false, children: [
+      { id: 1, author: "Student1", timestamp: "2023-12-20 14:30", content: "I need help with calculus", replies: 2 },
+      { id: 2, author: "Student2", timestamp: "2023-12-21 09:15", content: "How do I solve quadratic equations?", replies: 0 }
+    ] },
+    { id: 2, topic: "Science Project Discussion", posts: 8, locked: false, expanded: false, children: [
+      { id: 1, author: "Student3", timestamp: "2023-12-19 16:45", content: "Ideas for renewable energy project?", replies: 1 }
+    ] },
+    { id: 3, topic: "English Essay Tips", posts: 15, locked: false, expanded: false, children: [
+      { id: 1, author: "Student4", timestamp: "2023-12-18 11:20", content: "How to structure an analytical essay?", replies: 3 }
+    ] },
   ]);
 
   // Form states
@@ -99,11 +119,6 @@ const TeacherDashboard = () => {
   const [resourceType, setResourceType] = useState("PDF");
   const [resourceLink, setResourceLink] = useState("");
   const [newDiscussionTopic, setNewDiscussionTopic] = useState("");
-
-  // Dark mode toggle
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   // Handle notification click
   const handleNotificationClick = (notification) => {
@@ -210,9 +225,50 @@ const TeacherDashboard = () => {
       topic: newDiscussionTopic,
       posts: 0,
       locked: false,
+      expanded: false,
+      children: []
     };
     setDiscussionForums([...discussionForums, newTopic]);
     setNewDiscussionTopic("");
+  };
+
+  // Toggle forum expansion
+  const toggleForumExpansion = (forumId) => {
+    const updatedForums = discussionForums.map((forum) =>
+      forum.id === forumId ? { ...forum, expanded: !forum.expanded } : forum
+    );
+    setDiscussionForums(updatedForums);
+  };
+
+  // Handle opening reply dialog
+  const handleOpenReplyDialog = (forum, post) => {
+    setSelectedForum(forum);
+    setSelectedPost(post);
+    setReplyContent("");
+    setOpenReplyDialog(true);
+  };
+
+  // Handle submitting a reply
+  const handleSubmitReply = () => {
+    if (replyContent.trim()) {
+      // Update the reply count for the post
+      const updatedForums = discussionForums.map((forum) => {
+        if (forum.id === selectedForum.id) {
+          const updatedChildren = forum.children.map((post) => {
+            if (post.id === selectedPost.id) {
+              return { ...post, replies: post.replies + 1 };
+            }
+            return post;
+          });
+          return { ...forum, posts: forum.posts + 1, children: updatedChildren };
+        }
+        return forum;
+      });
+      
+      setDiscussionForums(updatedForums);
+      setReplyContent("");
+      setOpenReplyDialog(false);
+    }
   };
 
   // Handle real-time communication
@@ -227,7 +283,7 @@ const TeacherDashboard = () => {
     <div className={`dashboard ${darkMode ? "dark-mode" : "light-mode"}`}>
       <header>
         <h1>Welcome Teacher!</h1>
-        <div className="dark-mode-toggle">
+        <div className="dark-mode-toggle" onClick={toggleDarkMode}>
           <span>☀️</span>
           <label className="switch">
             <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
@@ -244,7 +300,7 @@ const TeacherDashboard = () => {
             <h2>Notifications</h2>
             <ul className="list">
               {notifications.map((notification) => (
-                <li key={notification.id} className="list-item" onClick={() => handleNotificationClick(notification)}>
+                <li key={notification.id} className="notification-item" onClick={() => handleNotificationClick(notification)}>
                   {notification.message}
                 </li>
               ))}
@@ -258,7 +314,6 @@ const TeacherDashboard = () => {
             <h2>Student Performance</h2>
             <div className="chart-container">
               <Bar data={barChartData} options={{ responsive: true }} />
-              <Pie data={pieChartData} options={{ responsive: true }} />
             </div>
           </div>
         </div>
@@ -335,7 +390,7 @@ const TeacherDashboard = () => {
             </button>
             <ul className="list">
               {resources.map((resource) => (
-                <li key={resource.id} className="list-item">
+                <li key={resource.id} className="resource-item">
                   <a href={resource.link} target="_blank" rel="noopener noreferrer">
                     {resource.title} ({resource.type})
                   </a>
@@ -352,35 +407,63 @@ const TeacherDashboard = () => {
             <button className="btn primary" onClick={() => setOpenDiscussionModerationDialog(true)}>
               Moderate Forums
             </button>
-            <div className="new-topic-form">
+            <div className="forum-controls">
               <input
                 type="text"
                 value={newDiscussionTopic}
                 onChange={(e) => setNewDiscussionTopic(e.target.value)}
                 placeholder="New discussion topic"
+                className="forum-input"
               />
-              <button onClick={handleCreateDiscussionTopic}>Create Topic</button>
+              <button className="forum-button" onClick={handleCreateDiscussionTopic}>Create Topic</button>
             </div>
-            <ul className="list">
+            <div className="forum-list">
               {discussionForums.map((forum) => (
-                <li key={forum.id} className="list-item">
-                  <div className="forum-item">
-                    <div>
-                      <strong>{forum.topic}</strong>
-                      <p>Posts: {forum.posts}</p>
+                <div key={forum.id} className="forum-container">
+                  <div className="forum-row">
+                    <div className="forum-info" onClick={() => toggleForumExpansion(forum.id)}>
+                      <div className="forum-title">
+                        {forum.expanded ? '▼' : '►'} {forum.topic} 
+                      </div>
+                      <div className="forum-stats">Posts: {forum.posts}</div>
                     </div>
                     <div className="forum-actions">
-                      <button className="icon-btn" onClick={() => handleLockForum(forum.id)}>
+                      <button className="forum-action-btn" onClick={() => handleLockForum(forum.id)}>
                         {forum.locked ? "🔒" : "✏️"}
                       </button>
-                      <button className="icon-btn" onClick={() => handleDeleteForum(forum.id)}>
+                      <button className="forum-action-btn" onClick={() => handleDeleteForum(forum.id)}>
                         🗑️
                       </button>
                     </div>
                   </div>
-                </li>
+                  
+                  {/* Child posts - only shown when forum is expanded */}
+                  {forum.expanded && (
+                    <div className="forum-children">
+                      {forum.children.map((post) => (
+                        <div key={post.id} className="forum-post">
+                          <div className="post-header">
+                            <div className="post-author">{post.author}</div>
+                            <div className="post-time">{post.timestamp}</div>
+                          </div>
+                          <div className="post-content">{post.content}</div>
+                          <div className="post-footer">
+                            <span className="post-replies">Replies: {post.replies}</span>
+                            <button 
+                              className="reply-btn" 
+                              onClick={() => handleOpenReplyDialog(forum, post)}
+                              disabled={forum.locked}
+                            >
+                              Reply
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
@@ -393,7 +476,7 @@ const TeacherDashboard = () => {
             </button>
             <ul className="list">
               {liveClasses.map((liveClass) => (
-                <li key={liveClass.id} className="list-item">
+                <li key={liveClass.id} className="live-class-item">
                   <strong>{liveClass.title}</strong> - Date: {liveClass.date}, Time: {liveClass.time}
                 </li>
               ))}
@@ -410,7 +493,7 @@ const TeacherDashboard = () => {
             </button>
             <ul className="list">
               {feedbackList.map((feedbackItem) => (
-                <li key={feedbackItem.id} className="list-item">
+                <li key={feedbackItem.id} className="feedback-item">
                   <strong>{feedbackItem.student}</strong>: {feedbackItem.message}
                 </li>
               ))}
@@ -633,6 +716,7 @@ const TeacherDashboard = () => {
         </div>
       )}
 
+      {/* Discussion Moderation Dialog */}
       {openDiscussionModerationDialog && (
         <div className="dialog-overlay">
           <div className="dialog">
@@ -640,29 +724,63 @@ const TeacherDashboard = () => {
               <h2>Moderate Discussion Forums</h2>
             </div>
             <div className="dialog-content">
-              <ul className="list">
+              <div className="forum-moderation-list">
                 {discussionForums.map((forum) => (
-                  <li key={forum.id} className="list-item">
-                    <div className="forum-item">
-                      <div>
-                        <strong>{forum.topic}</strong>
-                        <p>Posts: {forum.posts}</p>
-                      </div>
-                      <div className="forum-actions">
-                        <button className="icon-btn" onClick={() => handleLockForum(forum.id)}>
-                          {forum.locked ? "🔒" : "✏️"}
-                        </button>
-                        <button className="icon-btn" onClick={() => handleDeleteForum(forum.id)}>
-                          🗑️
-                        </button>
-                      </div>
+                  <div key={forum.id} className="forum-moderation-row">
+                    <div className="forum-moderation-info">
+                      <div className="forum-moderation-title">{forum.topic}</div>
+                      <div className="forum-moderation-stats">Posts: {forum.posts}</div>
                     </div>
-                  </li>
+                    <div className="forum-moderation-actions">
+                      <button 
+                        className="forum-moderation-btn" 
+                        onClick={() => handleLockForum(forum.id)}
+                      >
+                        {forum.locked ? "🔒 Unlock" : "🔒 Lock"}
+                      </button>
+                      <button 
+                        className="forum-moderation-btn delete" 
+                        onClick={() => handleDeleteForum(forum.id)}
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
             <div className="dialog-actions">
               <button className="btn" onClick={() => setOpenDiscussionModerationDialog(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reply Dialog */}
+      {openReplyDialog && selectedPost && (
+        <div className="dialog-overlay">
+          <div className="dialog">
+            <div className="dialog-header">
+              <h2>Reply to Post</h2>
+            </div>
+            <div className="dialog-content">
+              <div className="quoted-post">
+                <div className="quoted-author">{selectedPost.author} wrote:</div>
+                <div className="quoted-content">{selectedPost.content}</div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="reply-content">Your Reply</label>
+                <textarea
+                  id="reply-content"
+                  rows="4"
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                ></textarea>
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <button className="btn" onClick={() => setOpenReplyDialog(false)}>Cancel</button>
+              <button className="btn primary" onClick={handleSubmitReply}>Submit Reply</button>
             </div>
           </div>
         </div>
