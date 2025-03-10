@@ -199,3 +199,11 @@ if (err) {
    });
   });
  });
+ // -------------------------------
+// 4. Teacher Dashboard
+// -------------------------------
+
+// Get Teacher Dashboard
+router.get("/teacher/dashboard", authenticateToken, authorizeRole("teacher"), (req, res) => {
+    const userId = req.user.id;
+});
