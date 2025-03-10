@@ -247,4 +247,18 @@ db.query(performanceQuery, [userId], (err, performance) => {
 // Get Parent Dashboard
 router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req, res) => {
     const userId = req.user.id;
+    
+    // Fetch linked students
+    const studentsQuery = `
+        SELECT u.id, u.name, u.email 
+        FROM users u 
+        JOIN parent_child pc ON u.id = pc.student_id 
+        WHERE pc.parent_id = ?`;
+    db.query(studentsQuery, [userId], (err, students) => {
+        if (err) {
+            console.error("Error fetching linked students:", err);
+            return res.status(500).json({ message: "Failed to fetch linked students" });
+        }
+    });
+
 });
