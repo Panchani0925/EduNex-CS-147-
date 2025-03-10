@@ -240,3 +240,11 @@ db.query(performanceQuery, [userId], (err, performance) => {
 });
 });
 });
+// -------------------------------
+// 5. Parent Dashboard
+// -------------------------------
+
+// Get Parent Dashboard
+router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req, res) => {
+    const userId = req.user.id;
+});
