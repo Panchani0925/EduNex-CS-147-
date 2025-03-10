@@ -446,3 +446,25 @@ router.get("/alerts", authenticateToken, (req, res) => {
         res.json({ alerts: result });
     });
 });
+
+// -------------------------------
+// 13. Parent Dashboard Enhancements
+// -------------------------------
+
+// Get Parent Alerts
+router.get("/parent/alerts", authenticateToken, authorizeRole("parent"), (req, res) => {
+    const userId = req.user.id;
+
+    const query = `
+        SELECT n.id, n.message, n.created_at 
+        FROM notifications n 
+        JOIN parent_child pc ON n.user_id = pc.student_id 
+        WHERE pc.parent_id = ? AND n.is_read = FALSE`;
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error("Error fetching parent alerts:", err);
+            return res.status(500).json({ message: "Failed to fetch parent alerts" });
+        }
+        res.json({ alerts: result });
+    });
+});
