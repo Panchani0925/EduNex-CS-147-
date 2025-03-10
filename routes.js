@@ -174,7 +174,28 @@ if (err) {
     console.error("Error fetching upcoming assignments:", err);
     return res.status(500).json({ message: "Failed to fetch upcoming assignments" });
 }
+// Fetch performance analytics
+const performanceQuery = `
+SELECT a.course_id, c.name AS course_name, AVG(s.grade) AS average_grade 
+FROM submissions s 
+JOIN assignments a ON s.assignment_id = a.id 
+JOIN courses c ON a.course_id = c.id 
+WHERE s.student_id = ? 
+GROUP BY a.course_id;`;
+db.query(performanceQuery, [userId], (err, performance) => {
+if (err) {
+    console.error("Error fetching performance analytics:", err);
+    return res.status(500).json({ message: "Failed to fetch performance analytics" });
+}
 
-});
-});
-});
+       // Send the response
+       res.json({
+          message: "Welcome to your dashboard!",
+          courses,
+          assignments,
+          performance,
+        });
+     });
+   });
+  });
+ });
