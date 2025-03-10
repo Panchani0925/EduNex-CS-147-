@@ -97,6 +97,30 @@ const styles = StyleSheet.create({
       width: 24,
       backgroundColor: '#4169E1',
     },
+    journeyButton: {
+      width: '100%',
+      height: 56,
+      backgroundColor: '#4169E1',
+      borderRadius: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 16,
+    },
+    journeyButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: '500',
+    },
+    homeIndicator: {
+      width: 134,
+      height: 5,
+      backgroundColor: '#000',
+      borderRadius: 2.5,
+      alignSelf: 'center',
+      marginBottom: 8,
+    },
+  });
+  
   
   
   
