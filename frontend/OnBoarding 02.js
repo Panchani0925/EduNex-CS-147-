@@ -65,6 +65,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  blueCircle: {
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 999,
+    backgroundColor: '#4169E1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  illustration: {
+    width: '80%',
+    height: '80%',
+  },
+  text: {
+    marginTop: 24,
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: 32,
+  },
+  progressContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 32,
+  },
+  progressDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#E0E0E0',
+    marginHorizontal: 4,
+  },
+
 
 
 
