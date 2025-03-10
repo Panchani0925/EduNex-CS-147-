@@ -134,6 +134,12 @@ export default function App() {
     // Navigate to main app
   };
 
+   return (
+    <OnboardingScreen onStart={handleStart} />
+  );
+}
+*/
+
   
   
   
