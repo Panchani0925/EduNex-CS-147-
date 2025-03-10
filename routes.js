@@ -300,4 +300,15 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
 // Get Course Details
 router.get("/courses/:id", authenticateToken, (req, res) => {
     const courseId = req.params.id;
+
+    // Fetch course details
+    const courseQuery = "SELECT id, name, description, teacher_id FROM courses WHERE id = ?";
+    db.query(courseQuery, [courseId], (err, course) => {
+        if (err) {
+            console.error("Error fetching course details:", err);
+            return res.status(500).json({ message: "Failed to fetch course details" });
+        }
+    });
+
+
 });
