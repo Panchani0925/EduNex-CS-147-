@@ -259,7 +259,7 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
             console.error("Error fetching linked students:", err);
             return res.status(500).json({ message: "Failed to fetch linked students" });
         }
-        
+
         // If no students are linked, return an empty progress array
         if (students.length === 0) {
             return res.json({
@@ -268,6 +268,27 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
                 progress: [],
             });
         }
+        
+        // Fetch progress for each student
+        const studentIds = students.map((student) => student.id);
+        const progressQuery = `
+            SELECT p.student_id, c.name AS course_name, p.grade, p.attendance 
+            FROM progress p 
+            JOIN courses c ON p.course_id = c.id 
+            WHERE p.student_id IN (?)`;
+        db.query(progressQuery, [studentIds], (err, progress) => {
+            if (err) {
+                console.error("Error fetching progress data:", err);
+                return res.status(500).json({ message: "Failed to fetch progress data" });
+            }
+
+            // Send the response
+            res.json({
+                message: "Welcome to your dashboard!",
+                students,
+                progress,
+            });
+        });
 
     });
 
