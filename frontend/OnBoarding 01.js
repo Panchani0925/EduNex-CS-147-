@@ -90,6 +90,73 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  illustration: {
+    width: '80%',
+    height: '80%',
+  },
+  textContainer: {
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#333',
+    lineHeight: 24,
+  },
+  progressContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  progressBar: {
+    width: 100,
+    height: 8,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 4,
+  },
+  progressIndicator: {
+    width: '30%',
+    height: '100%',
+    backgroundColor: '#4263EB',
+    borderRadius: 4,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  nextButton: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#4263EB',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  nextButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  skipText: {
+    color: '#4263EB',
+    fontSize: 16,
+  },
+  homeIndicator: {
+    width: '100%',
+    alignItems: 'center',
+    paddingBottom: 8,
+  },
+  homeIndicatorBar: {
+    width: 134,
+    height: 5,
+    backgroundColor: 'black',
+    borderRadius: 2.5,
+  },
+});
 
+export default OnboardingScreen;
         
 
