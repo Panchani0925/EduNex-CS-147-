@@ -41,4 +41,5 @@ const OnboardingScreen = ({ onNext, onSkip }) => {
           <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
       </View>
+      
 
