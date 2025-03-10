@@ -485,3 +485,19 @@ router.post("/anonymous-feedback", authenticateToken, (req, res) => {
         res.status(201).json({ message: "Feedback submitted successfully", feedbackId: result.insertId });
     });
 });
+
+// -------------------------------
+// 15. Admin Dashboard (For School Admins)
+// -------------------------------
+
+// Get All Users (Admin Only)
+router.get("/admin/users", authenticateToken, authorizeRole("admin"), (req, res) => {
+    const sql = "SELECT id, name, email, role FROM users";
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("Error fetching users:", err);
+            return res.status(500).json({ message: "Failed to fetch users" });
+        }
+        res.json({ users: result });
+    });
+});
