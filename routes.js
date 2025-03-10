@@ -247,7 +247,7 @@ db.query(performanceQuery, [userId], (err, performance) => {
 // Get Parent Dashboard
 router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req, res) => {
     const userId = req.user.id;
-    
+
     // Fetch linked students
     const studentsQuery = `
         SELECT u.id, u.name, u.email 
@@ -259,6 +259,16 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
             console.error("Error fetching linked students:", err);
             return res.status(500).json({ message: "Failed to fetch linked students" });
         }
+        
+        // If no students are linked, return an empty progress array
+        if (students.length === 0) {
+            return res.json({
+                message: "Welcome to your dashboard!",
+                students: [],
+                progress: [],
+            });
+        }
+
     });
 
 });
