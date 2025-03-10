@@ -30,7 +30,7 @@ const OnboardingScreen = ({ onNext, onSkip }) => {
         {/* Text content */}
         <View style={styles.textContainer}>
           <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras netus mauris pulvinar suspendisse. Et sit ac lacus in rhoncus.
+            Education is the most powerful weapon which you can use to change the world.
           </Text>
         </View>
 
