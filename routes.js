@@ -144,4 +144,12 @@ router.post("/reset-password", (req, res) => {
         res.status(400).json({ message: "Invalid or expired token" });
     }
 });
+// -------------------------------
+// 3. Student Dashboard
+// -------------------------------
+
+// Get Student Dashboard
+router.get("/student/dashboard", authenticateToken, authorizeRole("student"), (req, res) => {
+    const userId = req.user.id;
+});
 
