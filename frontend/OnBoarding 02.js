@@ -98,6 +98,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0E0E0',
     marginHorizontal: 4,
   },
+  activeDot: {
+    width: 24,
+    backgroundColor: '#4169E1',
+  },
+  nextButton: {
+    width: '100%',
+    height: 56,
+    backgroundColor: '#4169E1',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  nextButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  skipButton: {
+    paddingVertical: 12,
+  },
+  skipButtonText: {
+    color: '#4169E1',
+    fontSize: 16,
+  },
+  homeIndicator: {
+    width: 134,
+    height: 5,
+    backgroundColor: '#000',
+    borderRadius: 2.5,
+    alignSelf: 'center',
+    marginBottom: 8,
+  },
+});
+
+export default OnboardingScreen;
+
 
 
 
