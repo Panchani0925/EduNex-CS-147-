@@ -56,7 +56,20 @@ router.post("/register", async (req, res) => {
         if (result.length > 0) {
             return res.status(400).json({ message: "Email already exists" });
         }
-
+        try {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            // Insert User with role
+            db.query("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+                [name, email, hashedPassword, role],
+                (err, result) => {
+                    if (err) return res.status(500).json({ message: err.message });
+                    res.status(201).json({ message: "User registered successfully" });
+                });
+        } catch (hashError) {
+            console.error("Error hashing password:", hashError);
+            res.status(500).json({ message: "Password encryption failed" });
+        }
 
 });
 });
