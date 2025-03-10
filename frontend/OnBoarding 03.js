@@ -21,7 +21,7 @@ const OnboardingScreen = ({ onStart }) => {
 
          {/* Text Content */}
          <Text style={styles.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras netus mauris pulvinar suspendisse. Et sit ac lacus in rhoncus.
+          The beautiful thing about learning is that no one can take it away from you.
         </Text>
         
         {/* Progress Indicator */}
