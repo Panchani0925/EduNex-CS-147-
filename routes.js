@@ -106,4 +106,13 @@ router.post("/login", async (req, res) => {
 
     });
 });
+ //Forgot Password - Send Reset Link
+ router.post("/forgot-password", (req, res) => {
+  const { email } = req.body;
+ if (!email) return res.status(400).json({ message: "Email is required" });
 
+ db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+ if (err) return res.status(500).json({ message: err.message });
+        if (result.length === 0) return res.status(404).json({ message: "User not found" });
+    });
+    });
