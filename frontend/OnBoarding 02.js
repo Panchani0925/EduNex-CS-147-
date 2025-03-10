@@ -22,7 +22,7 @@ const OnboardingScreen = ({ onNext, onSkip }) => {
          
         {/* Text Content */}
         <Text style={styles.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras netus mauris pulvinar suspendisse. Et sit ac lacus in rhoncus.
+          Live as if you were to die tomorrow. Learn as if you were to live forever.
         </Text>
         
         {/* Progress Indicator */}
