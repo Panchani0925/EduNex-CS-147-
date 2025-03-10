@@ -38,3 +38,18 @@ router.get("/", (req, res) => {
         callToAction: "Get Started Today!",
     });
 });
+// -------------------------------
+// 2. Login & Sign-Up Page
+// -------------------------------
+
+// Register Route
+router.post("/register", async (req, res) => {
+    const { name, email, password, role = "student" } = req.body;
+    console.log("Registration payload:", { name, email, password, role });
+
+    if (!password || typeof password !== "string") {
+        return res.status(400).json({ message: "Invalid password format" });
+    }
+    
+});
+
