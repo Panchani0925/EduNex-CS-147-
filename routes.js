@@ -501,3 +501,20 @@ router.get("/admin/users", authenticateToken, authorizeRole("admin"), (req, res)
         res.json({ users: result });
     });
 });
+// Delete User (Admin Only)
+router.delete("/admin/users/:id", authenticateToken, authorizeRole("admin"), (req, res) => {
+    const userId = req.params.id;
+    const sql = "DELETE FROM users WHERE id = ?";
+    db.query(sql, [userId], (err, result) => {
+        if (err) {
+            console.error("Error deleting user:", err);
+            return res.status(500).json({ message: "Failed to delete user" });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json({ message: "User deleted successfully" });
+    });
+});
+
+module.exports = router;
