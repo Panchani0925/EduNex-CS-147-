@@ -162,6 +162,19 @@ router.get("/student/dashboard", authenticateToken, authorizeRole("student"), (r
             console.error("Error fetching enrolled courses:", err);
             return res.status(500).json({ message: "Failed to fetch enrolled courses" });
         }
+// Fetch upcoming assignments
+const assignmentsQuery = `
+SELECT a.id, a.title, a.deadline, c.name AS course_name 
+FROM assignments a 
+JOIN courses c ON a.course_id = c.id 
+JOIN enrollments e ON c.id = e.course_id 
+WHERE e.student_id = ? AND a.deadline > NOW()`;
+db.query(assignmentsQuery, [userId], (err, assignments) => {
+if (err) {
+    console.error("Error fetching upcoming assignments:", err);
+    return res.status(500).json({ message: "Failed to fetch upcoming assignments" });
+}
 
+});
 });
 });
