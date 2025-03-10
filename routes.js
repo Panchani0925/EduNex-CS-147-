@@ -151,5 +151,17 @@ router.post("/reset-password", (req, res) => {
 // Get Student Dashboard
 router.get("/student/dashboard", authenticateToken, authorizeRole("student"), (req, res) => {
     const userId = req.user.id;
-});
+    // Fetch enrolled courses
+    const coursesQuery = `
+        SELECT c.id, c.name, c.description, e.enrolled_date 
+        FROM enrollments e 
+        JOIN courses c ON e.course_id = c.id 
+        WHERE e.student_id = ?`;
+    db.query(coursesQuery, [userId], (err, courses) => {
+        if (err) {
+            console.error("Error fetching enrolled courses:", err);
+            return res.status(500).json({ message: "Failed to fetch enrolled courses" });
+        }
 
+});
+});
