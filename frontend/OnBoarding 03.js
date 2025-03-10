@@ -19,3 +19,16 @@ const OnboardingScreen = ({ onStart }) => {
           </View>
         </View>
 
+         {/* Text Content */}
+         <Text style={styles.text}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras netus mauris pulvinar suspendisse. Et sit ac lacus in rhoncus.
+        </Text>
+        
+        {/* Progress Indicator */}
+        <View style={styles.progressContainer}>
+          <View style={[styles.progressDot, styles.activeDot]} />
+          <View style={styles.progressDot} />
+          <View style={styles.progressDot} />
+        </View>
+
+
