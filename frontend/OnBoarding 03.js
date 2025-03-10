@@ -31,4 +31,17 @@ const OnboardingScreen = ({ onStart }) => {
           <View style={styles.progressDot} />
         </View>
 
+        {/* Action Button */}
+        <TouchableOpacity style={styles.journeyButton} onPress={onStart}>
+          <Text style={styles.journeyButtonText}>Let's Make a Journey</Text>
+        </TouchableOpacity>
+      </View>
+      
+      {/* Home Indicator Line */}
+      <View style={styles.homeIndicator} />
+    </SafeAreaView>
+  );
+};
+
+
 
