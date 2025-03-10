@@ -114,5 +114,13 @@ router.post("/login", async (req, res) => {
  db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
  if (err) return res.status(500).json({ message: err.message });
         if (result.length === 0) return res.status(404).json({ message: "User not found" });
+
+        const user = result[0];
+        const resetToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+        //const resetLink = https://yourplatform.com/reset-password?token=${resetToken};
+
+        // Send reset link via email (use nodemailer or similar)
+        console.log("Reset Link:", resetLink); // Replace with actual email sending logic
+        res.json({ message: "Reset link sent to your email" });
     });
     });
