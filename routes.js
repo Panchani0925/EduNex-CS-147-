@@ -308,6 +308,29 @@ router.get("/courses/:id", authenticateToken, (req, res) => {
             console.error("Error fetching course details:", err);
             return res.status(500).json({ message: "Failed to fetch course details" });
         }
+        // Fetch course modules
+        const modulesQuery = "SELECT id, title, description FROM course_modules WHERE course_id = ?";
+        db.query(modulesQuery, [courseId], (err, modules) => {
+            if (err) {
+                console.error("Error fetching course modules:", err);
+                return res.status(500).json({ message: "Failed to fetch course modules" });
+            }
+
+            // Fetch course resources
+            const resourcesQuery = "SELECT id, title, file_path, type FROM resources WHERE course_id = ?";
+            db.query(resourcesQuery, [courseId], (err, resources) => {
+                if (err) {
+                    console.error("Error fetching course resources:", err);
+                    return res.status(500).json({ message: "Failed to fetch course resources" });
+                }
+
+                res.json({
+                    course: course[0], // Return the first (and only) course object
+                    modules,
+                    resources,
+                });
+            });
+        });
     });
 
 
