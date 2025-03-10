@@ -81,6 +81,23 @@ const styles = StyleSheet.create({
       color: '#333',
       marginBottom: 32,
     },
+    progressContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: 32,
+    },
+    progressDot: {
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: '#E0E0E0',
+      marginHorizontal: 4,
+    },
+    activeDot: {
+      width: 24,
+      backgroundColor: '#4169E1',
+    },
+  
   
   
   
