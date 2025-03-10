@@ -9,3 +9,32 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const router = express.Router();
+// -------------------------------
+// 1. Landing Page (Home Page)
+// -------------------------------
+router.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Welcome to EduNex!",
+        description: "EduNex is a comprehensive learning platform for students, teachers, and parents.",
+        features: [
+            "Progress Tracking",
+            "Communication Tools",
+            "Live Classes",
+            "Resource Hub",
+            "Performance Analytics",
+        ],
+        testimonials: [
+            {
+                name: "John Doe",
+                role: "Student",
+                feedback: "EduNex helped me improve my grades and stay organized!",
+            },
+            {
+                name: "Jane Smith",
+                role: "Teacher",
+                feedback: "The platform is intuitive and makes teaching so much easier.",
+            },
+        ],
+        callToAction: "Get Started Today!",
+    });
+});
