@@ -206,4 +206,15 @@ if (err) {
 // Get Teacher Dashboard
 router.get("/teacher/dashboard", authenticateToken, authorizeRole("teacher"), (req, res) => {
     const userId = req.user.id;
+ // Fetch courses managed by the teacher
+    const coursesQuery = `
+    SELECT id, name, description 
+    FROM courses 
+    WHERE teacher_id = ?`;
+db.query(coursesQuery, [userId], (err, courses) => {
+    if (err) {
+        console.error("Error fetching courses:", err);
+        return res.status(500).json({ message: "Failed to fetch courses" });
+    }
+});
 });
