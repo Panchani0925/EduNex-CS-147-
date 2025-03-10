@@ -391,3 +391,21 @@ router.get("/resources", authenticateToken, (req, res) => {
         res.json({ resources: result });
     });
 });
+
+// -------------------------------
+// 10. Communication & Notifications System
+// -------------------------------
+
+// Get Notifications
+router.get("/notifications", authenticateToken, (req, res) => {
+    const userId = req.user.id;
+
+    const query = "SELECT id, message, is_read, created_at FROM notifications WHERE user_id = ?";
+    db.query(query, [userId], (err, result) => {
+        if (err) {
+            console.error("Error fetching notifications:", err);
+            return res.status(500).json({ message: "Failed to fetch notifications" });
+        }
+        res.json({ notifications: result });
+    });
+});
