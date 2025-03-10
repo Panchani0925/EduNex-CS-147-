@@ -268,7 +268,7 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
                 progress: [],
             });
         }
-        
+
         // Fetch progress for each student
         const studentIds = students.map((student) => student.id);
         const progressQuery = `
@@ -292,4 +292,12 @@ router.get("/parent/dashboard", authenticateToken, authorizeRole("parent"), (req
 
     });
 
+});
+/ -------------------------------/
+// 6. Course Page (For Students & Teachers)
+// -------------------------------
+
+// Get Course Details
+router.get("/courses/:id", authenticateToken, (req, res) => {
+    const courseId = req.params.id;
 });
