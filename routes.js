@@ -332,6 +332,23 @@ router.get("/courses/:id", authenticateToken, (req, res) => {
             });
         });
     });
+});
 
+// -------------------------------
+// 7. Assignment Submission Page (For Students)
+// -------------------------------
 
+// Submit Assignment
+router.post("/assignments/submit", authenticateToken, authorizeRole("student"), (req, res) => {
+    const { assignmentId, file_path } = req.body;
+    const studentId = req.user.id;
+
+    const sql = "INSERT INTO submissions (assignment_id, student_id, file_path) VALUES (?, ?, ?)";
+    db.query(sql, [assignmentId, studentId, file_path], (err, result) => {
+        if (err) {
+            console.error("Error submitting assignment:", err);
+            return res.status(500).json({ message: "Failed to submit assignment" });
+        }
+        res.status(201).json({ message: "Assignment submitted successfully", submissionId: result.insertId });
+    });
 });
