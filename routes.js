@@ -79,5 +79,11 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required" });
     }
+    db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
+        if (err) return res.status(500).json({ message: err.message });
+        if (result.length === 0) {
+            return res.status(400).json({ message: "User not found" });
+        }
 
+    });
 });
