@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 
-
 const App = () => {
   const screenWidth = Dimensions.get('window').width;
   
