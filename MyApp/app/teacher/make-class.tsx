@@ -3,6 +3,8 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Text,
+  View,
   ScrollView,
   Platform,
   KeyboardAvoidingView,
@@ -17,7 +19,12 @@ const App = () => {
         style={styles.keyboardAvoidingView}
       >
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {/* Content will go here */}
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.headerText}>
+              What Do You Want to{'\n'}Teach Today
+            </Text>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -34,6 +41,23 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flexGrow: 1,
+  },
+  header: {
+    height: 250,
+    backgroundColor: '#3366cc',
+    borderBottomLeftRadius: 250,
+    borderBottomRightRadius: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+    marginBottom: 20,
+  },
+  headerText: {
+    color: '#ffffff',
+    fontSize: 32,
+    fontWeight: '600',
+    textAlign: 'center',
+    lineHeight: 42,
   },
 });
 
