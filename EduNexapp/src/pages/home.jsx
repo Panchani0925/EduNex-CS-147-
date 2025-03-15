@@ -29,7 +29,9 @@ const Home = () => {
     }
   ];
 
+  
 
+ 
   return (
     <div>
       <div
@@ -37,7 +39,7 @@ const Home = () => {
         style={{
           backgroundImage: "url('/main.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center"
+          backgroundPosition: "center",
         }}
       >
         {/* Header */}
@@ -241,7 +243,8 @@ const Home = () => {
                 Easier for parents to check their child's education.
               </h2>
               <p className="text-lg text-gray-700">
-                Parents receive notifications about their child's progress and can communicate with teachers.
+                Parents receive notifications about their child's progress and
+                can communicate with teachers.
               </p>
             </div>
             <img
@@ -273,17 +276,17 @@ const Home = () => {
 
       {/* Subjects */}
       <section className="py-12 px-4 bg-white">
-        <h2 className="text-center text-3xl font-medium mb-8 text-white">
+        <h2 className="text-center text-3xl font-medium mb-8 text-black">
           Our Top Subjects
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
           {subjects.map((subject, idx) => (
             <div key={idx} className="relative">
-              <img 
-                src={subject.image} 
-                alt={subject.name} 
-                className="w-full h-48 object-cover" 
+              <img
+                src={subject.image}
+                alt={subject.name}
+                className="w-full h-48 object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
                 <h3 className="text-xl mb-1">{subject.name}</h3>
