@@ -1,6 +1,4 @@
 import { useState } from "react";
-// Ensure react-icons is installed via "npm install react-icons"
-import { FaTwitter } from "react-icons/fa";
 import { HiMoon, HiSun } from "react-icons/hi"; // added modern sun and moon icons
 import LinksContent from "../components/LinksContent";
 
@@ -43,7 +41,6 @@ const Login = () => {
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              '--i': i
             }}
           />
         ))}
@@ -244,16 +241,6 @@ const Login = () => {
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
               </svg>
               Facebook
-            </button>
-            <button
-              className={`flex items-center justify-center ${
-                isDarkMode
-                  ? "bg-[#1DA1F2] hover:bg-[#1A91DA] border-[#1A91DA]"
-                  : "bg-[#1DA1F2] hover:bg-[#1991DA] border-[#1A91DA]"
-              } text-white font-bold py-2 px-4 border-b-4 rounded`}
-            >
-              <FaTwitter className="mr-2 h-5 w-5" />
-              Twitter
             </button>
           </div>
           <LinksContent isDarkMode={isDarkMode} />

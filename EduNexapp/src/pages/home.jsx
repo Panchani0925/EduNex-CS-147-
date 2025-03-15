@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   // Sample data
@@ -14,7 +13,6 @@ const Home = () => {
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop%20-%203.jpg-rkHtrYnkurFscNYP7QhWssVyQxfRl7.jpeg"
     },
-
     {
       name: "Bio Science",
       students: "2000+ students",
@@ -29,9 +27,6 @@ const Home = () => {
     }
   ];
 
-  
-
- 
   return (
     <div>
       <div
@@ -42,58 +37,6 @@ const Home = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* Header */}
-        <header>
-          <nav className="max-w-7xl mx-auto flex items-center justify-between">
-            <Link to="/about">
-              <img src="/logo.jpg" alt="EduNex Logo" className="logo" />
-            </Link>
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-            <div className="md:hidden">
-              <button
-                className="text-white"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                <Menu className="h-6 w-6" />
-              </button>
-            </div>
-          </nav>
-          {menuOpen && (
-            <div className="md:hidden bg-[#231b5d] text-white p-4">
-              <Link to="/" className="block py-2 hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="block py-2 hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="block py-2 hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="block py-2 hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="block py-2 hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-          )}
-        </header>
 
         {/* Hero Section */}
         <section className="py-24">
