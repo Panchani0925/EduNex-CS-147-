@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-blue-950 text-white">
+    <footer className="bg-[#1a2547] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -12,7 +12,7 @@ export default function Footer() {
               alt="EduNex Logo"
               className="footer-logo mb-4"
             />
-            <h3 className="text-lg font-semibold mb-4  text-yellow-700">
+            <h3 className="text-lg font-semibold mb-4  text-[#4ce2e9]">
               About Us
             </h3>
             <p className="text-gray-300">
@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4  text-yellow-700">
+            <h3 className="text-lg font-semibold mb-4  text-[#4ce2e9]">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -48,7 +48,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4  text-yellow-700">
+            <h3 className="text-lg font-semibold mb-4  text-[#4ce2e9]">
               Contact Info
             </h3>
             <ul className="space-y-2 text-gray-300">
@@ -64,7 +64,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-700">
+            <h3 className="text-lg font-semibold mb-4 text-[#4ce2e9]">
               Newsletter
             </h3>
             <form className="space-y-4">
@@ -75,7 +75,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-yellow-700 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-yellow-800 transition"
+                className="px-6 py-3 bg-gradient-to-r from-[#2c9cdb] to-[#3db2ff] text-white hover:opacity-90 rounded-full flex items-center justify-center transition"
               >
                 Subscribe
               </button>
