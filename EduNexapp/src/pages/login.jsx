@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { HiMoon, HiSun } from "react-icons/hi"; // added modern sun and moon icons
 import LinksContent from "../components/LinksContent";
@@ -199,7 +201,7 @@ const Login = () => {
               }`}
             ></div>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <button
               className={`flex items-center justify-center ${
                 isDarkMode
@@ -246,8 +248,7 @@ const Login = () => {
           <LinksContent isDarkMode={isDarkMode} />
         </div>
       </div>
-      {/* Merged all style tags into one */}
-      <style>{`
+      <style jsx global>{`
         :root {
           --bg-color: #f0f4f8; /* updated light background */
           --text-color: #334155; /* updated light text color */
@@ -291,6 +292,8 @@ const Login = () => {
         a {
           color: var(--tint-color);
         }
+      `}</style>
+      <style jsx>{`
         @keyframes bubble {
           0% {
             opacity: 0.9;

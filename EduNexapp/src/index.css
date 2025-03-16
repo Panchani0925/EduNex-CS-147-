@@ -7,8 +7,7 @@
 :root {
   --primary-blue: #1B2A4A;
   --secondary-blue: #2C3E50;
-  --primary-teal: #1abc9c;
-  --button-green: #4CAF50;
+  --primary-teal: #661abc;
   --white: #ffffff;
   --gray-light: #f5f5f5;
 }
@@ -381,7 +380,6 @@ body {
 }
 
 .btn-auth {
-  background-color: #4CAF50;
   color: white;
   padding: 0.5rem 1.5rem;
   border: none;
@@ -1235,5 +1233,3 @@ html {
   font-size: 0.875rem;
   color: #718096;
 }
-
-

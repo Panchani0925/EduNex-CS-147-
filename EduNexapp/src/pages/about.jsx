@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card"; // fixed import error
-import { Menu } from "lucide-react"; // Import the Menu component
+import { Card, CardContent } from "@/components/ui/card";
+import { ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 
 const teamMembers = [
@@ -9,7 +9,7 @@ const teamMembers = [
     role: "Leader",
     idNumber: "w2084711",
     contribution: "**************************",
-    image: "site.jpg",
+    image: "/site.jpg", // Added leading slash for proper path resolution
   },
   {
     id: 2,
@@ -17,23 +17,23 @@ const teamMembers = [
     role: "Database",
     idNumber: "w2084712",
     contribution: "**************************",
-    image: "oshadhi.jpg",
+    image: "/oshadhi.jpg", // Added leading slash
   },
   {
     id: 3,
     name: "Ridmi Poornima",
-    role: "Frontend", // fixed spelling error
+    role: "Frontend", // Capitalized for consistency
     idNumber: "w2084722",
     contribution: "**************************",
-    image: "ridmi.jpg",
+    image: "/ridmi.jpg", // Added leading slash
   },
   {
     id: 4,
     name: "Abishek",
-    role: "Backend", // fixed spelling error
+    role: "Backend", // Capitalized for consistency
     idNumber: "w2084733",
     contribution: "**************************",
-    image: "abishek.jpg",
+    image: "/abishek.jpg", // Added leading slash
   },
   {
     id: 5,
@@ -41,21 +41,24 @@ const teamMembers = [
     role: "Backend",
     idNumber: "w2084744",
     contribution: "**************************",
-    image: "dithara.jpg",
+    image: "/dithara.jpg", // Added leading slash
   },
   {
     id: 6,
     name: "Buthmira",
-    role: "Frontend", // fixed spelling error
+    role: "Frontend", // Capitalized for consistency
     idNumber: "w2084755",
     contribution: "**************************",
-    image: "buthmira.jpg",
+    image: "/buthmira.jpg", // Added leading slash
   },
 ];
 
 export default function About() {
   const [hoveredMember, setHoveredMember] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // Add state for menu
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen">
@@ -69,20 +72,20 @@ export default function About() {
       >
         {/* Hero Section */}
         <section className="py-24 text-black bg-white bg-opacity-25 text-center">
-          <div className="max-w-7xl mx-auto text-center px-4 ">
+          <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
               <div className="space-y-6">
-                {/* Hero Section */}
-                <section className="bg-teal-500 text-white py-16">
-                  <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                      About EduNex
-                    </h1>
-                    <p className="text-xl">
-                      Empowering Education Through Technology
-                    </p>
-                  </div>
-                </section>
+                {/* Removed nested Hero Section and fixed structure */}
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                  About EduNex
+                </h1>
+                <p className="text-xl">
+                  Empowering Education Through Technology
+                </p>
+              </div>
+              {/* Added missing column content for the grid */}
+              <div className="hidden md:block">
+                {/* Placeholder for right column content */}
               </div>
             </div>
           </div>
@@ -112,7 +115,7 @@ export default function About() {
             <div className="flex items-center justify-center">
               <div className="relative group">
                 <img
-                  src="AC.jpg"
+                  src="/AC.jpg" // Added leading slash
                   alt="Education Mission"
                   className="rounded-2xl shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
                 />
@@ -178,14 +181,14 @@ export default function About() {
       {/* Enhanced Footer */}
       <footer className="bg-white text-black py-6">
         <div className="container mx-auto px-4">
-          <p className="text-black text-center text-lg">
-            <a
-              href="#"
-              className="font-bold hover:text-teal-200 transition-colors duration-300 border-b-2 border-transparent hover:border-teal-200 pb-1"
+          <div className="text-black text-center text-lg">
+            <button
+              onClick={scrollToTop}
+              className="group bg-primary hover:bg-primary/90 text-white p-3 rounded-full shadow-lg mb-6 transition-all duration-300 hover:shadow-primary/30 hover:shadow-xl"
             >
-              To-up
-            </a>
-          </p>
+              <ChevronUp className="h-6 w-6 group-hover:-translate-y-1 transition-transform duration-300" />
+            </button>
+          </div>
         </div>
       </footer>
     </div>
