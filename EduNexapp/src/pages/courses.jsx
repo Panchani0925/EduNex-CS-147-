@@ -226,9 +226,9 @@ function App() {
   const courses = [
     {
       id: 1,
-      title: "Advanced Web Development Masterclass",
-      description: "Master modern web development...",
-      duration: "12 weeks",
+      title: "Advanced Level Mathematic",
+      description: "Master modern Mathematics...",
+      duration: "1 years",
       level: "Intermediate",
       price: 499,
       image:
@@ -236,9 +236,9 @@ function App() {
     },
     {
       id: 2,
-      title: "Intro to Data Science",
+      title: "O/L Science",
       description: "Learn the fundamentals of data...",
-      duration: "8 weeks",
+      duration: "1 month",
       level: "Beginner",
       price: 299,
       image:
@@ -246,8 +246,8 @@ function App() {
     },
     {
       id: 3,
-      title: "UI/UX Design Bootcamp",
-      description: "Design principles and creative process...",
+      title: "English",
+      description: "Your Spoken English Improving...",
       duration: "10 weeks",
       level: "Intermediate",
       price: 399,
@@ -256,8 +256,8 @@ function App() {
     },
     {
       id: 4,
-      title: "Mobile App Development",
-      description: "Build native and cross-platform mobile apps...",
+      title: "O/L Mathematics",
+      description: "Build Your Knowlage...",
       duration: "12 weeks",
       level: "Advanced",
       price: 599,
@@ -331,21 +331,70 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <div>
         {/* Hero Section */}
-        <section className="py-24 text-black bg-white bg-opacity-25 text-center">
+        <section className="py-24 text-black bg-gradient-to-b from-white to-blue-100">
           <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
               <div className="space-y-6">
-                {/* Removed nested Hero Section and fixed structure */}
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  About EduNex
+                  Our Courses
                 </h1>
-                <p className="text-xl">
-                  Empowering Education Through Technology
-                </p>
+                <ul className="text-xl space-y-4 text-left max-w-lg mx-auto">
+                  <li className="flex items-start">
+                    <span className="mr-2">📚</span>
+                    <span>
+                      Learn Anytime, Master Anything: Flexible Courses for Your
+                      Pace.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">🎯</span>
+                    <span>
+                      Transform Your Skills: Expert-Led Courses for Real-World
+                      Success.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">🚀</span>
+                    <span>
+                      Unlock Your Potential: Interactive Lessons, Proven
+                      Results.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2">🌟</span>
+                    <span>
+                      From Basics to Brilliance: Step-by-Step Learning for All
+                      Levels.
+                    </span>
+                  </li>
+                </ul>
               </div>
-              {/* Added missing column content for the grid */}
-              <div className="hidden md:block">
-                {/* Placeholder for right column content */}
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-bold mb-4">Featured Courses</h2>
+                <div className="space-y-4">
+                  <div className="bg-blue-50 p-4 rounded-md">
+                    <h3 className="font-semibold">
+                      Web Development Masterclass
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Learn modern web development from scratch
+                    </p>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-md">
+                    <h3 className="font-semibold">Data Science Fundamentals</h3>
+                    <p className="text-sm text-gray-600">
+                      Master data analysis and visualization
+                    </p>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-md">
+                    <h3 className="font-semibold">
+                      Digital Marketing Essentials
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      Grow your online presence effectively
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
