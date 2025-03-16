@@ -1,13 +1,13 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Footer from "./components/layout/footer"; 
+import Footer from "./components/layout/footer";
 import Header from "./components/layout/Header";
 import "./index.css";
-import About from "./pages/about"; 
+import About from "./pages/about";
 import Blog from "./pages/blog";
 import Contact from "./pages/contact";
 import Course from "./pages/courses";
-import ForgotPassword from "./pages/forgot-password"; 
-import Home from "./pages/Home";
+import ForgotPassword from "./pages/forgot-password";
+import Home from "./pages/home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hide Header on both "/login" and "/forgot-password" routes */}
-      {!["/login", "/forgot-password"].includes(location.pathname) && (
+      {!["/forgot-password"].includes(location.pathname) && (
         <Header />
       )}
       <main className="flex-grow">
@@ -32,7 +32,6 @@ function App() {
           <Route path="/courses" element={<Course />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/404" element={<NotFound />} />
-          <Route path="/Login" element={<Login />} />
         </Routes>
       </main>
       <Footer />
