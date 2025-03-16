@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { HiMoon, HiSun } from "react-icons/hi"; // added modern sun and moon icons
+import { FaFacebookF, FaGoogle } from "react-icons/fa";
+import { HiMoon, HiSun } from "react-icons/hi"; 
 import LinksContent from "../components/LinksContent";
 
 const Login = () => {
@@ -209,18 +210,7 @@ const Login = () => {
                   : "bg-blue-600 hover:bg-blue-500 border-blue-800 hover:border-blue-600"
               } text-white font-bold py-2 px-4 border-b-4 rounded`}
             >
-              <svg
-                className="mr-2 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
-              </svg>
+              <FaGoogle className="mr-2 h-5 w-5" />
               Google
             </button>
             <button
@@ -230,22 +220,29 @@ const Login = () => {
                   : "bg-blue-600 hover:bg-blue-500 border-blue-800 hover:border-blue-600"
               } text-white font-bold py-2 px-4 border-b-4 rounded`}
             >
-              <svg
-                className="mr-2 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-              </svg>
+              <FaFacebookF className="mr-2 h-5 w-5" />{" "}
+              {/* replaced svg icon with FaFacebookF */}
               Facebook
             </button>
           </div>
           <LinksContent isDarkMode={isDarkMode} />
+          <p
+            className={`mt-8 text-center text-sm ${
+              isDarkMode ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Already have an account?{" "}
+            <a
+              href="/register"
+              className={
+                isDarkMode
+                  ? "text-[#4ce2e9] hover:underline"
+                  : "text-[#2c9cdb] hover:underline"
+              }
+            >
+              Sign up
+            </a>
+          </p>
         </div>
       </div>
       <style jsx global>{`

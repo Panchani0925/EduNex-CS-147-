@@ -23,13 +23,13 @@ const Home = () => {
                 <h1 className="text-5xl md:text-6xl font-bold mb-6">
                   Start Your Education Journey With Us
                 </h1>
-                <div className="bg-white rounded-lg p-2 flex items-center gap-2 justify-center">
+                <div className="bg-white rounded p-2 flex items-center gap-2 justify-center">
                   <input
                     type="text"
                     placeholder="What do you want to learn?"
                     className="flex-1 p-2 text-gray-800 outline-none"
                   />
-                  <button className="bg-[#231b5d] text-white px-4 py-2 rounded-md">
+                  <button className="bg-[#231b5d] text-white px-4 py-2 rounded">
                     Search
                   </button>
                 </div>
@@ -38,7 +38,7 @@ const Home = () => {
           </div>
         </section>
         <button
-          className="bg-white text-[#231b5d] px-4 py-2 rounded-md font-medium mx-auto block"
+          className="bg-white text-[#231b5d] px-2 py-4 rounded font-bold mx-auto block transition duration-300 text-2xl"
           onClick={() => setModalOpen(true)}
         >
           Get Started
@@ -48,7 +48,7 @@ const Home = () => {
       {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg relative">
+          <div className="bg-white p-6 rounded relative">
             <button
               className="absolute top-2 right-2 text-gray-600"
               onClick={() => setModalOpen(false)}
@@ -202,137 +202,178 @@ const Home = () => {
       </section>
 
       {/* Subjects */}
-      <section className="py-12 px-4 bg-white">
-        <h2 className="text-center text-3xl font-medium mb-8 text-white">
-          Our Top Subjects
-        </h2>
+      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-center text-3xl font-bold mb-12 text-gray-800">
+            Our Top Subjects
+          </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
-          {/* First row of subjects */}
-          <div className="relative">
-            <img src="1.jpg" className="w-full h-48 object-cover" />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Mathematics</h3>
-              <p>2000+ students</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* First row of subjects */}
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="Mathematics"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">Mathematics</h3>
+                <p className="flex justify-between">
+                  <span>2000+ students</span>
+                  <span className="text-blue-300">24 courses</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="Bio Science"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">Bio Science</h3>
+                <p className="flex justify-between">
+                  <span>2000+ students</span>
+                  <span className="text-blue-300">18 courses</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="Chemistry"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">Chemistry</h3>
+                <p className="flex justify-between">
+                  <span>1000+ students</span>
+                  <span className="text-blue-300">15 courses</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Second row of subjects */}
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="Physics"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">Physics</h3>
+                <p className="flex justify-between">
+                  <span>1800+ students</span>
+                  <span className="text-blue-300">20 courses</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="English Language"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">English Language</h3>
+                <p className="flex justify-between">
+                  <span>2500+ students</span>
+                  <span className="text-blue-300">22 courses</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 group">
+              <img
+                src="/api/placeholder/500/300"
+                alt="Computer Science"
+                className="w-full h-64 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-5">
+                <h3 className="text-xl font-semibold mb-2">Computer Science</h3>
+                <p className="flex justify-between">
+                  <span>1600+ students</span>
+                  <span className="text-blue-300">16 courses</span>
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Bio Science"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Bio Science</h3>
-              <p>2000+ students</p>
-            </div>
+          <div className="text-center">
+            <button className="bg-[#1d1b4b] text-white hover:bg-[#2d2b6b] transition duration-300  text-lg font-bold py-2 px-4 rounded">
+              View All Subjects
+            </button>
           </div>
-
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Chemistry"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Chemistry</h3>
-              <p>1000+ students</p>
-            </div>
-          </div>
-
-          {/* Second row of subjects */}
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Mathematics"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Mathematics</h3>
-              <p>2000+ students</p>
-            </div>
-          </div>
-
-          <div className="relative">
-            <img
-              src="2.jpg"
-              alt="Bio Science"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Bio Science</h3>
-              <p>2000+ students</p>
-            </div>
-          </div>
-
-          <div className="relative">
-            <img
-              src="3.jpg"
-              alt="Chemistry"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Chemistry</h3>
-              <p>1000+ students</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center mb-16">
-          <button className="bg-[#1d1b4b] text-white px-6 py-2 rounded">
-            View All Subjects
-          </button>
         </div>
       </section>
-
       {/* Teachers */}
-      <section className="py-12 px-4 bg-gray-50 ">
-        <h2 className="text-center text-3xl font-medium mb-8 text-black">
-          Our Teachers
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Mr. Perera"
-              className="w-full aspect-square object-cover rounded-full bg-gray-200"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Mr. Perera</h3>
-              <p>2000+ students</p>
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-center text-3xl font-bold mb-12 text-gray-800">
+            Our Teachers
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* Teacher Card 1 */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:-translate-y-2">
+              <div className="relative pt-6 px-6">
+                <div className="aspect-square overflow-hidden rounded-full mx-auto border-4 border-gray-100">
+                  <img
+                    src="/1.jpg"
+                    alt="Mr. Perera"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="mt-6 bg-[#1d1b4b] text-white p-4 rounded-t-xl">
+                  <h3 className="text-xl font-semibold mb-1">Mr. Perera</h3>
+                  <p className="text-gray-200">2000+ students</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Teacher Card 2 */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:-translate-y-2">
+              <div className="relative pt-6 px-6">
+                <div className="aspect-square overflow-hidden rounded-full mx-auto border-4 border-gray-100">
+                  <img
+                    src="/api/placeholder/300/300"
+                    alt="Mrs. Fernando"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="mt-6 bg-[#1d1b4b] text-white p-4 rounded-t-xl">
+                  <h3 className="text-xl font-semibold mb-1">Mrs. Fernando</h3>
+                  <p className="text-gray-200">2000+ students</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Teacher Card 3 */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:-translate-y-2">
+              <div className="relative pt-6 px-6">
+                <div className="aspect-square overflow-hidden rounded-full mx-auto border-4 border-gray-100">
+                  <img
+                    src="/api/placeholder/300/300"
+                    alt="Ms. Amarasena"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="mt-6 bg-[#1d1b4b] text-white p-4 rounded-t-xl">
+                  <h3 className="text-xl font-semibold mb-1">Ms. Amarasena</h3>
+                  <p className="text-gray-200">1000+ students</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Mrs. Fernando"
-              className="w-full aspect-square object-cover rounded-full bg-gray-200"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Mrs. Fernando</h3>
-              <p>2000+ students</p>
-            </div>
+          <div className="text-center">
+            <button className="bg-[#1d1b4b] text-white hover:bg-[#2d2b6b] transition duration-300  text-lg font-bold py-2 px-4 rounded">
+              View All Teachers
+            </button>
           </div>
-
-          <div className="relative">
-            <img
-              src="1.jpg"
-              alt="Ms. Amarasena"
-              className="w-full aspect-square object-cover rounded-full bg-gray-200"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-              <h3 className="text-xl mb-1">Ms. Amarasena</h3>
-              <p>1000+ students</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <button className="bg-[#1d1b4b] px-6 py-3 rounded-lg text-lg">
-            View All Teachers
-          </button>
         </div>
       </section>
 
@@ -372,7 +413,7 @@ const Home = () => {
             </div>
           </div>
 
-          <button className="bg-[#1d1b4b] px-6 py-3 rounded-lg text-lg">
+          <button className="bg-[#1d1b4b] text-white hover:bg-[#2d2b6b] transition duration-300  text-lg font-bold py-2 px-4 rounded">
             View All Lessons
           </button>
         </div>
@@ -422,7 +463,7 @@ const Home = () => {
 
         {/* View More Button */}
         <div className="text-center">
-          <button className="bg-[#1d1b4b] px-6 py-3 rounded-lg text-lg text-white">
+          <button className="bg-[#1d1b4b] text-white hover:bg-[#2d2b6b] transition duration-300  text-lg font-bold py-2 px-4 rounded">
             View More
           </button>
         </div>

@@ -9,6 +9,7 @@ import {
   HiOutlineUser,
   HiSun,
 } from "react-icons/hi";
+import LinksContent from "../components/LinksContent";
 
 const roles = ["Student", "Teacher", "Parent"];
 
@@ -90,7 +91,7 @@ const Register = () => {
                 isDarkMode ? "text-[#4ce2e9]" : "text-[#2c9cdb]"
               }`}
             >
-              EduNex REGISTER
+              EduNex SINGUP
             </h1>
             <p className={isDarkMode ? "text-gray-300" : "text-gray-600"}>
               Create your digital workspace account
@@ -302,6 +303,8 @@ const Register = () => {
                 Facebook
               </button>
             </div>
+
+            <LinksContent isDarkMode={isDarkMode} />
 
             <p
               className={`mt-8 text-center text-sm ${
