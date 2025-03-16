@@ -1,12 +1,12 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Footer from "./components/layout/Footer";
+import Footer from "./components/layout/footer"; 
 import Header from "./components/layout/Header";
 import "./index.css";
-import About from "./pages/About";
+import About from "./pages/about"; 
 import Blog from "./pages/blog";
-import Contact from "./pages/Contact";
-import Course from "./pages/Courses";
-import ForgotPassword from "./pages/forgot-password"; // corrected import path
+import Contact from "./pages/contact";
+import Course from "./pages/courses";
+import ForgotPassword from "./pages/forgot-password"; 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -31,6 +31,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/courses" element={<Course />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </main>
       <Footer />
