@@ -41,15 +41,15 @@ export default function Blog() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <div>
         {/* Hero Section */}
-        <section className="py-24 text-black bg-white bg-opacity-25 text-center">
+        <section className="py-24 text-white bg-gradient-to-b from-white to-blue-900">
           <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
               <div className="container mx-auto px-4">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
-                <p className="text-xl">
+                <p className="text-xl text-blue-100">
                   Latest insights and updates from EduNex
                 </p>
               </div>
@@ -61,28 +61,45 @@ export default function Blog() {
           </div>
         </section>
       </div>
-    
-       
 
       {/* Blog Posts Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           {selectedPost ? (
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-4">{selectedPost.title}</h2>
+            <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+              <h2 className="text-3xl font-bold mb-4 text-blue-900">
+                {selectedPost.title}
+              </h2>
               <p className="text-gray-600 mb-4">{selectedPost.date}</p>
               <p className="text-lg text-gray-800">{selectedPost.content}</p>
               <button
-                className="mt-4 text-teal-600 hover:text-teal-700 font-medium"
+                className="mt-4 text-blue-700 hover:text-blue-900 font-medium flex items-center"
                 onClick={() => setSelectedPost(null)}
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
                 Back to Blog
               </button>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogPosts.map((post) => (
-                <Card key={post.id} className="overflow-hidden">
+                <Card
+                  key={post.id}
+                  className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white"
+                >
                   <CardContent className="p-0">
                     <img
                       src={post.image}
@@ -91,7 +108,7 @@ export default function Blog() {
                     />
                     <div className="p-6">
                       <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                        <span className="bg-teal-100 text-teal-800 px-2 py-1 rounded-full text-xs">
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
                           {post.category}
                         </span>
                         <div className="flex items-center gap-1">
@@ -103,15 +120,29 @@ export default function Blog() {
                           })}
                         </div>
                       </div>
-                      <h2 className="text-xl font-semibold mb-2">
+                      <h2 className="text-xl font-semibold mb-2 text-blue-900">
                         {post.title}
                       </h2>
                       <p className="text-gray-600 mb-4">{post.excerpt}</p>
                       <button
-                        className="text-teal-600 hover:text-teal-700 font-medium"
+                        className="text-blue-700 hover:text-blue-900 font-medium flex items-center"
                         onClick={() => handleReadMore(post)}
                       >
-                        Read More →
+                        Read More
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 ml-1"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
+                        </svg>
                       </button>
                     </div>
                   </CardContent>
