@@ -21,7 +21,9 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent",
+        scrolled
+          ? "bg-background/80 backdrop-blur-md shadow-sm"
+          : "bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,7 +37,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 text-blue-900 hover:text-blue-600 px-3 py-2 font-medium transition-colors duration-200">
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/courses">Courses</NavLink>
@@ -49,7 +51,11 @@ export function Header() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {menuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </nav>
       </div>
@@ -58,7 +64,9 @@ export function Header() {
       <div
         className={cn(
           "fixed inset-0 z-40 bg-background/95 backdrop-blur-md md:hidden transition-all duration-300 ease-in-out",
-          menuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none",
+          menuOpen
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-full pointer-events-none"
         )}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8 text-lg">

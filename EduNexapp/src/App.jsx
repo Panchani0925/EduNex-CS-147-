@@ -3,7 +3,7 @@ import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import "./index.css";
 import About from "./pages/About";
-import Blog from "./pages/Blog";
+import Blog from "./pages/blog";
 import Contact from "./pages/Contact";
 import Course from "./pages/Courses";
 import ForgotPassword from "./pages/forgot-password"; // corrected import path

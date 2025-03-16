@@ -42,35 +42,27 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen">
-      <div
-        className="bg-[#231b5d] text-white px-4 py-3"
-        style={{
-          backgroundImage: "url('/blog.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-
+      <div>
         {/* Hero Section */}
-        <section className="py-24 text-center">
+        <section className="py-24 text-black bg-white bg-opacity-25 text-center">
           <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
-              <div>
-                <section className="bg-teal-500 text-white opacity-25 py-16 bg-center">
-                  <div className="container mx-auto px-4">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                      Blog
-                    </h1>
-                    <p className="text-xl">
-                      Latest insights and updates from EduNex
-                    </p>
-                  </div>
-                </section>
+              <div className="container mx-auto px-4">
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
+                <p className="text-xl">
+                  Latest insights and updates from EduNex
+                </p>
+              </div>
+              {/* Added missing column content for the grid */}
+              <div className="hidden md:block">
+                {/* Placeholder for right column content */}
               </div>
             </div>
           </div>
         </section>
       </div>
+    
+       
 
       {/* Blog Posts Section */}
       <section className="py-16">

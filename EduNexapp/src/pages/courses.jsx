@@ -33,6 +33,10 @@ const PaymentModal = ({
             <X className="w-5 h-5" />
           </button>
         </div>
+        <div>
+
+
+        </div>
 
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
@@ -325,6 +329,28 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <div>
+        {/* Hero Section */}
+        <section className="py-24 text-black bg-white bg-opacity-25 text-center">
+          <div className="max-w-7xl mx-auto text-center px-4">
+            <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
+              <div className="space-y-6">
+                {/* Removed nested Hero Section and fixed structure */}
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                  About EduNex
+                </h1>
+                <p className="text-xl">
+                  Empowering Education Through Technology
+                </p>
+              </div>
+              {/* Added missing column content for the grid */}
+              <div className="hidden md:block">
+                {/* Placeholder for right column content */}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="md:flex">
