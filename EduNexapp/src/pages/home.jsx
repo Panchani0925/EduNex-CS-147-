@@ -1,4 +1,4 @@
-import { Book, Menu, Search, Users, X } from "lucide-react";
+import { Book, Search, Users, X } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,6 @@ const Home = () => {
           backgroundPosition: "center",
         }}
       >
-
         {/* Hero Section */}
         <section className="py-24">
           <div className="max-w-7xl mx-auto text-center px-4">
@@ -151,8 +150,11 @@ const Home = () => {
                 Education is much easier with us
               </h2>
               <p className="text-lg text-gray-700">
-                Students can learn with live classes or watch as videos in their
-                own pace.
+                Learn with live classes for real-time interaction or watch video
+                lessons at your own pace—flexibility tailored to your needs.
+                Master concepts through bite-sized, engaging content designed to
+                simplify complex ideas. Whether you thrive in dynamic sessions
+                or prefer self-paced learning, we’ve got you covered! 🌟
               </p>
             </div>
           </div>
@@ -164,8 +166,10 @@ const Home = () => {
                 Easier for parents to checking thier child education.
               </h2>
               <p className="text-lg text-gray-700">
-                Parents get notifications of their child progress and also
-                communicate with teachers.
+                Parents can easily track their child's education through
+                progress notifications and direct communication with teachers.
+                Stay informed, address concerns, and actively support your
+                child’s academic journey—all in one place!
               </p>
             </div>
             <img
@@ -187,8 +191,10 @@ const Home = () => {
                 Teaching is easier with us
               </h2>
               <p className="text-lg text-gray-700">
-                Teachers can do live classes, create lessons, manage students
-                and their assignments
+                Teachers can host live classes, create lessons, manage students,
+                and track assignments in one intuitive platform. Simplify
+                workflows, save time, and focus on what matters most—guiding
+                students toward success! 🚀
               </p>
             </div>
           </div>
@@ -332,7 +338,7 @@ const Home = () => {
 
       {/* Lesson */}
       <section className="py-12 px-4 bg-white">
-        <div className="flex flex-col items-center gap-8 py-12">
+        <div className="flex flex-col items-center gap-8 py-12 text-white">
           <h2 className="text-4xl font-normal text-black">
             Our Popular Lessons
           </h2>
@@ -373,7 +379,7 @@ const Home = () => {
       </section>
 
       <section className="py-12 px-4 bg-gray-50">
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 py-16 text-white">
           {/* Testimonials Section */}
           <h2 className="text-4xl font-medium text-center mb-16 text-black">
             What Students Say About Us
@@ -397,7 +403,7 @@ const Home = () => {
         <h2 className="text-4xl font-medium text-center mb-16 text-black">
           Check Blog For Latest Educational News
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-white">
           {[1, 2, 3].map((item) => (
             <div key={item} className="bg-[#1d1b4b] p-8 rounded-lg">
               <p className="text-2xl mb-8 ">
@@ -416,7 +422,7 @@ const Home = () => {
 
         {/* View More Button */}
         <div className="text-center">
-          <button className="bg-[#1d1b4b] px-6 py-3 rounded-lg text-lg">
+          <button className="bg-[#1d1b4b] px-6 py-3 rounded-lg text-lg text-white">
             View More
           </button>
         </div>
