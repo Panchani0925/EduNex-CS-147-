@@ -2,11 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Mail, MapPin, Menu, Phone } from "lucide-react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function Contact() {
-  const [menuOpen, setMenuOpen] = useState(false);
+
 
   return (
     <div className="min-h-screen">
@@ -18,57 +16,7 @@ export default function Contact() {
           backgroundPosition: "center",
         }}
       >
-        {/* Header */}
-        <header>
-          <nav className="max-w-7xl mx-auto flex items-center justify-between">
-            <img src="/logo.jpg" alt="EduNex Logo" className="logo" />
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-            <div className="md:hidden">
-              <button
-                className="text-white"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                <Menu className="h-6 w-6" />
-              </button>
-            </div>
-          </nav>
-          {menuOpen && (
-            <div className="md:hidden bg-[#231b5d] text-white p-4">
-              <Link to="/" className="block py-2 hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="block py-2 hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="block py-2 hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="block py-2 hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="block py-2 hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-          )}
-        </header>
-
+        
         {/* Hero Section */}
         <section className="py-24 text-black bg-white bg-opacity-25 text-center">
           <div className="max-w-7xl mx-auto text-center px-4">

@@ -3,35 +3,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Sample data
-  const subjects = [
-    {
-      name: "Mathematics",
-      students: "2000+ students",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop%20-%203.jpg-rkHtrYnkurFscNYP7QhWssVyQxfRl7.jpeg"
-    },
-
-    {
-      name: "Bio Science",
-      students: "2000+ students",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop%20-%203.jpg-rkHtrYnkurFscNYP7QhWssVyQxfRl7.jpeg"
-    },
-    {
-      name: "Chemistry",
-      students: "1500+ students",
-      image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Desktop%20-%203.jpg-rkHtrYnkurFscNYP7QhWssVyQxfRl7.jpeg"
-    }
-  ];
-
-  
-
- 
   return (
     <div>
       <div
@@ -42,58 +15,6 @@ const Home = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* Header */}
-        <header>
-          <nav className="max-w-7xl mx-auto flex items-center justify-between">
-            <Link to="/about">
-              <img src="/logo.jpg" alt="EduNex Logo" className="logo" />
-            </Link>
-            <div className="hidden md:flex items-center gap-6">
-              <Link to="/" className="hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-            <div className="md:hidden">
-              <button
-                className="text-white"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                <Menu className="h-6 w-6" />
-              </button>
-            </div>
-          </nav>
-          {menuOpen && (
-            <div className="md:hidden bg-[#231b5d] text-white p-4">
-              <Link to="/" className="block py-2 hover:opacity-80">
-                Home
-              </Link>
-              <Link to="/about" className="block py-2 hover:opacity-80">
-                About
-              </Link>
-              <Link to="/courses" className="block py-2 hover:opacity-80">
-                Courses
-              </Link>
-              <Link to="/blog" className="block py-2 hover:opacity-80">
-                Blog
-              </Link>
-              <Link to="/contact" className="block py-2 hover:opacity-80">
-                Contact
-              </Link>
-            </div>
-          )}
-        </header>
 
         {/* Hero Section */}
         <section className="py-24">
@@ -240,11 +161,11 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-4 md:order-1">
               <h2 className="text-3xl font-bold text-[#1a237e]">
-                Easier for parents to check their child's education.
+                Easier for parents to checking thier child education.
               </h2>
               <p className="text-lg text-gray-700">
-                Parents receive notifications about their child's progress and
-                can communicate with teachers.
+                Parents get notifications of their child progress and also
+                communicate with teachers.
               </p>
             </div>
             <img
@@ -276,24 +197,80 @@ const Home = () => {
 
       {/* Subjects */}
       <section className="py-12 px-4 bg-white">
-        <h2 className="text-center text-3xl font-medium mb-8 text-black">
+        <h2 className="text-center text-3xl font-medium mb-8 text-white">
           Our Top Subjects
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
-          {subjects.map((subject, idx) => (
-            <div key={idx} className="relative">
-              <img
-                src={subject.image}
-                alt={subject.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
-                <h3 className="text-xl mb-1">{subject.name}</h3>
-                <p>{subject.students}</p>
-              </div>
+          {/* First row of subjects */}
+          <div className="relative">
+            <img src="1.jpg" className="w-full h-48 object-cover" />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Mathematics</h3>
+              <p>2000+ students</p>
             </div>
-          ))}
+          </div>
+
+          <div className="relative">
+            <img
+              src="1.jpg"
+              alt="Bio Science"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Bio Science</h3>
+              <p>2000+ students</p>
+            </div>
+          </div>
+
+          <div className="relative">
+            <img
+              src="1.jpg"
+              alt="Chemistry"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Chemistry</h3>
+              <p>1000+ students</p>
+            </div>
+          </div>
+
+          {/* Second row of subjects */}
+          <div className="relative">
+            <img
+              src="1.jpg"
+              alt="Mathematics"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Mathematics</h3>
+              <p>2000+ students</p>
+            </div>
+          </div>
+
+          <div className="relative">
+            <img
+              src="2.jpg"
+              alt="Bio Science"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Bio Science</h3>
+              <p>2000+ students</p>
+            </div>
+          </div>
+
+          <div className="relative">
+            <img
+              src="3.jpg"
+              alt="Chemistry"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#1d1b4b] text-white p-4">
+              <h3 className="text-xl mb-1">Chemistry</h3>
+              <p>1000+ students</p>
+            </div>
+          </div>
         </div>
 
         <div className="text-center mb-16">

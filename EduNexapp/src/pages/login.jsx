@@ -1,6 +1,6 @@
+"use client";
+
 import { useState } from "react";
-// Ensure react-icons is installed via "npm install react-icons"
-import { FaTwitter } from "react-icons/fa";
 import { HiMoon, HiSun } from "react-icons/hi"; // added modern sun and moon icons
 import LinksContent from "../components/LinksContent";
 
@@ -43,7 +43,6 @@ const Login = () => {
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              '--i': i
             }}
           />
         ))}
@@ -202,7 +201,7 @@ const Login = () => {
               }`}
             ></div>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <button
               className={`flex items-center justify-center ${
                 isDarkMode
@@ -245,22 +244,11 @@ const Login = () => {
               </svg>
               Facebook
             </button>
-            <button
-              className={`flex items-center justify-center ${
-                isDarkMode
-                  ? "bg-[#1DA1F2] hover:bg-[#1A91DA] border-[#1A91DA]"
-                  : "bg-[#1DA1F2] hover:bg-[#1991DA] border-[#1A91DA]"
-              } text-white font-bold py-2 px-4 border-b-4 rounded`}
-            >
-              <FaTwitter className="mr-2 h-5 w-5" />
-              Twitter
-            </button>
           </div>
           <LinksContent isDarkMode={isDarkMode} />
         </div>
       </div>
-      {/* Merged all style tags into one */}
-      <style>{`
+      <style jsx global>{`
         :root {
           --bg-color: #f0f4f8; /* updated light background */
           --text-color: #334155; /* updated light text color */
@@ -304,6 +292,8 @@ const Login = () => {
         a {
           color: var(--tint-color);
         }
+      `}</style>
+      <style jsx>{`
         @keyframes bubble {
           0% {
             opacity: 0.9;
