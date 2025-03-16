@@ -1,3 +1,4 @@
+"use client";
 import { Menu, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // replaced next/link with react-router-dom's Link
@@ -28,7 +29,7 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center">
+          <Link to="/about" className="flex items-center">
             <img
               src="/logo.jpg"
               alt="Logo"

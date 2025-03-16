@@ -44,19 +44,56 @@ export default function Blog() {
     <div className="min-h-screen bg-gray-50">
       <div>
         {/* Hero Section */}
-        <section className="py-24 text-white bg-gradient-to-b from-white to-blue-900">
-          <div className="max-w-7xl mx-auto text-center px-4">
+        <section className="py-24 text-white bg-gradient-to-b from-white to-blue-900 relative overflow-hidden">
+          {/* Animated background particles */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute w-20 h-20 bg-blue-400 rounded-full opacity-10 top-1/4 left-1/4 animate-pulse"></div>
+            <div
+              className="absolute w-32 h-32 bg-blue-300 rounded-full opacity-10 top-3/4 left-1/3 animate-ping"
+              style={{ animationDuration: "4s" }}
+            ></div>
+            <div
+              className="absolute w-24 h-24 bg-blue-200 rounded-full opacity-10 top-1/3 right-1/4 animate-pulse"
+              style={{ animationDuration: "7s" }}
+            ></div>
+            <div
+              className="absolute w-16 h-16 bg-blue-100 rounded-full opacity-10 bottom-1/4 right-1/3 animate-ping"
+              style={{ animationDuration: "5s" }}
+            ></div>
+          </div>
+
+          {/* Enhanced content with effects */}
+          <div className="max-w-7xl mx-auto text-center px-4 relative z-10">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
-              <div className="container mx-auto px-4">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">Blog</h1>
-                <p className="text-xl text-blue-100">
+              <div className="container mx-auto px-4 transform transition-all duration-700 hover:scale-105">
+                {/* Text effect for heading with gradient and animation */}
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fadeIn bg-clip-text text-transparent bg-gradient-to-r from-blue-200 to-white">
+                  Blog<br>
+                  </br><br></br>
+                </h1>
+                {/* Text effect for subtitle with typing animation */}
+                <p className="text-xl text-blue-100 animate-fadeInDelayed relative overflow-hidden">
                   Latest insights and updates from EduNex
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-300 animate-slideRight"></span>
                 </p>
               </div>
-              {/* Added missing column content for the grid */}
-              <div className="hidden md:block">
-                {/* Placeholder for right column content */}
-              </div>
+
+              
+            </div>
+
+            {/* Scroll indicator animation */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+              <svg
+                className="w-6 h-6 text-blue-200"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
             </div>
           </div>
         </section>

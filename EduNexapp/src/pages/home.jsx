@@ -20,7 +20,7 @@ const Home = () => {
           <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
               <div>
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <h1 className="animate-bounce animate-once text-5xl md:text-6xl font-bold mb-6">
                   Start Your Education Journey With Us
                 </h1>
                 <div className="bg-white rounded p-2 flex items-center gap-2 justify-center">
@@ -48,7 +48,7 @@ const Home = () => {
       {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded relative">
+          <div className="bg-white p-6 rounded- relative">
             <button
               className="absolute top-2 right-2 text-gray-600"
               onClick={() => setModalOpen(false)}
@@ -101,8 +101,12 @@ const Home = () => {
       {/* Features */}
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-black">
-            Why Choose Us?
+          <h2 className="text-4xl font-bold text-center mb-16 tracking-tight">
+            Why Choose{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2c9cdb] to-[#4ce2e9]">
+              EduNex
+            </span>
+            ?
           </h2>
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-[#060d4d] text-white p-6 rounded-lg text-center">
@@ -149,9 +153,9 @@ const Home = () => {
               <h2 className="text-3xl font-bold text-[#1a237e]">
                 Education is much easier with us
               </h2>
-              <p className="text-lg text-gray-700">
+              <p className="text-lg text-gray-700 font-bold">
                 Learn with live classes for real-time interaction or watch video
-                lessons at your own pace—flexibility tailored to your needs.
+                lessons at your own pace flexibility tailored to your needs.
                 Master concepts through bite-sized, engaging content designed to
                 simplify complex ideas. Whether you thrive in dynamic sessions
                 or prefer self-paced learning, we’ve got you covered! 🌟
@@ -165,11 +169,11 @@ const Home = () => {
               <h2 className="text-3xl font-bold text-[#1a237e]">
                 Easier for parents to checking thier child education.
               </h2>
-              <p className="text-lg text-gray-700">
+              <p className="text-lg text-gray-700 font-bold">
                 Parents can easily track their child's education through
                 progress notifications and direct communication with teachers.
                 Stay informed, address concerns, and actively support your
-                child’s academic journey—all in one place!
+                child’s academic journey all in one place!
               </p>
             </div>
             <img
@@ -190,7 +194,7 @@ const Home = () => {
               <h2 className="text-3xl font-bold text-[#1a237e]">
                 Teaching is easier with us
               </h2>
-              <p className="text-lg text-gray-700">
+              <p className="text-lg text-gray-700 font-bold ">
                 Teachers can host live classes, create lessons, manage students,
                 and track assignments in one intuitive platform. Simplify
                 workflows, save time, and focus on what matters most—guiding
@@ -205,7 +209,10 @@ const Home = () => {
       <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-center text-3xl font-bold mb-12 text-gray-800">
-            Our Top Subjects
+            Our Top{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2c9cdb] to-[#4ce2e9]">
+              Subjects
+            </span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -313,7 +320,10 @@ const Home = () => {
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-center text-3xl font-bold mb-12 text-gray-800">
-            Our Teachers
+            Our{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#2c9cdb] to-[#4ce2e9]">
+              Teachers
+            </span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -380,7 +390,7 @@ const Home = () => {
       {/* Lesson */}
       <section className="py-12 px-4 bg-white">
         <div className="flex flex-col items-center gap-8 py-12 text-white">
-          <h2 className="text-4xl font-normal text-black">
+          <h2 className="text-4xl  text-black font-bold">
             Our Popular Lessons
           </h2>
 
@@ -439,9 +449,35 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Inline styles for typewriter and unique effects */}
+      <style>
+        {`
+        @keyframes typewriter {
+          from { width: 0; }
+          to { width: 100%; }
+        }
+        @keyframes blinkCaret {
+          0% { border-right-color: transparent; }
+          50% { border-right-color: black; }
+          100% { border-right-color: transparent; }
+        }
+        .typewriter {
+          overflow: hidden;
+          white-space: nowrap;
+          border-right: 3px solid black;
+          width: 0;
+          animation: typewriter 4s steps(40) forwards, blinkCaret 0.75s step-end infinite;
+        }
+        .unique {
+          font-family: 'Courier New', Courier, monospace;
+          color: #2c3e50;
+          text-shadow: 2px 2px 4px #aaa;
+        }
+        `}
+      </style>
       {/* Blog Section */}
       <section className="py-12 px-4 bg-white">
-        <h2 className="text-4xl font-medium text-center mb-16 text-black">
+        <h2 className="text-4xl font-bold text-center mb-16 text-black typewriter unique ">
           Check Blog For Latest Educational News
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-white">

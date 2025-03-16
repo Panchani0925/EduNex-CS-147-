@@ -1,3 +1,4 @@
+import "animate.css/animate.min.css";
 import {
   Award,
   BookOpen,
@@ -33,10 +34,7 @@ const PaymentModal = ({
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div>
-
-
-        </div>
+        <div></div>
 
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
@@ -331,7 +329,7 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <div>
         {/* Hero Section */}
-        <section className="py-24 text-black bg-gradient-to-b from-white to-blue-100">
+        <section className="py-24 text-black bg-gradient-to-b from-white to-blue-100 animate__animated animate__fadeIn">
           <div className="max-w-7xl mx-auto text-center px-4">
             <div className="grid md:grid-cols-2 gap-8 items-center justify-center">
               <div className="space-y-6">
