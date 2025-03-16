@@ -1,7 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { motion as Motion } from "framer-motion";
 import { ChevronUp } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
 const teamMembers = [
   {
@@ -55,8 +54,6 @@ const teamMembers = [
 ];
 
 export default function About() {
-  const [hoveredMember, setHoveredMember] = useState(null);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -65,7 +62,6 @@ export default function About() {
     <div className="min-h-screen">
       <div>
         {/* Hero Section */}
-       
 
         {/* Hero Section with Transition from White to Blue */}
         <section className="relative overflow-hidden">
@@ -120,8 +116,7 @@ export default function About() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.9, duration: 0.8 }}
-                  >
-                  </Motion.div>
+                  ></Motion.div>
                 </Motion.div>
 
                 {/* Right column - Illustration */}
@@ -219,51 +214,30 @@ export default function About() {
       </section>
 
       {/* Enhanced Team Members Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="team-section py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800">
-            Meet Our Team
-          </h2>
+          <h2 className="team-heading">Meet Our Team</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
-              <div
-                key={member.id}
-                onMouseEnter={() => setHoveredMember(member.id)}
-                onMouseLeave={() => setHoveredMember(null)}
-                className="transform hover:-translate-y-2 transition-all duration-300"
-              >
-                <Card className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group bg-white rounded-2xl">
-                  <CardContent className="p-0">
-                    <div className="aspect-square relative">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div
-                        className={`absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm text-white p-8 transform transition-all duration-300 ease-in-out ${
-                          hoveredMember === member.id
-                            ? "translate-y-0"
-                            : "translate-y-full"
-                        }`}
-                      >
-                        <h3 className="text-2xl font-bold mb-2">
-                          {member.name}
-                        </h3>
-                        <p className="text-teal-300 text-lg mb-3">
-                          {member.role}
-                        </p>
-                        <p className="text-gray-300 mb-2">
-                          ID: {member.idNumber}
-                        </p>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                          {member.contribution}
-                        </p>
-                      </div>
+              <div key={member.id}>
+                <div className="team-card">
+                  <div className="image-container">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="member-image"
+                    />
+                    <div className="image-overlay" />
+                    <div className="member-info">
+                      <h3 className="member-name">{member.name}</h3>
+                      <p className="member-role">{member.role}</p>
+                      <p className="member-id">ID: {member.idNumber}</p>
+                      <p className="member-contribution">
+                        {member.contribution}
+                      </p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -276,7 +250,7 @@ export default function About() {
           <div className="text-black text-center text-lg">
             <button
               onClick={scrollToTop}
-              className="group bg-primary hover:bg-primary/90 text-white p-3 rounded-full shadow-lg mb-6 transition-all duration-300 hover:shadow-primary/30 hover:shadow-xl"
+              className="group bg-[#1d1b4b] hover:bg-primary/90 text-white p-3 rounded-full shadow-lg mb-6 transition-all duration-300 hover:shadow-primary/30 hover:shadow-xl"
             >
               <ChevronUp className="h-6 w-6 group-hover:-translate-y-1 transition-transform duration-300" />
             </button>
