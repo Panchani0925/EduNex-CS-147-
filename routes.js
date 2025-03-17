@@ -771,4 +771,54 @@ app.put("/update-course/:id", (req, res) => {
         }
     });
 });
+
+// Update an Existing Course
+app.put("/update-course/:id", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "UPDATE courses SET name = ?, description = ? WHERE id = ?";
+    db.query(sql, [name, description, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course updated successfully" });
+        }
+    });
+});
+
+
+app.get("/assignments/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM assignments WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post("/assignments", (req, res) => {
+    const { course_id, title, description, due_date } = req.body;
+    const sql = "INSERT INTO assignments (course_id, title, description, due_date) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, description, due_date], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Assignment added successfully", id: result.insertId });
+        }
+    });
+});
+
+app.get("/resources/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM resources WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
