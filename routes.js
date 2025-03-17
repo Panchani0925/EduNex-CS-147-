@@ -592,4 +592,15 @@ app.patch("/users/:id/status", (req, res) => {
         }
     });
 });
+
+// Fetch all teachers
+app.get("/teachers", (req, res) => {
+    db.query("SELECT id, name, password FROM teachers", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
