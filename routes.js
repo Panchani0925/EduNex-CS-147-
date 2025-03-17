@@ -567,4 +567,29 @@ app.delete("/users/:id", (req, res) => {
     });
 });
 
+// Toggle Student Status (Active/Inactive)
+app.patch("/users/:id/status", (req, res) => {
+    const { status } = req.body;
+    const sql = "UPDATE users SET status = ? WHERE id = ?";
+    db.query(sql, [status, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Student status updated successfully" });
+        }
+    });
+});
+
+// Toggle Student Status (Active/Inactive)
+app.patch("/users/:id/status", (req, res) => {
+    const { status } = req.body;
+    const sql = "UPDATE users SET status = ? WHERE id = ?";
+    db.query(sql, [status, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Student status updated successfully" });
+        }
+    });
+});
 module.exports = router;
