@@ -616,4 +616,16 @@ app.post("/teachers", (req, res) => {
         }
     });
 });
+
+// Delete a Teacher
+app.delete("/teachers/:id", (req, res) => {
+    const sql = "DELETE FROM teachers WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Teacher deleted successfully" });
+        }
+    });
+});
 module.exports = router;
