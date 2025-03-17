@@ -651,4 +651,16 @@ app.post("/parents", (req, res) => {
         }
     });
 });
+
+// Delete a Parent
+app.delete("/parents/:id", (req, res) => {
+    const sql = "DELETE FROM parents WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Parent deleted successfully" });
+        }
+    });
+});
 module.exports = router;
