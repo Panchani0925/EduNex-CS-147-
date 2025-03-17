@@ -674,4 +674,17 @@ app.get("/classes", (req, res) => {
         }
     });
 });
+
+// Add a New Class
+app.post("/classes", (req, res) => {
+    const { name, teacher, subject } = req.body;
+    const sql = "INSERT INTO classes (name, teacher, subject) VALUES (?, ?, ?)";
+    db.query(sql, [name, teacher, subject], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class added successfully", id: result.insertId });
+        }
+    });
+});
 module.exports = router;
