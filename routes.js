@@ -555,5 +555,16 @@ app.put("/users/:id", (req, res) => {
     });
 });
 
+// Delete a Student
+app.delete("/users/:id", (req, res) => {
+    const sql = "DELETE FROM users WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Student deleted successfully" });
+        }
+    });
+});
 
 module.exports = router;
