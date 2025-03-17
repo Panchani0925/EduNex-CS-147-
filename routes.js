@@ -734,4 +734,15 @@ app.post("/courses", (req, res) => {
         }
     });
 });
+
+// Fetch All Courses (New Function)
+app.get("/all-courses", (req, res) => {
+    db.query("SELECT id, name, description FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
