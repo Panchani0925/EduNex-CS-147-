@@ -638,4 +638,17 @@ app.get("/parents", (req, res) => {
         }
     });
 });
+
+// Add a New Parent
+app.post("/parents", (req, res) => {
+    const { name, password } = req.body;
+    const sql = "INSERT INTO parents (name, password) VALUES (?, ?)";
+    db.query(sql, [name, password], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Parent added successfully", id: result.insertId });
+        }
+    });
+});
 module.exports = router;
