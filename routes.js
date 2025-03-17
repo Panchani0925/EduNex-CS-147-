@@ -663,4 +663,15 @@ app.delete("/parents/:id", (req, res) => {
         }
     });
 });
+
+// Fetch All Classes
+app.get("/classes", (req, res) => {
+    db.query("SELECT * FROM classes", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
