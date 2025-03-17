@@ -517,4 +517,18 @@ router.delete("/admin/users/:id", authenticateToken, authorizeRole("admin"), (re
     });
 });
 
+// Fetch All Users
+// Fetch all students
+app.get("/users", (req, res) => {
+    db.query("SELECT id, name, password, status FROM users", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+
+
 module.exports = router;
