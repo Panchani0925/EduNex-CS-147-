@@ -616,7 +616,6 @@ app.post("/teachers", (req, res) => {
         }
     });
 });
-
 // Delete a Teacher
 app.delete("/teachers/:id", (req, res) => {
     const sql = "DELETE FROM teachers WHERE id = ?";
@@ -625,6 +624,17 @@ app.delete("/teachers/:id", (req, res) => {
             res.status(500).json({ error: err.message });
         } else {
             res.json({ message: "Teacher deleted successfully" });
+        }
+    });
+});
+
+// Fetch all parents
+app.get("/parents", (req, res) => {
+    db.query("SELECT id, name, password FROM parents", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
         }
     });
 });
