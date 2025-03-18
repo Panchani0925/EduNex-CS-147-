@@ -902,4 +902,18 @@ app.get("/course-schedules", (req, res) => {
         }
     });
 });
+
+// Add a new live class
+app.post("/live-classes", (req, res) => {
+    const { course_id, title, description, date, time } = req.body;
+    const sql = "INSERT INTO live_classes (course_id, title, description, date, time) VALUES (?, ?, ?, ?, ?)";
+    
+    db.query(sql, [course_id, title, description, date, time], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Live class added successfully", id: result.insertId });
+        }
+    });
+});
 module.exports = router;
