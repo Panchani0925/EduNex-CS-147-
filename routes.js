@@ -1119,4 +1119,140 @@ app.post("/assign-parent", (req, res) => {
         }
     });
 });
+// Get Parent-Student Relationships
+app.get("/parent-student", (req, res) => {
+    const sql = `
+        SELECT ps.id, u1.name AS student_name, u2.name AS parent_name 
+        FROM parent_student ps
+        JOIN users u1 ON ps.student_id = u1.id
+        JOIN parents u2 ON ps.parent_id = u2.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/student-performance", (req, res) => {
+    const parentId = 1; // Assume parent_id = 1 by default
+
+    const sql = `
+        SELECT 
+            users.name AS student_name,
+            courses.name AS course_name,
+            progress.score
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+        JOIN parent_student ON parent_student.student_id = users.id
+        WHERE parent_student.parent_id = ?
+    `;
+
+    db.query(sql, [parentId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/student-performance", (req, res) => {
+    const parentId = 1; // Default Parent ID
+
+    const sql = `
+        SELECT 
+            users.name AS student_name,
+            courses.name AS course_name,
+            progress.score
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+        JOIN parent_student ON parent_student.student_id = users.id
+        WHERE parent_student.parent_id = ?
+    `;
+
+    db.query(sql, [parentId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// New API for fetching student scores by subject
+app.get("/student-performance-subjects", (req, res) => {
+    const parentId = 1; // Default Parent ID
+
+    const sql = `
+        SELECT 
+            users.name AS student_name,
+            courses.name AS course_name,
+            progress.score
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+        JOIN parent_student ON parent_student.student_id = users.id
+        WHERE parent_student.parent_id = ?;
+    `;
+
+    db.query(sql, [parentId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Fetch students with low scores
+app.get("/low-score-alerts/:parentId", (req, res) => {
+    const parentId = req.params.parentId;
+
+    const sql = `
+        SELECT 
+            users.name AS student_name,
+            courses.name AS course_name,
+            progress.score
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+        JOIN parent_student ON parent_student.student_id = users.id
+        WHERE parent_student.parent_id = ? AND progress.score < 50;
+    `;
+
+    db.query(sql, [parentId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Fetch engagement tracking data
+app.get("/engagement-tracking", (req, res) => {
+    const sql = `
+        SELECT 
+            engagement_tracking.user_id,
+            users.name AS student_name,
+            engagement_tracking.no_of_hours,
+            engagement_tracking.day
+        FROM engagement_tracking
+        JOIN users ON engagement_tracking.user_id = users.id;
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
