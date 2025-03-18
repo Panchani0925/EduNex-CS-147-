@@ -1092,4 +1092,31 @@ app.get("/discussion/:course_id", (req, res) => {
         }
     });
 });
+// Post a new message in the discussion forum
+app.post("/discussion", (req, res) => {
+    const { course_id, message } = req.body;
+    const sql = "INSERT INTO discussion_forum (course_id, message) VALUES (?, ?)";
+    db.query(sql, [course_id, message], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Message posted successfully", id: result.insertId });
+        }
+    });
+});
+
+
+// Assign Parent to a Student
+app.post("/assign-parent", (req, res) => {
+    const { student_id, parent_id } = req.body;
+    const sql = "INSERT INTO parent_student (student_id, parent_id) VALUES (?, ?)";
+    
+    db.query(sql, [student_id, parent_id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Parent assigned to student successfully" });
+        }
+    });
+});
 module.exports = router;
