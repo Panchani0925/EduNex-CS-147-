@@ -902,4 +902,194 @@ app.get("/course-schedules", (req, res) => {
         }
     });
 });
+
+// Add a new live class
+app.post("/live-classes", (req, res) => {
+    const { course_id, title, description, date, time } = req.body;
+    const sql = "INSERT INTO live_classes (course_id, title, description, date, time) VALUES (?, ?, ?, ?, ?)";
+    
+    db.query(sql, [course_id, title, description, date, time], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Live class added successfully", id: result.insertId });
+        }
+    });
+});
+// Fetch all feedback with student details
+app.get("/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Fetch notifications (Live Classes and Feedback)
+app.get("/notifications", (req, res) => {
+    const sql = `
+        SELECT id, 'Live Class' AS type, title AS message, description AS details, date AS created_at
+        FROM live_classes
+        UNION 
+        SELECT feedback.id, 'Feedback' AS type, feedback.message, users.name AS details, NOW() AS created_at
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/study-resources", (req, res) => {
+    const sql = `
+        SELECT r.id, r.course_id, r.title, r.type, r.link, c.name as course_name 
+        FROM resources r
+        JOIN courses c ON r.course_id = c.id
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/scheduled-live-classes", (req, res) => {
+    const sql = `
+        SELECT lc.id, lc.course_id, lc.title, lc.description, lc.date, lc.time, c.name AS course_name
+        FROM live_classes lc
+        JOIN courses c ON lc.course_id = c.id
+        ORDER BY lc.date ASC, lc.time ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/assignment-notifications", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        ORDER BY a.due_date ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/upcoming-deadlines", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        WHERE a.due_date >= CURDATE()
+        ORDER BY a.due_date ASC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Fetch messages for a course
+app.get("/discussion/:course_id", (req, res) => {
+    const courseId = req.params.course_id;
+    const sql = "SELECT * FROM discussion_forum WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
