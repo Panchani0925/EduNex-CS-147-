@@ -1326,4 +1326,73 @@ app.get("/api/subjects/count", (req, res) => {
         }
     });
 });
+// Fetch All Available Courses
+app.get("/api/available-courses", (req, res) => {
+    const sql = "SELECT id, name, description, students FROM courses";
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Endpoint to handle form submissions
+app.post("/api/contact", (req, res) => {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const sql = "INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)";
+    db.query(sql, [name, email, message], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Message sent successfully!" });
+        }
+    });
+});
+
+// Fetch all contact messages
+app.get("/api/contact-messages", (req, res) => {
+    db.query("SELECT * FROM contact_messages ORDER BY created_at DESC", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// User Login Route
+app.post("/api/login", (req, res) => {
+    const { name, password, role } = req.body;
+
+    let table = "";
+    if (role === "user") table = "users";
+    else if (role === "teacher") table = "teachers";
+    else if (role === "parent") table = "parents";
+    else return res.status(400).json({ error: "Invalid role selected" });
+
+    const sql = `SELECT * FROM ${table} WHERE name = ? AND password = ?`;
+    db.query(sql, [name, password], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        if (result.length === 0) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        res.json({ message: "Login successful", role });
+    });
+});
+
+
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
 module.exports = router;
