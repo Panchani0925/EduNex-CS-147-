@@ -821,4 +821,67 @@ app.get("/resources/:courseId", (req, res) => {
         }
     });
 });
+// Delete a Course
+app.delete("/remove-course/:id", (req, res) => {
+    const sql = "DELETE FROM courses WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course deleted successfully" });
+        }
+    });
+});
+
+
+app.get("/assignments/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM assignments WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post("/assignments", (req, res) => {
+    const { course_id, title, description, due_date } = req.body;
+    const sql = "INSERT INTO assignments (course_id, title, description, due_date) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, description, due_date], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Assignment added successfully", id: result.insertId });
+        }
+    });
+});
+
+app.get("/resources/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM resources WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Add new resource (Only Links)
+app.post("/resources", (req, res) => {
+    const { course_id, title, type, link } = req.body;
+
+    // Ensure the link can be nullable
+    const sql = "INSERT INTO resources (course_id, title, type, link) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, type, link || null], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Resource added successfully", id: result.insertId });
+        }
+    });
+});
 module.exports = router;
