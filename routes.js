@@ -884,4 +884,22 @@ app.post("/resources", (req, res) => {
         }
     });
 });
+// Fetch all courses with their live class schedules
+app.get("/course-schedules", (req, res) => {
+    const sql = `
+        SELECT courses.id AS course_id, courses.name AS course_name, 
+               live_classes.title, live_classes.description, 
+               live_classes.date, live_classes.time 
+        FROM courses
+        LEFT JOIN live_classes ON courses.id = live_classes.course_id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
 module.exports = router;
