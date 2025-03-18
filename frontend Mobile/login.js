@@ -17,7 +17,7 @@ const LoginScreen = () => {
     // Implement login logic here
     console.log('Login attempted with:', username);
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
