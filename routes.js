@@ -1255,4 +1255,75 @@ app.get("/engagement-tracking", (req, res) => {
         }
     });
 });
+
+// Fetch all courses dynamically
+app.get("/api/courses", (req, res) => {
+    db.query("SELECT id, name, description, students FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Fetch all teachers dynamically
+app.get("/api/teachers", (req, res) => {
+    db.query("SELECT id, name FROM teachers", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/api/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Get the total number of students
+app.get("/api/students/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM users", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ students: result[0].count });
+        }
+    });
+});
+
+// Get the total number of teachers
+app.get("/api/teachers/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM teachers", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ teachers: result[0].count });
+        }
+    });
+});
+
+// Get the total number of subjects (courses)
+app.get("/api/subjects/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ subjects: result[0].count });
+        }
+    });
+});
 module.exports = router;
