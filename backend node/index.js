@@ -96,3 +96,16 @@ app.get("/teachers", (req, res) => {
     });
 });
 
+// Add a New Teacher
+app.post("/teachers", (req, res) => {
+    const { name, password } = req.body;
+    const sql = "INSERT INTO teachers (name, password) VALUES (?, ?)";
+    db.query(sql, [name, password], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Teacher added successfully", id: result.insertId });
+        }
+    });
+});
+
