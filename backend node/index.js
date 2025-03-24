@@ -785,3 +785,20 @@ app.get("/api/available-courses", (req, res) => {
         }
     });
 });
+
+// Endpoint to handle form submissions
+app.post("/api/contact", (req, res) => {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const sql = "INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)";
+    db.query(sql, [name, email, message], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Message sent successfully!" });
+        }
+    });
+});
