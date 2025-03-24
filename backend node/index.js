@@ -586,3 +586,21 @@ app.post("/assign-parent", (req, res) => {
         }
     });
 });
+
+// Get Parent-Student Relationships
+app.get("/parent-student", (req, res) => {
+    const sql = `
+        SELECT ps.id, u1.name AS student_name, u2.name AS parent_name 
+        FROM parent_student ps
+        JOIN users u1 ON ps.student_id = u1.id
+        JOIN parents u2 ON ps.parent_id = u2.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
