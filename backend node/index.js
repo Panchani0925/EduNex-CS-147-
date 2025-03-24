@@ -751,3 +751,14 @@ app.get("/api/students/count", (req, res) => {
         }
     });
 });
+
+// Get the total number of teachers
+app.get("/api/teachers/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM teachers", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ teachers: result[0].count });
+        }
+    });
+});
