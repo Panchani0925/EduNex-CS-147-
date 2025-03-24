@@ -264,3 +264,15 @@ app.put("/update-course/:id", (req, res) => {
         }
     });
 });
+
+// Delete a Course
+app.delete("/remove-course/:id", (req, res) => {
+    const sql = "DELETE FROM courses WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course deleted successfully" });
+        }
+    });
+});
