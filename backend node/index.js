@@ -34,3 +34,15 @@ app.get("/users", (req, res) => {
     });
 });
 
+// Add a New Student
+app.post("/users", (req, res) => {
+    const { name, password, status } = req.body;
+    const sql = "INSERT INTO users (name, password, status) VALUES (?, ?, ?)";
+    db.query(sql, [name, password, status], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Student added successfully", id: result.insertId });
+        }
+    });
+});
