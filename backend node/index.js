@@ -773,3 +773,15 @@ app.get("/api/subjects/count", (req, res) => {
         }
     });
 });
+
+// Fetch All Available Courses
+app.get("/api/available-courses", (req, res) => {
+    const sql = "SELECT id, name, description, students FROM courses";
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
