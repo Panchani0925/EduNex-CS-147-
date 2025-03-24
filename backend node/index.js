@@ -298,3 +298,14 @@ app.post("/assignments", (req, res) => {
         }
     });
 });
+app.get("/resources/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM resources WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
