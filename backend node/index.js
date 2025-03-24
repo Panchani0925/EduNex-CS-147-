@@ -560,6 +560,20 @@ app.post("/discussion", (req, res) => {
     });
 });
 
+
+// Post a new message in the discussion forum
+app.post("/discussion", (req, res) => {
+    const { course_id, message } = req.body;
+    const sql = "INSERT INTO discussion_forum (course_id, message) VALUES (?, ?)";
+    db.query(sql, [course_id, message], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Message posted successfully", id: result.insertId });
+        }
+    });
+});
+
 // Assign Parent to a Student
 app.post("/assign-parent", (req, res) => {
     const { student_id, parent_id } = req.body;
@@ -570,6 +584,24 @@ app.post("/assign-parent", (req, res) => {
             res.status(500).json({ error: err.message });
         } else {
             res.json({ message: "Parent assigned to student successfully" });
+        }
+    });
+});
+
+// Get Parent-Student Relationships
+app.get("/parent-student", (req, res) => {
+    const sql = `
+        SELECT ps.id, u1.name AS student_name, u2.name AS parent_name 
+        FROM parent_student ps
+        JOIN users u1 ON ps.student_id = u1.id
+        JOIN parents u2 ON ps.parent_id = u2.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
         }
     });
 });
