@@ -802,3 +802,14 @@ app.post("/api/contact", (req, res) => {
         }
     });
 });
+
+// Fetch all contact messages
+app.get("/api/contact-messages", (req, res) => {
+    db.query("SELECT * FROM contact_messages ORDER BY created_at DESC", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
