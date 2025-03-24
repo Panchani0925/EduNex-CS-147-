@@ -180,3 +180,16 @@ app.post("/classes", (req, res) => {
         }
     });
 });
+
+// Update a Class
+app.put("/classes/:id", (req, res) => {
+    const { name, teacher, subject } = req.body;
+    const sql = "UPDATE classes SET name = ?, teacher = ?, subject = ? WHERE id = ?";
+    db.query(sql, [name, teacher, subject, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class updated successfully" });
+        }
+    });
+});
