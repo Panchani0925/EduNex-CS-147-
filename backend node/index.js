@@ -390,3 +390,35 @@ app.get("/notifications", (req, res) => {
         }
     });
 });
+app.get("/study-resources", (req, res) => {
+    const sql = `
+        SELECT r.id, r.course_id, r.title, r.type, r.link, c.name as course_name 
+        FROM resources r
+        JOIN courses c ON r.course_id = c.id
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/scheduled-live-classes", (req, res) => {
+    const sql = `
+        SELECT lc.id, lc.course_id, lc.title, lc.description, lc.date, lc.time, c.name AS course_name
+        FROM live_classes lc
+        JOIN courses c ON lc.course_id = c.id
+        ORDER BY lc.date ASC, lc.time ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
