@@ -422,3 +422,114 @@ app.get("/scheduled-live-classes", (req, res) => {
         }
     });
 });
+app.get("/scheduled-live-classes", (req, res) => {
+    const sql = `
+        SELECT lc.id, lc.course_id, lc.title, lc.description, lc.date, lc.time, c.name AS course_name
+        FROM live_classes lc
+        JOIN courses c ON lc.course_id = c.id
+        ORDER BY lc.date ASC, lc.time ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/assignment-notifications", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        ORDER BY a.due_date ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/upcoming-deadlines", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        WHERE a.due_date >= CURDATE()
+        ORDER BY a.due_date ASC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
