@@ -276,3 +276,14 @@ app.delete("/remove-course/:id", (req, res) => {
         }
     });
 });
+app.get("/assignments/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM assignments WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
