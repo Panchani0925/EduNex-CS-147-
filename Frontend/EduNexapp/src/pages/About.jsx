@@ -20,7 +20,7 @@ const teamMembers = [
   },
   {
     id: 2,
-    name: "Oshadhi",
+    name: "Liyana Oshadhi",
     role: "Server-side Development & Database Management",
     idNumber: "w2083091",
     contribution: "I work to build the database of the application",
@@ -55,7 +55,7 @@ const teamMembers = [
       links: {
         linkedin: "https://linkedin.com/in/charliedavis",
         github: "https://github.com/charliedavis",
-        email: "charlie@example.com"
+        email: "thangavelabishek5@gmail.com"
       },
       gradient: "from-red-500 to-rose-500",
     image: "/abishek.jpg", // Added leading slash
@@ -83,7 +83,7 @@ const teamMembers = [
     links: {
       linkedin: "https://linkedin.com/in/evewilson",
       github: "https://github.com/evewilson",
-      email: "eve@example.com"
+      email: "buthmira.20231968@iit.ac.lk"
     },
     gradient: "from-indigo-500 to-violet-500",
     image: "/buthmira.jpg", // Added leading slash
