@@ -370,3 +370,23 @@ app.get("/feedback", (req, res) => {
         }
     });
 });
+// Fetch notifications (Live Classes and Feedback)
+app.get("/notifications", (req, res) => {
+    const sql = `
+        SELECT id, 'Live Class' AS type, title AS message, description AS details, date AS created_at
+        FROM live_classes
+        UNION 
+        SELECT feedback.id, 'Feedback' AS type, feedback.message, users.name AS details, NOW() AS created_at
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
