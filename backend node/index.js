@@ -740,3 +740,14 @@ app.get("/api/feedback", (req, res) => {
         }
     });
 });
+
+// Get the total number of students
+app.get("/api/students/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM users", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ students: result[0].count });
+        }
+    });
+});
