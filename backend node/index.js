@@ -121,3 +121,14 @@ app.delete("/teachers/:id", (req, res) => {
     });
 });
 
+// Fetch all parents
+app.get("/parents", (req, res) => {
+    db.query("SELECT id, name, password FROM parents", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
