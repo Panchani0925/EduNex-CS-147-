@@ -205,3 +205,25 @@ app.delete("/classes/:id", (req, res) => {
         }
     });
 });
+
+app.get("/courses", (req, res) => {
+    db.query("SELECT * FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post("/courses", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "INSERT INTO courses (name, description, students) VALUES (?, ?, 0)";
+    db.query(sql, [name, description], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course added successfully", id: result.insertId });
+        }
+    });
+});
