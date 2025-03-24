@@ -702,3 +702,14 @@ app.get("/low-score-alerts/:parentId", (req, res) => {
         }
     });
 });
+
+// Fetch all courses dynamically
+app.get("/api/courses", (req, res) => {
+    db.query("SELECT id, name, description, students FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
