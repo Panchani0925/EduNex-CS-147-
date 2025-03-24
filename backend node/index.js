@@ -309,3 +309,17 @@ app.get("/resources/:courseId", (req, res) => {
         }
     });
 });
+// Add new resource (Only Links)
+app.post("/resources", (req, res) => {
+    const { course_id, title, type, link } = req.body;
+
+    // Ensure the link can be nullable
+    const sql = "INSERT INTO resources (course_id, title, type, link) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, type, link || null], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Resource added successfully", id: result.insertId });
+        }
+    });
+});
