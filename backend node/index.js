@@ -713,3 +713,30 @@ app.get("/api/courses", (req, res) => {
         }
     });
 });
+
+// Fetch all teachers dynamically
+app.get("/api/teachers", (req, res) => {
+    db.query("SELECT id, name FROM teachers", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/api/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
