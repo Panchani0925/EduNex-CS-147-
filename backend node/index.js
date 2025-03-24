@@ -145,3 +145,391 @@ app.post("/parents", (req, res) => {
     });
 });
 
+// Delete a Parent
+app.delete("/parents/:id", (req, res) => {
+    const sql = "DELETE FROM parents WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Parent deleted successfully" });
+        }
+    });
+});
+
+// Fetch All Classes
+app.get("/classes", (req, res) => {
+    db.query("SELECT * FROM classes", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Add a New Class
+app.post("/classes", (req, res) => {
+    const { name, teacher, subject } = req.body;
+    const sql = "INSERT INTO classes (name, teacher, subject) VALUES (?, ?, ?)";
+    db.query(sql, [name, teacher, subject], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class added successfully", id: result.insertId });
+        }
+    });
+});
+
+// Update a Class
+app.put("/classes/:id", (req, res) => {
+    const { name, teacher, subject } = req.body;
+    const sql = "UPDATE classes SET name = ?, teacher = ?, subject = ? WHERE id = ?";
+    db.query(sql, [name, teacher, subject, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class updated successfully" });
+        }
+    });
+});
+
+// Delete a Class
+app.delete("/classes/:id", (req, res) => {
+    const sql = "DELETE FROM classes WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class deleted successfully" });
+        }
+    });
+});
+
+app.get("/courses", (req, res) => {
+    db.query("SELECT * FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.post("/courses", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "INSERT INTO courses (name, description, students) VALUES (?, ?, 0)";
+    db.query(sql, [name, description], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course added successfully", id: result.insertId });
+        }
+    });
+});
+
+// Fetch All Courses (New Function)
+app.get("/all-courses", (req, res) => {
+    db.query("SELECT id, name, description FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Add a New Course (students column defaults to 0)
+app.post("/new-course", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "INSERT INTO courses (name, description, students) VALUES (?, ?, 0)";
+    db.query(sql, [name, description], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course added successfully", id: result.insertId });
+        }
+    });
+});
+
+// Update an Existing Course
+app.put("/update-course/:id", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "UPDATE courses SET name = ?, description = ? WHERE id = ?";
+    db.query(sql, [name, description, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course updated successfully" });
+        }
+    });
+});
+
+// Delete a Course
+app.delete("/remove-course/:id", (req, res) => {
+    const sql = "DELETE FROM courses WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course deleted successfully" });
+        }
+    });
+});
+app.get("/assignments/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM assignments WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+app.post("/assignments", (req, res) => {
+    const { course_id, title, description, due_date } = req.body;
+    const sql = "INSERT INTO assignments (course_id, title, description, due_date) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, description, due_date], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Assignment added successfully", id: result.insertId });
+        }
+    });
+});
+app.get("/resources/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM resources WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Add new resource (Only Links)
+app.post("/resources", (req, res) => {
+    const { course_id, title, type, link } = req.body;
+
+    // Ensure the link can be nullable
+    const sql = "INSERT INTO resources (course_id, title, type, link) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, type, link || null], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Resource added successfully", id: result.insertId });
+        }
+    });
+});
+// Fetch all courses with their live class schedules
+app.get("/course-schedules", (req, res) => {
+    const sql = `
+        SELECT courses.id AS course_id, courses.name AS course_name, 
+               live_classes.title, live_classes.description, 
+               live_classes.date, live_classes.time 
+        FROM courses
+        LEFT JOIN live_classes ON courses.id = live_classes.course_id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Add a new live class
+app.post("/live-classes", (req, res) => {
+    const { course_id, title, description, date, time } = req.body;
+    const sql = "INSERT INTO live_classes (course_id, title, description, date, time) VALUES (?, ?, ?, ?, ?)";
+    
+    db.query(sql, [course_id, title, description, date, time], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Live class added successfully", id: result.insertId });
+        }
+    });
+});
+// Fetch all feedback with student details
+app.get("/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Fetch notifications (Live Classes and Feedback)
+app.get("/notifications", (req, res) => {
+    const sql = `
+        SELECT id, 'Live Class' AS type, title AS message, description AS details, date AS created_at
+        FROM live_classes
+        UNION 
+        SELECT feedback.id, 'Feedback' AS type, feedback.message, users.name AS details, NOW() AS created_at
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+app.get("/study-resources", (req, res) => {
+    const sql = `
+        SELECT r.id, r.course_id, r.title, r.type, r.link, c.name as course_name 
+        FROM resources r
+        JOIN courses c ON r.course_id = c.id
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/scheduled-live-classes", (req, res) => {
+    const sql = `
+        SELECT lc.id, lc.course_id, lc.title, lc.description, lc.date, lc.time, c.name AS course_name
+        FROM live_classes lc
+        JOIN courses c ON lc.course_id = c.id
+        ORDER BY lc.date ASC, lc.time ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+app.get("/scheduled-live-classes", (req, res) => {
+    const sql = `
+        SELECT lc.id, lc.course_id, lc.title, lc.description, lc.date, lc.time, c.name AS course_name
+        FROM live_classes lc
+        JOIN courses c ON lc.course_id = c.id
+        ORDER BY lc.date ASC, lc.time ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/assignment-notifications", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        ORDER BY a.due_date ASC
+    `;
+    
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/upcoming-deadlines", (req, res) => {
+    const sql = `
+        SELECT a.id, a.course_id, a.title, a.description, a.due_date, c.name AS course_name
+        FROM assignments a
+        JOIN courses c ON a.course_id = c.id
+        WHERE a.due_date >= CURDATE()
+        ORDER BY a.due_date ASC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/feedback", (req, res) => {
+    const sql = `
+        SELECT feedback.id, feedback.message, users.name AS student 
+        FROM feedback
+        INNER JOIN users ON feedback.user_id = users.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/progress", (req, res) => {
+    const sql = `
+        SELECT 
+            progress.user_id, 
+            users.name AS user_name, 
+            progress.course_id, 
+            courses.name AS course_name, 
+            progress.score 
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
