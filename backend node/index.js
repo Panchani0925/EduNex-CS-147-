@@ -533,3 +533,29 @@ app.get("/progress", (req, res) => {
         }
     });
 });
+
+// Fetch messages for a course
+app.get("/discussion/:course_id", (req, res) => {
+    const courseId = req.params.course_id;
+    const sql = "SELECT * FROM discussion_forum WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+// Post a new message in the discussion forum
+app.post("/discussion", (req, res) => {
+    const { course_id, message } = req.body;
+    const sql = "INSERT INTO discussion_forum (course_id, message) VALUES (?, ?)";
+    db.query(sql, [course_id, message], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Message posted successfully", id: result.insertId });
+        }
+    });
+});
