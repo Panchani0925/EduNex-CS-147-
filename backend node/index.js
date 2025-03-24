@@ -287,3 +287,14 @@ app.get("/assignments/:courseId", (req, res) => {
         }
     });
 });
+app.post("/assignments", (req, res) => {
+    const { course_id, title, description, due_date } = req.body;
+    const sql = "INSERT INTO assignments (course_id, title, description, due_date) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, description, due_date], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Assignment added successfully", id: result.insertId });
+        }
+    });
+});
