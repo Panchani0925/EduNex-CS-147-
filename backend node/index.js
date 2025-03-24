@@ -762,3 +762,14 @@ app.get("/api/teachers/count", (req, res) => {
         }
     });
 });
+
+// Get the total number of subjects (courses)
+app.get("/api/subjects/count", (req, res) => {
+    db.query("SELECT COUNT(*) AS count FROM courses", (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ subjects: result[0].count });
+        }
+    });
+});
