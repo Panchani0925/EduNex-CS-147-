@@ -572,3 +572,17 @@ app.post("/discussion", (req, res) => {
         }
     });
 });
+
+// Assign Parent to a Student
+app.post("/assign-parent", (req, res) => {
+    const { student_id, parent_id } = req.body;
+    const sql = "INSERT INTO parent_student (student_id, parent_id) VALUES (?, ?)";
+    
+    db.query(sql, [student_id, parent_id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Parent assigned to student successfully" });
+        }
+    });
+});
