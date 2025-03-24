@@ -238,3 +238,16 @@ app.get("/all-courses", (req, res) => {
         }
     });
 });
+
+// Add a New Course (students column defaults to 0)
+app.post("/new-course", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "INSERT INTO courses (name, description, students) VALUES (?, ?, 0)";
+    db.query(sql, [name, description], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course added successfully", id: result.insertId });
+        }
+    });
+});
