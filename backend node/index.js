@@ -813,3 +813,25 @@ app.get("/api/contact-messages", (req, res) => {
         }
     });
 });
+
+// User Login Route
+app.post("/api/login", (req, res) => {
+    const { name, password, role } = req.body;
+
+    let table = "";
+    if (role === "user") table = "users";
+    else if (role === "teacher") table = "teachers";
+    else if (role === "parent") table = "parents";
+    else return res.status(400).json({ error: "Invalid role selected" });
+
+    const sql = `SELECT * FROM ${table} WHERE name = ? AND password = ?`;
+    db.query(sql, [name, password], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        if (result.length === 0) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        res.json({ message: "Login successful", role });
+    });
+});
