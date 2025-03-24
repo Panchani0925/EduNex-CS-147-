@@ -193,3 +193,15 @@ app.put("/classes/:id", (req, res) => {
         }
     });
 });
+
+// Delete a Class
+app.delete("/classes/:id", (req, res) => {
+    const sql = "DELETE FROM classes WHERE id = ?";
+    db.query(sql, [req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Class deleted successfully" });
+        }
+    });
+});
