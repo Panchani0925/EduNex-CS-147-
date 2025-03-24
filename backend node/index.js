@@ -835,3 +835,9 @@ app.post("/api/login", (req, res) => {
         res.json({ message: "Login successful", role });
     });
 });
+
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
