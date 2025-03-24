@@ -533,3 +533,16 @@ app.get("/progress", (req, res) => {
         }
     });
 });
+
+// Fetch messages for a course
+app.get("/discussion/:course_id", (req, res) => {
+    const courseId = req.params.course_id;
+    const sql = "SELECT * FROM discussion_forum WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
