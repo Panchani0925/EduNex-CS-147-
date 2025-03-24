@@ -298,3 +298,28 @@ app.post("/assignments", (req, res) => {
         }
     });
 });
+app.get("/resources/:courseId", (req, res) => {
+    const courseId = req.params.courseId;
+    const sql = "SELECT * FROM resources WHERE course_id = ?";
+    db.query(sql, [courseId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
+// Add new resource (Only Links)
+app.post("/resources", (req, res) => {
+    const { course_id, title, type, link } = req.body;
+
+    // Ensure the link can be nullable
+    const sql = "INSERT INTO resources (course_id, title, type, link) VALUES (?, ?, ?, ?)";
+    db.query(sql, [course_id, title, type, link || null], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Resource added successfully", id: result.insertId });
+        }
+    });
+});
