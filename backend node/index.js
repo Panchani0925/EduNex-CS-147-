@@ -46,3 +46,17 @@ app.post("/users", (req, res) => {
         }
     });
 });
+
+// Update a Student
+app.put("/users/:id", (req, res) => {
+    const { name, password, status } = req.body;
+    const sql = "UPDATE users SET name = ?, password = ?, status = ? WHERE id = ?";
+    db.query(sql, [name, password, status, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Student updated successfully" });
+        }
+    });
+});
+
