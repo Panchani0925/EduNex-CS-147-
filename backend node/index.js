@@ -628,3 +628,27 @@ app.get("/student-performance", (req, res) => {
         }
     });
 });
+
+app.get("/student-performance", (req, res) => {
+    const parentId = 1; // Default Parent ID
+
+    const sql = `
+        SELECT 
+            users.name AS student_name,
+            courses.name AS course_name,
+            progress.score
+        FROM progress
+        JOIN users ON progress.user_id = users.id
+        JOIN courses ON progress.course_id = courses.id
+        JOIN parent_student ON parent_student.student_id = users.id
+        WHERE parent_student.parent_id = ?
+    `;
+
+    db.query(sql, [parentId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(result);
+        }
+    });
+});
