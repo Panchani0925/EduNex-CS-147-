@@ -5,9 +5,9 @@ import React from "react";
 const teamMembers = [
   {
     id: 1,
-    name: "Panchali  Charunya Gunarathne",
+    name: "Panchani  Charunya Gunarathne",
     role: "Leader",
-    idNumber: "w2084711",
+    idNumber: "w2082085",
     contribution: "I lead my team and also train",
     links: {
       linkedin:
@@ -22,7 +22,7 @@ const teamMembers = [
     id: 2,
     name: "Oshadhi",
     role: "Server-side Development & Database Management",
-    idNumber: "w2084712",
+    idNumber: "w2083091",
     contribution: "I work to build the database of the application",
     links: {
       linkedin: "http://www.linkedin.com/in/arundathi-oshadhi-061166336",
@@ -50,7 +50,7 @@ const teamMembers = [
     id: 4,
     name: "Thangavel Abishek",
     role: "UI/UX Design & server-side development",
-    idNumber: "w2084733",
+    idNumber: "w2084376",
     contribution: "I work to build the backend of the application",
       links: {
         linkedin: "https://linkedin.com/in/charliedavis",
@@ -64,7 +64,7 @@ const teamMembers = [
     id: 5,
     name: "Dithara Nimvini Andaraweera",
     role: "server Side development & Marketing",
-    idNumber: "w2084744",
+    idNumber: "w2082820",
     contribution: "I work to build the backend of the application",
       links: {
         linkedin: "http://www.linkedin.com/in/ditharaandaraweera",
@@ -78,7 +78,7 @@ const teamMembers = [
     id: 6,
     name: "Buthmira  Perera",
     role: "UI/UX Design & Client Side development",
-    idNumber: "w2084755",
+    idNumber: "w2084754",
     contribution:  "I work to build the frontend of the application",
     links: {
       linkedin: "https://linkedin.com/in/evewilson",
