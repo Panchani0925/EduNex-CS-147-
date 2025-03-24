@@ -251,3 +251,16 @@ app.post("/new-course", (req, res) => {
         }
     });
 });
+
+// Update an Existing Course
+app.put("/update-course/:id", (req, res) => {
+    const { name, description } = req.body;
+    const sql = "UPDATE courses SET name = ?, description = ? WHERE id = ?";
+    db.query(sql, [name, description, req.params.id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ message: "Course updated successfully" });
+        }
+    });
+});
